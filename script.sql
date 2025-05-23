@@ -9,7 +9,6 @@ create table tb_Usuario (
     IdUsuario int primary key auto_increment,
     Email varchar(50) not null unique,
     Senha varchar(50) not null,
-    Tipo enum('Cliente', 'Funcionario', 'Administrador') not null
 );
 
 -- Tabela do Cliente
