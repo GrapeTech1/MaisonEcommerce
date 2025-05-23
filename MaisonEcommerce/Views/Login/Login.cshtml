@@ -1,0 +1,19 @@
+﻿@model MaisonEcommerce.Models.Usuario;
+
+<form asp-action="Login" method="post" class="login-form">
+    <h1 class="logit-titu text-center">Login</h1>
+
+    <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="email" required class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Senha:</label>
+        <input type="password" name="senha" required class="form-control" />
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </div>
+</form>
