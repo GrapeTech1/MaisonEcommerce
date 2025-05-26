@@ -1,12 +1,93 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MaisonEcommerce.Models;
+using MaisonEcommerce.Repositorio;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MaisonEcommerce.Controllers
 {
     public class ClienteController : Controller
     {
+        private readonly ClienteRepositorio _clienteRepositorio;
+
+        public ClienteController(ClienteRepositorio clienteRepositorio)
+        {
+            _clienteRepositorio = clienteRepositorio;
+        }
+
         public IActionResult Index()
         {
+            return View(_clienteRepositorio.TodosClientes());
+        }
+        
+        public IActionResult CadastrarCliente()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CadastrarCliente(Cliente cliente)
+        {
+            int linhasAfetadas = _clienteRepositorio.Cadastrar(cliente);
+
+            if (linhasAfetadas > 0)
+            {
+                TempData["Mensagem"] = "Cliente cadastrado com sucesso!";
+                TempData["Classe"] = "alert alert-success";
+                return RedirectToAction(nameof(Index));
+            }
+
+            else
+            {
+                TempData["Mensagem"] = "O cliente já existe no sistema.";
+                TempData["Classe"] = "alert alert-danger";
+                return View();
+            }
+        }
+
+        public IActionResult EditarCliente(int id)
+        {
+            var cliente = _clienteRepositorio.ObterCliente(id);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return View(cliente);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarCliente(int id, [Bind("IdCliente, CPF, Nome, Telefone, Idade, Sexo")] Cliente cliente)
+        {
+            if (id != cliente.IdCliente)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_clienteRepositorio.Atualizar(cliente))
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Erro ao editar o cliente.");
+                    return View(cliente);
+                }
+            }
+
+            return View(cliente);
+        }
+
+        public IActionResult ExcluirCliente(int id)
+        {
+            _clienteRepositorio.Excluir(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
