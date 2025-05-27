@@ -33,6 +33,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.DataCadastro)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataAtualizacao)
+            </th>
             <th class="text-center">Ação</th>
         </tr>
     </thead>
@@ -61,6 +64,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DataCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataAtualizacao)
                 </td>
                 <td class="text-center">
                     <a asp-controller="Cliente" asp-action="EditarCliente" asp-route-id="@item.IdCliente" class="btn btn-sm btn-warning">Editar</a>

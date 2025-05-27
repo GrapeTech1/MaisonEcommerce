@@ -14,7 +14,7 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("Call insertCliente(@cpf, @nome, @telefone, @idade, @sexo)");
+                MySqlCommand cmd = new MySqlCommand("Call insertCliente(@cpf, @nome, @telefone, @idade, @sexo);", conexao);
                 cmd.Parameters.Add("@cpf", MySqlDbType.VarChar).Value = cliente.CPF;
                 cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = cliente.Nome;
                 cmd.Parameters.Add("@telefone", MySqlDbType.VarChar).Value = cliente.Telefone;

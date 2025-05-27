@@ -2,13 +2,13 @@
 create database dbMaisonDeBeaute;
 
 -- Usando o banco de dados
-use dbMaisonDeBeute;
+use dbMaisonDeBeaute;
 
 -- Criando as tabelas
 create table tb_Usuario (
     IdUsuario int primary key auto_increment,
     Email varchar(50) not null unique,
-    Senha varchar(50) not null,
+    Senha varchar(50) not null
 );
 
 -- Tabela do Cliente
@@ -106,7 +106,7 @@ create table tb_Servico_Plano (
     foreign key (IdPlano) references tb_Plano(IdPlano)
 );
 
-
+select * from tb_Usuario;
 
 -- PROCEDURES
 
@@ -174,6 +174,7 @@ end
 $$
 
 -- Procedure de Cliente 
+delimiter $$
 create procedure insertCliente
 (vCPF varchar(12), vNome varchar(50), vTel varchar(10), vIdade int, vSexo varchar(10))
 
