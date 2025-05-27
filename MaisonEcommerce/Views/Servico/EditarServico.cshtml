@@ -1,0 +1,44 @@
+﻿@model MaisonEcommerce.Models.Servico;
+
+<h1 class="titulo-serv">Editar Serviço</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditarServico" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="IdServico" class="form-control"/>
+                <span asp-validation-for="IdServico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+
+            <div class="btn">
+                <div class="form-group">
+                    <input type="submit" value="Alterar" class="btn btn-primary" />
+                </div>
+
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-success">Voltar</a>
+                </div>
+            </div>
+        
+        </form>
+    </div>
+</div>
