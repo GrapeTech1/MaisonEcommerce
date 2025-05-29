@@ -38,8 +38,8 @@ create table tb_Funcionario (
 create table tb_Produto(
     IdProduto int primary key auto_increment,
     Nome varchar(50) not null,
+	Descricao varchar (200) not null,
     Quantidade int not null,
-    Descricao varchar (200) not null,
     Preco decimal(10,2) not null,
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp
@@ -176,14 +176,14 @@ $$
 -- Procedure de Cliente 
 delimiter $$
 create procedure insertCliente
-(vCPF varchar(12), vNome varchar(50), vTel varchar(10), vIdade int, vSexo varchar(10))
-
+(vCPF varchar(12), vNome varchar(50), vTel varchar(10), vIdade int, vSexo varchar(10), vData date)
 begin
+
 	 if not exists 
      (select IdCliente from tb_Cliente where CPF = vCPF)
      then
-		insert into tb_Cliente (CPF, Nome, Telefone, Idade, Sexo)
-        values (vCPF, vNome, vTel, vIdade, vSexo);
+		insert into tb_Cliente (CPF, Nome, Telefone, Idade, Sexo, DataCadastro)
+        values (vCPF, vNome, vTel, vIdade, vSexo, vData);
 	end if;
     
 end 
