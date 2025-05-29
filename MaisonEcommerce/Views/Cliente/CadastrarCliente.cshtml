@@ -13,6 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
+                    
                     <label asp-for="CPF" class="control-label"></label>
                     <input asp-for="CPF" class="form-control" />
                     <span asp-validation-for="CPF" class="text-danger"></span>
@@ -37,8 +38,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Sexo" class="control-label"></label>
-                    <input asp-for="Sexo" class="form-control" />
+                <label asp-for="Sexo" class="control-label"></label>
+                    <select asp-for="Sexo">
+                        <option value="Feminino">Feminino</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                    
                     <span asp-validation-for="Sexo" class="text-danger"></span>
                 </div>
 

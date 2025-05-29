@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using Google.Protobuf.WellKnownTypes;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace MaisonEcommerce.Models
 {
@@ -10,6 +12,7 @@ namespace MaisonEcommerce.Models
         public string? Telefone { get; set; }
         public int Idade { get; set; }
         public string? Sexo { get; set; }
+        
         public DateTime DataCadastro { get; set; }
         public DateTime DataAtualizacao { get; set; }
     

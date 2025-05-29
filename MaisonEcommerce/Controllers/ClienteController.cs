@@ -28,6 +28,13 @@ namespace MaisonEcommerce.Controllers
         {
             int linhasAfetadas = _clienteRepositorio.Cadastrar(cliente);
 
+            if (cliente.Idade < 18)
+            {
+                TempData["Mensagem"] = "O cliente deve ter pelo menos 18 anos para ser cadastrado no sistema.";
+                TempData["Classe"] = "alert alert-danger";
+                return View();
+            }
+
             if (linhasAfetadas > 0)
             {
                 TempData["Mensagem"] = "Cliente cadastrado com sucesso!";

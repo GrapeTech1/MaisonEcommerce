@@ -1,4 +1,5 @@
-﻿using MaisonEcommerce.Models;
+﻿using Google.Protobuf.WellKnownTypes;
+using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
 using System.Data;
 
@@ -14,12 +15,20 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("Call insertCliente(@cpf, @nome, @telefone, @idade, @sexo);", conexao);
+                MySqlCommand cmd = new MySqlCommand("Call insertCliente(@cpf, @nome, @telefone, @idade, @sexo, @dataCa);", conexao);
                 cmd.Parameters.Add("@cpf", MySqlDbType.VarChar).Value = cliente.CPF;
                 cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = cliente.Nome;
+                
                 cmd.Parameters.Add("@telefone", MySqlDbType.VarChar).Value = cliente.Telefone;
                 cmd.Parameters.Add("@idade", MySqlDbType.Int32).Value = cliente.Idade;
                 cmd.Parameters.Add("@sexo", MySqlDbType.VarChar).Value = cliente.Sexo;
+                cmd.Parameters.Add("@dataCa", MySqlDbType.DateTime).Value = DateTime.Today;
+
+
+                if (cliente.Idade < 18)
+                {
+                    return -1;
+                }
 
                 int linhasAfetadas = cmd.ExecuteNonQuery();
 
