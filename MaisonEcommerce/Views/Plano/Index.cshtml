@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MaisonEcommerce.Models.Plano>
+
+<p>
+    <a asp-controller="Plano" asp-action="CadastrarPlano" class="btn btn-primary">Cadastrar Plano</a>
+</p>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+}
+
+<table class="table custom-table"> 
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPlano)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DuracaoPlano)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCadastro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataAtualizacao)
+            </th>
+
+            <th class="text-center">Ação</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPlano)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracaoPlano)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataAtualizacao)
+                </td>
+                <td class="text-center">
+                    <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@item.IdPlano" class="btn btn-sm btn-warning">Editar</a>
+                    <span>|</span>
+                    <a asp-controller="Plano" asp-action="ExcluirPlano" asp-route-id="@item.IdPlano"
+                       onclick="return confirm('Deseja realmente Excluir este plano?')" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
