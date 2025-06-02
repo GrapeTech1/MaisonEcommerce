@@ -16,7 +16,7 @@ create table tb_Cliente (
     IdCliente int primary key auto_increment,
     CPF varchar(12) unique not null,
     Nome varchar (50) not null,
-    telefone varchar(10) not null,
+    telefone varchar(14) not null,
     Idade int check (Idade >=18),
     Sexo varchar(10) check (Sexo in ('Masculino', 'Feminino', 'Outro')),
     DataCadastro timestamp default current_timestamp not null,
@@ -109,7 +109,7 @@ create table tb_Servico_Plano (
 select * from tb_Usuario;
 
 -- PROCEDURES
-
+select * from tb_Cliente;
 -- Procedure do Serviço
 DELIMITER $$
 create PROCEDURE insertServico 
@@ -159,6 +159,7 @@ end
 $$
 
 -- Porcedure de Produtos 
+delimiter $$
 create procedure insertProduto 
 (vNome varchar (50), vDesc varchar(200), vQuant int, vPreco decimal (10,2))
 
@@ -176,14 +177,14 @@ $$
 -- Procedure de Cliente 
 delimiter $$
 create procedure insertCliente
-(vCPF varchar(12), vNome varchar(50), vTel varchar(10), vIdade int, vSexo varchar(10), vData date)
+(vCPF varchar(12), vNome varchar(50), vTel varchar(14), vIdade int, vSexo varchar(10))
 begin
 
 	 if not exists 
      (select IdCliente from tb_Cliente where CPF = vCPF)
      then
-		insert into tb_Cliente (CPF, Nome, Telefone, Idade, Sexo, DataCadastro)
-        values (vCPF, vNome, vTel, vIdade, vSexo, vData);
+		insert into tb_Cliente (CPF, Nome, Telefone, Idade, Sexo)
+        values (vCPF, vNome, vTel, vIdade, vSexo);
 	end if;
     
 end 
