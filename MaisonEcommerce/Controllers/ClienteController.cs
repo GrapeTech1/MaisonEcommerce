@@ -77,6 +77,8 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_clienteRepositorio.Atualizar(cliente))
                     {
+                        TempData["Mensagem"] = "Cliente modificado com sucesso!";
+                        TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }
                 }
@@ -94,6 +96,10 @@ namespace MaisonEcommerce.Controllers
         public IActionResult ExcluirCliente(int id)
         {
             _clienteRepositorio.Excluir(id);
+
+            TempData["Mensagem"] = $"Cliente deletado com sucesso!  -  {DateTime.Now}";
+            TempData["Classe"] = "alert alert-success";
+
             return RedirectToAction(nameof(Index));
         }
     }

@@ -44,7 +44,86 @@ namespace MaisonEcommerce.Repositorio
                     cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = plano.Preco;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();
+                    return linhasAfetadas > 0;
                 }
+            }
+
+            catch (MySqlException ex)
+            {
+                Console.WriteLine($"Erro ao editar plano: {ex.Message}");
+                return false;
+            }
+        }
+
+        public IEnumerable<Plano> TodosPlanos()
+        {
+            List<Plano> planos = new List<Plano>();
+
+            using (var conexao = new MySqlConnection(_conexaMySQL))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("Select * from tb_Plano", conexao);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                conexao.Close();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    planos.Add(
+                        new Plano
+                        {
+                            IdPlano = Convert.ToInt32(dr["IdPlano"]),
+                            Nome = ((string)dr["Nome"]),
+                            Descricao = ((string)dr["Descricao"]),
+
+                            Preco = Convert.ToDecimal(dr["Preco"]),
+                        }
+                    );
+                }
+                return planos;
+            }
+        }
+
+        public Plano ObterPlano(int codigo)
+        {
+            using (var conexao = new MySqlConnection(_conexaMySQL))
+            {
+                conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand("Select * from tb_Plano where IdPlano = @codigo", conexao);
+                cmd.Parameters.AddWithValue("@codigo", codigo);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                MySqlDataReader dr;
+                Plano plano = new Plano();
+
+                dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dr.Read())
+                {
+                    plano.IdPlano = Convert.ToInt32(dr["IdPlano"]);
+                    plano.Nome = (string)(dr["Nome"]);
+                    plano.Descricao = (string)(dr["Descricao"]);
+                    plano.DuracaoPlano = (string)(dr["DuracaoPlano"]);
+                    plano.Preco = Convert.ToDecimal(dr["Preco"]);
+                }
+                return plano;
+            }
+        }
+
+        public void Excluir(int IdPlano)
+        {
+            using (var conexao = new MySqlConnection(_conexaMySQL))
+            {
+                conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand("Delete from tb_Plano where IdPlano = @IdPlano", conexao);
+                cmd.Parameters.AddWithValue("@IdPlano", IdPlano);
+
+                int linhasAfetadas = cmd.ExecuteNonQuery();
+
+                conexao.Close();
             }
         }
     }
