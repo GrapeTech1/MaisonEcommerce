@@ -9,6 +9,7 @@ namespace MaisonEcommerce.Models
         public string Nome { get; set; }
         public int Idade { get; set; }
         public string Sexo { get; set; }
+        public string Cargo { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAtualizacao { get; set; }
 

@@ -29,6 +29,7 @@ create table tb_Funcionario (
     CPF varchar (12) unique not null,
     Nome varchar(50) not null,
     Idade int check (Idade >=18),
+    Cargo varchar(50) not null,
     Sexo varchar(10) check (Sexo in ('Masculino', 'Feminino', 'Outro')),
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp

@@ -1,6 +1,5 @@
 ﻿using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Prng;
 using System.Data;
 
 namespace MaisonEcommerce.Repositorio
@@ -37,7 +36,7 @@ namespace MaisonEcommerce.Repositorio
                     conexao.Open();
 
                     MySqlCommand cmd = new MySqlCommand("Update tb_Plano set Nome=@nome, Descricao=@descricao, DuracaoPlano=@duracao, Preco=@preco where IdPlano=@idPlano", conexao);
-                    cmd.Parameters.Add("@IdPlano", MySqlDbType.Int32).Value = plano.IdPlano;
+                    cmd.Parameters.Add("@idPlano", MySqlDbType.Int32).Value = plano.IdPlano;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = plano.Nome;
                     cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = plano.Descricao;
                     cmd.Parameters.Add("@duracao", MySqlDbType.Int32).Value = plano.DuracaoPlano;
@@ -98,6 +97,7 @@ namespace MaisonEcommerce.Repositorio
                 MySqlDataReader dr;
                 Plano plano = new Plano();
 
+
                 dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
                 while (dr.Read())
@@ -114,6 +114,7 @@ namespace MaisonEcommerce.Repositorio
 
         public void Excluir(int IdPlano)
         {
+
             using (var conexao = new MySqlConnection(_conexaMySQL))
             {
                 conexao.Open();
