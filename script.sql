@@ -28,7 +28,6 @@ create table tb_Funcionario (
     IdFuncionario int primary key auto_increment,
     CPF varchar (12) unique not null,
     Nome varchar(50) not null,
-    Idade int check (Idade >=18),
     Cargo varchar(50) not null,
     Sexo varchar(10) check (Sexo in ('Masculino', 'Feminino', 'Outro')),
     DataCadastro timestamp default current_timestamp not null,
@@ -107,10 +106,9 @@ create table tb_Servico_Plano (
     foreign key (IdPlano) references tb_Plano(IdPlano)
 );
 
-select * from tb_Usuario;
 
--- PROCEDURES
-select * from tb_Cliente;
+
+
 -- Procedure do Serviço
 DELIMITER $$
 create PROCEDURE insertServico 
@@ -193,15 +191,16 @@ $$
 
 
 -- Procedure de Funcionario 
+delimiter $$
 create procedure insertFuncionario
-(vCPF varchar(12), vNome varchar(50), vTel varchar(10), vIdade int, vSexo varchar(10))
+(vCPF varchar(12), vNome varchar(50), vSexo varchar(10), vCargo varchar(50))
 
 begin
 	 if not exists 
      (select IdFuncionario from tb_Funcionario where CPF = vCPF)
      then
-		insert into tb_Funcionario (CPF, Nome, Telefone, Idade, Sexo)
-        values (vCPF, vNome, vTel, vIdade, vSexo);
+		insert into tb_Funcionario (CPF, Nome, Cargo, Sexo)
+        values (vCPF, vNome,vCargo, vSexo);
 	end if;
     
 end 

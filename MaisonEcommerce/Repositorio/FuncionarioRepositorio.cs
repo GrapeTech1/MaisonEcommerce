@@ -12,12 +12,12 @@ namespace MaisonEcommerce.Repositorio
             using (var conexao = new MySqlConnection(_conexaMySQL))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("Call insertFuncionario(@cpf, @nome, @idade, @sexo, @cargo)", conexao);
+                MySqlCommand cmd = new MySqlCommand("Call insertFuncionario(@cpf, @nome, @cargo, @sexo)", conexao);
                 cmd.Parameters.Add("@cpf", MySqlDbType.VarChar).Value = funcionario.CPF;
                 cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = funcionario.Nome;
-                cmd.Parameters.Add("@idade", MySqlDbType.Int32).Value = funcionario.Idade;
-                cmd.Parameters.Add("@sexo", MySqlDbType.VarChar).Value = funcionario.Sexo;
                 cmd.Parameters.Add("@cargo", MySqlDbType.VarChar).Value = funcionario.Cargo;
+                cmd.Parameters.Add("@sexo", MySqlDbType.VarChar).Value = funcionario.Sexo;
+
                 int linhasAfetadas = cmd.ExecuteNonQuery();
                 conexao.Close();
                 return linhasAfetadas;
@@ -30,13 +30,12 @@ namespace MaisonEcommerce.Repositorio
                 using (var conexao = new MySqlConnection(_conexaMySQL))
                 {
                     conexao.Open();
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Funcionario set CPF=@cpf, Nome=@nome, Idade=@idade, Sexo=@sexo, Cargo=@cargo where IdFuncionario=@idFuncionario", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Funcionario set CPF=@cpf, Nome=@nome, Idade=@idade, Cargo=@cargo, Sexo=@sexo where IdFuncionario=@idFuncionario", conexao);
                     cmd.Parameters.Add("@IdFuncionario", MySqlDbType.Int32).Value = funcionario.IdFuncionario;
                     cmd.Parameters.Add("@cpf", MySqlDbType.VarChar).Value = funcionario.CPF;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = funcionario.Nome;
-                    cmd.Parameters.Add("@idade", MySqlDbType.Int32).Value = funcionario.Idade;
-                    cmd.Parameters.Add("@sexo", MySqlDbType.VarChar).Value = funcionario.Sexo;
                     cmd.Parameters.Add("@cargo", MySqlDbType.VarChar).Value = funcionario.Cargo;
+                    cmd.Parameters.Add("@sexo", MySqlDbType.VarChar).Value = funcionario.Sexo;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();
                     return linhasAfetadas > 0;
@@ -72,9 +71,8 @@ namespace MaisonEcommerce.Repositorio
                             IdFuncionario = Convert.ToInt32(dr["IdFuncionario"]),
                             CPF = ((string)dr["CPF"]),
                             Nome = ((string)dr["Nome"]),
-                            Idade = Convert.ToInt32(dr["Idade"]),
-                            Sexo = ((string)dr["Sexo"]),
                             Cargo = ((string)dr["Cargo"]),
+                            Sexo = ((string)dr["Sexo"]),
                             DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
                             DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"])
                         });
@@ -102,9 +100,8 @@ namespace MaisonEcommerce.Repositorio
                     funcionario.IdFuncionario = Convert.ToInt32(dr["IdFuncionario"]);
                     funcionario.CPF = (string)(dr["CPF"]);
                     funcionario.Nome = (string)(dr["Nome"]);
-                    funcionario.Idade = Convert.ToInt32(dr["Idade"]);
-                    funcionario.Sexo = (string)(dr["Sexo"]);
                     funcionario.Cargo = (string)(dr["Cargo"]);
+                    funcionario.Sexo = (string)(dr["Sexo"]);
                     
                 }
                 return funcionario;
