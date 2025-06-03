@@ -43,80 +43,85 @@ namespace MaisonEcommerce.Repositorio
                     cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = plano.Preco;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();
+                    return linhasAfetadas > 0;
                 }
             }
+
             catch (MySqlException ex)
             {
-                Console.WriteLine($"Erro ao atualizar plano: {ex.Message}");
+                Console.WriteLine($"Erro ao editar plano: {ex.Message}");
                 return false;
             }
         }
 
-        public IEnumerable<Plano> TodosPlano()
-        { 
+        public IEnumerable<Plano> TodosPlanos()
+        {
             List<Plano> planos = new List<Plano>();
 
-            using (var conexao = new MySqlConnection(_conexaoMySQL))
-
-                    conexao.Open();
-
-            MySqlCommand cmd = new MySqlCommand("select * from tb_Plano", conexao);
-            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            conexao.Close();    
-
-            foreach (DataRow dr in dt.Rows)
+            using (var conexao = new MySqlConnection(_conexaMySQL))
             {
-                Plano.Add(
-                    new Plano
-                    {
-                        IdPlano = Convert.ToInt32(dr["IdPlano"]),
-                        Nome = dr["Nome"].ToString(),
-                        Descricao = dr["Descricao"].ToString(),
-                        DuracaoPlano = dr["DuracaoPlano"].ToString(),
-                        Preco = Convert.ToDecimal(dr["Preco"]),
-                        DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
-                        DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"])
-                    }
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("Select * from tb_Plano", conexao);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-                );
+                conexao.Close();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    planos.Add(
+                        new Plano
+                        {
+                            IdPlano = Convert.ToInt32(dr["IdPlano"]),
+                            Nome = ((string)dr["Nome"]),
+                            Descricao = ((string)dr["Descricao"]),
+
+                            Preco = Convert.ToDecimal(dr["Preco"]),
+                        }
+                    );
+                }
+                return planos;
             }
-            return Plano;
         }
-        public Servico ObterServico(int codigo)
+
+        public Plano ObterPlano(int codigo)
         {
-            using (var conexao = new MySqlConnection(_conexaoMySQL))
+            using (var conexao = new MySqlConnection(_conexaMySQL))
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select * from tb_Plano where IdPlano = @idPlano", conexao);
-                cmd.Parameters.AddWithValue("@idPlano", codigo);
+                MySqlCommand cmd = new MySqlCommand("Select * from tb_Plano where IdPlano = @codigo", conexao);
+                cmd.Parameters.AddWithValue("@codigo", codigo);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 MySqlDataReader dr;
-                Servico servico = new Servico();
+                Plano plano = new Plano();
+
 
                 dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
                 while (dr.Read())
                 {
-                    servico.IdServico = Convert.ToInt32(dr["IdPlano"]);
-                    servico.Nome = (string)(dr["Nome"]);
-                    servico.Descricao = (string)(dr["Descricao"]);
-                    servico.Preco = Convert.ToDecimal(dr["Preco"]);
+                    plano.IdPlano = Convert.ToInt32(dr["IdPlano"]);
+                    plano.Nome = (string)(dr["Nome"]);
+                    plano.Descricao = (string)(dr["Descricao"]);
+                    plano.DuracaoPlano = (string)(dr["DuracaoPlano"]);
+                    plano.Preco = Convert.ToDecimal(dr["Preco"]);
                 }
-                return servico;
+                return plano;
             }
         }
 
         public void Excluir(int IdPlano)
         {
-            using (var conexao = new MySqlConnection(_conexaoMySQL))
+
+            using (var conexao = new MySqlConnection(_conexaMySQL))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("delete from tb_Plano where IdServico = @idPlano", conexao);
-                cmd.Parameters.AddWithValue("@idPlano", IdPlano);
+
+                MySqlCommand cmd = new MySqlCommand("Delete from tb_Plano where IdPlano = @IdPlano", conexao);
+                cmd.Parameters.AddWithValue("@IdPlano", IdPlano);
+
                 int linhasAfetadas = cmd.ExecuteNonQuery();
 
                 conexao.Close();

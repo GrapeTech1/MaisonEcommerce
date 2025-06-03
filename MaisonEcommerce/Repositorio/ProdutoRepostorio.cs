@@ -14,7 +14,7 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("Call isertProduto(@nome, @descricao, @quantidade, @preco);", conexao);
+                MySqlCommand cmd = new MySqlCommand("Call insertProduto(@nome, @descricao, @quantidade, @preco);", conexao);
                 cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produto.Nome;
                 cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = produto.Descricao;
                 cmd.Parameters.Add("@quantidade", MySqlDbType.Int32).Value = produto.Quantidade;
@@ -36,7 +36,7 @@ namespace MaisonEcommerce.Repositorio
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Produto set Nome=@nome, Descricao=@descricao, Quantidade=@quantidade, Preco=@preco", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Produto set Nome=@nome, Descricao=@descricao, Quantidade=@quantidade, Preco=@preco where IdProduto = @idProduto", conexao);
                     cmd.Parameters.Add("@idProduto", MySqlDbType.Int32).Value = produto.IdProduto;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produto.Nome;
                     cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = produto.Descricao;
@@ -80,6 +80,8 @@ namespace MaisonEcommerce.Repositorio
                             Descricao = ((string)dr["Descricao"]),
                             Quantidade = Convert.ToInt32(dr["Quantidade"]),
                             Preco = Convert.ToDecimal(dr["Preco"]),
+                            DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
+                            DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         }
                         );
                 }

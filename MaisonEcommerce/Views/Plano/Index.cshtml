@@ -1,7 +1,7 @@
-﻿@model IEnumerable<MaisonEcommerce.Models.Produto>
+﻿@model IEnumerable<MaisonEcommerce.Models.Plano>
 
 <p>
-    <a asp-controller="Produto" asp-action="CadastrarProduto" class="btn btn-primary">Cadastrar Produto</a>
+    <a asp-controller="Plano" asp-action="CadastrarPlano" class="btn btn-primary">Cadastrar Plano</a>
 </p>
 
 @if (TempData["Mensagem"] != null)
@@ -9,11 +9,11 @@
     <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
 }
 
-<table class="table custom-table">
+<table class="table custom-table"> 
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdProduto)
+                @Html.DisplayNameFor(model => model.IdPlano)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
+                @Html.DisplayNameFor(model => model.DuracaoPlano)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Preco)
@@ -43,7 +43,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdProduto)
+                    @Html.DisplayFor(modelItem => item.IdPlano)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
@@ -52,7 +52,7 @@
                     @Html.DisplayFor(modelItem => item.Descricao)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantidade)
+                    @Html.DisplayFor(modelItem => item.DuracaoPlano)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Preco)
@@ -64,10 +64,10 @@
                     @Html.DisplayFor(modelItem => item.DataAtualizacao)
                 </td>
                 <td class="text-center">
-                    <a asp-controller="Produto" asp-action="EditarProduto" asp-route-id="@item.IdProduto" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@item.IdPlano" class="btn btn-sm btn-warning">Editar</a>
                     <span>|</span>
-                    <a asp-controller="Produto" asp-action="ExcluirProduto" asp-route-id="@item.IdProduto"
-                    onclick="return confirm('Deseja realmente Excluir este produto?')" class="btn btn-sm btn-danger">Excluir</a>
+                    <a asp-controller="Plano" asp-action="ExcluirPlano" asp-route-id="@item.IdPlano"
+                       onclick="return confirm('Deseja realmente Excluir este plano?')" class="btn btn-sm btn-danger">Excluir</a>
                 </td>
             </tr>
         }
