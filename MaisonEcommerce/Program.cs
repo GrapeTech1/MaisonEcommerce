@@ -8,6 +8,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ClienteRepositorio>();
 builder.Services.AddScoped<LoginRepositorio>();
 builder.Services.AddScoped<ProdutoRepositorio>();
+builder.Services.AddScoped<PacoteRepositorio>();
+builder.Services.AddScoped<PlanoRepositorio>();
+builder.Services.AddScoped<FuncionarioRepositorio>();
+builder.Services.AddScoped<ServicoRepositorio>();
 
 var app = builder.Build();
 
