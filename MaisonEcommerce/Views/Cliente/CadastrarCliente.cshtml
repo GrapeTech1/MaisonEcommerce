@@ -1,5 +1,6 @@
 ﻿@model MaisonEcommerce.Models.Cliente;
 
+
 <h1 class="titulo-cli">Cadastrar Cliente</h1>
 <hr />
 
@@ -15,7 +16,7 @@
                 <div class="form-group">
                     
                     <label asp-for="CPF" class="control-label"></label>
-                    <input asp-for="CPF" class="form-control" />
+                    <input asp-for="CPF" maxlength="12" class="form-control" />
                     <span asp-validation-for="CPF" class="text-danger"></span>
                 </div>
 
@@ -33,7 +34,7 @@
 
                 <div class="form-group">
                     <label asp-for="Idade" class="control-label"></label>
-                    <input asp-for="Idade" maxlength="2" class="form-control" />
+                    <input asp-for="Idade" type="text" pattern="\d*" maxlength="2" class="form-control" />
                     <span asp-validation-for="Idade" class="text-danger"></span>
                 </div>
 
@@ -44,6 +45,16 @@
                         <option value="Masculino">Masculino</option>
                         <option value="Outro">Outro</option>
                     </select>
+                    
+                    <span asp-validation-for="Sexo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                <label asp-for="Sexo" class="control-label"></label>
+                    <select asp-for="Sexo">
+                        @whi
+
+                </select>
                     
                     <span asp-validation-for="Sexo" class="text-danger"></span>
                 </div>
