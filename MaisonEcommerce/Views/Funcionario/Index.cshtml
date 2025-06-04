@@ -1,4 +1,75 @@
-﻿@*
-    Fazer o código
-*@
+﻿@model IEnumerable<MaisonEcommerce.Models.Funcionario>
 
+<p>
+    <a asp-controller="Funcionario" asp-action="CadastrarFuncionario" class="btn btn-primary">Cadastrar Funcionario</a>
+</p>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+}
+
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFuncionario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cargo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCadastro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataAtualizacao)
+            </th>
+
+            <th class="text-center">Ação</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdFuncionario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cargo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sexo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataAtualizacao)
+                </td>
+                <td class="text-center">
+                    <a asp-controller="Funcionario" asp-action="EditarFuncionario" asp-route-id="@item.IdFuncionario" class="btn btn-sm btn-warning">Editar</a>
+                    <span>|</span>
+                    <a asp-controller="Funcionario" asp-action="ExcluirFuncionario" asp-route-id="@item.IdFuncionario"
+                       onclick="return confirm('Deseja realmente Excluir este Funcionario?')" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
