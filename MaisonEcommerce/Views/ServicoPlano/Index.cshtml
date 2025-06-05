@@ -1,5 +1,56 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<MaisonEcommerce.Models.Servico_Plano>
+
+<p>
+    <a asp-controller="ServicoPlano" asp-action="CadastrarServicoPlano" class="btn btn-primary">Cadastrar Servico Plano</a>
+</p>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
 }
+
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdServicoPlano)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IdServico)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IdPlano)
+            </th>
+
+            <th class="text-center">Ação</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdServicoPlano)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdServico)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPlano)
+                </td>
+
+                <td class="text-center">
+                    <a asp-controller="ServicoPlano" asp-action="EditarServicoPlano" asp-route-id="@item.IdServicoPlano" class="btn btn-sm btn-warning">Editar</a>
+                    <span>|</span>
+                    <a asp-controller="ServicoPlano" asp-action="ExcluirServicoPlano" asp-route-id="@item.IdServicoPlano"
+                       onclick="return confirm('Deseja realmente Excluir este ServicoPlano?')" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
