@@ -1,7 +1,7 @@
 ﻿@model MaisonEcommerce.Models.Agendamento;
 
 
-<h1 class="titulo-cli">Cadastrar Agendamento</h1>
+<h1 class="titulo-agen">Cadastrar Agendamento</h1>
 <hr />
 
 <div class="row">
@@ -17,7 +17,6 @@
             <div class="form-group">
                 <label asp-for="IdCliente_Agen" class="control-label">Cliente</label>
                 <select asp-for="IdCliente_Agen" class="form-control" asp-items="ViewBag.Clientes">
-                    <option value="">-- Selecione um cliente --</option>
                 </select>
                 <span asp-validation-for="IdCliente_Agen" class="text-danger"></span>
             </div>
@@ -25,7 +24,6 @@
             <div class="form-group">
                 <label asp-for="IdServico_Agen" class="control-label">Serviço</label>
                 <select asp-for="IdServico_Agen" class="form-control" asp-items="ViewBag.Servicos">
-                    <option value="">-- Selecione um serviço --</option>
                 </select>
                 <span asp-validation-for="IdServico_Agen" class="text-danger"></span>
             </div>
