@@ -26,22 +26,22 @@ namespace MaisonEcommerce.Controllers
         [HttpPost]
         public IActionResult CadastrarProduto(Produto produto)
         {
-            int linhasAfetadas = _produtoRepositorio.Cadastrar(produto);
+            //string linhasAfetadas = _produtoRepositorio.Cadastrar(produto);
 
-            if (linhasAfetadas > 0)
-            {
-                TempData["Mensagem"] = "Produto cadastrado com sucesso!";
-                TempData["Classe"] = "alert alert-success";
-                return RedirectToAction(nameof(Index));
-            }
+            //if (linhasAfetadas > 0)
+            //{
+            //    TempData["Mensagem"] = "Produto cadastrado com sucesso!";
+            //    TempData["Classe"] = "alert alert-success";
+            //    return RedirectToAction(nameof(Index));
+            //}
 
-            else
-            {
-                TempData["Mensagem"] = "O produto já existe no sistema.";
-                TempData["Classe"] = "alert alert-danger";
-                return View();
-            }
-            
+            //else
+            //{
+            //    TempData["Mensagem"] = "O produto já existe no sistema.";
+            //    TempData["Classe"] = "alert alert-danger";
+            //    return View();
+            //}
+            return View();
         }
 
         public IActionResult EditarProduto(int id)
