@@ -1,0 +1,89 @@
+﻿namespace MaisonEcommerce.wwwroot.css
+{
+    public class login
+{
+    body, html
+
+{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-color: #111;
+}
+
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.login-form-wrapper {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+}
+
+.login-title {
+    font-size: 2rem;
+    text-transform: lowercase;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: none;
+    border-radius: 5px;
+    background: #eee;
+    font-size: 1rem;
+}
+
+.btn-login {
+    background-color: #b57b5b;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+    .btn-login:hover {
+        background-color: #a76a4b;
+    }
+
+.cadastro-link {
+    display: block;
+    margin-top: 20px;
+    color: #ccc;
+    text-align: center;
+    text-decoration: none;
+}
+
+    .cadastro-link:hover {
+        color: #fff;
+    }
+
+.image-side {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+    .image-side img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.4;
+    }
+
+    }
+}
