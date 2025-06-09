@@ -1,6 +1,7 @@
 ﻿using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace MaisonEcommerce.Repositorio
 {
@@ -8,23 +9,44 @@ namespace MaisonEcommerce.Repositorio
     {
         private readonly string _conexaoMySQL = configuration.GetConnectionString("ConexaoMySQL");
 
-        public int Cadastrar(Produto produto)
+        public async Task<string> Cadastrar(Produto produto)
         {
             using (var conexao = new MySqlConnection(_conexaoMySQL))
             {
-                conexao.Open();
+                await conexao.OpenAsync();
 
-                MySqlCommand cmd = new MySqlCommand("Call insertProduto(@nome, @descricao, @quantidade, @preco);", conexao);
-                cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produto.Nome;
-                cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = produto.Descricao;
-                cmd.Parameters.Add("@quantidade", MySqlDbType.Int32).Value = produto.Quantidade;
-                cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = produto.Preco;
+                using (var cmd = new MySqlCommand("Call insertProduto(@nome, @descricao, @quantidade, @preco);", conexao))
+                {
+                    cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produto.Nome;
+                    cmd.Parameters.AddWithValue("@descricao", MySqlDbType.VarChar).Value = produto.Descricao;
+                    cmd.Parameters.Add("@quantidade", MySqlDbType.Int32).Value = produto.Quantidade;
+                    cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = produto.Preco;
 
-                int linhasAfetadas = cmd.ExecuteNonQuery();
+                    try
+                    {
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                return reader.GetString(reader.GetOrdinal("Mensagem"));
+                            }
 
-                conexao.Close();
+                            return "Erro ao cadastrar produto.";
+                        }
+                    }
 
-                return linhasAfetadas;
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Erro MySQL ao cadastrar produto: {ex.Message}");
+                        return $"Erro de banco de dados ao cadastrar produto: {ex.Message}";
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Erro inesperado no repositório ao cadastrar produto: {ex.Message}");
+                        return $"Erro inesperado ao cadastrar: {ex.Message}";
+                    }
+                }
             }
         }
 
@@ -55,13 +77,13 @@ namespace MaisonEcommerce.Repositorio
             }
         }
 
-        public IEnumerable<Produto> TodosProdutos()
+        public async Task<IEnumerable<Produto>> TodosProdutos()
         {
-            List<Produto> produtos = new List<Produto>();
+            var produtos = new List<Produto>();
 
             using (var conexao = new MySqlConnection(_conexaoMySQL))
             {
-                conexao.Open();
+                await conexao.OpenAsync();
 
                 MySqlCommand cmd = new MySqlCommand("select * from tb_Produto", conexao);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
