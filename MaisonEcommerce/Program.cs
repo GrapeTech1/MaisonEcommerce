@@ -13,6 +13,8 @@ builder.Services.AddScoped<PlanoRepositorio>();
 builder.Services.AddScoped<FuncionarioRepositorio>();
 builder.Services.AddScoped<ServicoRepositorio>();
 builder.Services.AddScoped<AgendamentoRepositorio>();
+builder.Services.AddScoped < ServPacoteRepositorio>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
