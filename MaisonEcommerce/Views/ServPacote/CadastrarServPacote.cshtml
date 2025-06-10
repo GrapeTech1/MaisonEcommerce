@@ -1,0 +1,47 @@
+﻿@model MaisonEcommerce.Models.Servico_Pacote;
+
+<h1 class="titulo-pa">Adicionar Serviço no Pacote</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        @if (TempData["Mensagem"] != null)
+        {
+            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+        }
+        <form asp-action="CadastrarServPacote">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NomeServico" class="control-label">Nome do Serviço:</label>
+                <select asp-for="NomeServico">
+
+                    @foreach (var item in ViewBag.servicos)
+                    {
+                        <option value="@item.IdServico">@item.Nome</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NomePacote" class="control-label">Nome do Pacote:</label>
+                <select asp-for="NomePacote">
+
+                    @foreach (var item in ViewBag.pacotes)
+                    {
+                        <option value="@item.IdPacote">@item.Nome</option>
+                    }
+                </select>
+            </div>
+
+            <div class="btn">
+                <div class="form-group">
+                    <input type="submit" value="Adicionar" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-success">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
