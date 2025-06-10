@@ -205,3 +205,22 @@ begin
     
 end 
 $$
+
+
+-- Procedure do Serviço Pacote
+delimiter $$
+create procedure insertServPacote (servico int, pacote int)
+begin
+	insert into tb_Servico_Pacote (IdServico, IdPacote) values (servico, pacote);
+
+end;
+$$
+
+
+-- Procedure do Serviço Plano
+delimiter $$
+create procedure insertServPlano (servico int, plano int)
+begin
+	insert into tb_Servico_Plano (IdServico, IdPlano) values (servico, plano);
+end;
+$$
