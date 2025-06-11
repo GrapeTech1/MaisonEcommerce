@@ -6,7 +6,7 @@ namespace MaisonEcommerce.Controllers
 {
     public class ServPacoteController : Controller
     {
-        private readonly ServicoPacoteRepositorio _servPacoteRepositorio;
+        private readonly ServPacoteRepositorio _servPacoteRepositorio;
         private readonly ServicoRepositorio _servicoRepositorio;
         private readonly PacoteRepositorio _pacoteRepositorio;
 
