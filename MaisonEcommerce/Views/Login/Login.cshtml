@@ -1,11 +1,15 @@
 ﻿@model MaisonEcommerce.Models.Usuario
 
+@{
+    Layout = null;
+}
+
 <link rel="stylesheet" href="~/css/login.css" />
 
 <div class="login-container">
     <div class="login-form-wrapper">
         <form asp-action="Login" method="post" class="login-form">
-            <h2 class="login-title">login</h2>
+            <h2 class="login-title">Login</h2>
 
             <label for="email">Email</label>
             <input type="email" name="email" id="email" required class="input-field" />
@@ -15,7 +19,7 @@
 
             <button type="submit" class="btn-login">ENTRAR</button>
 
-            <a href="/Cadastro" class="cadastro-link">Cadastre-se aqui</a>
+            <a href="/Cliente/CadastrarCliente" class="cadastro-link">Cadastre-se aqui</a>
         </form>
     </div>
 

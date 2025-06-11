@@ -15,4 +15,14 @@
     <Folder Include="wwwroot\imagens\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\image\estrelasAvaliacao.png" />
+    <None Include="wwwroot\image\imageLogin.png" />
+    <None Include="wwwroot\image\imagenTelaCadastroLogin.png" />
+    <None Include="wwwroot\image\logointeira_branca.png" />
+    <None Include="wwwroot\image\logointeira_preta.png" />
+    <None Include="wwwroot\image\logo_M_branca.png" />
+    <None Include="wwwroot\image\logo_M_preta.png" />
+  </ItemGroup>
+
 </Project>
