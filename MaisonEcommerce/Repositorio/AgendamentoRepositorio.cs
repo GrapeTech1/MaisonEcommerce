@@ -15,9 +15,9 @@ namespace MaisonEcommerce.Repositorio
                 conexao.Open();
 
                 MySqlCommand cmd = new MySqlCommand("Call insertAgen(@cliente, @servico, @dataHora)", conexao);
-                cmd.Parameters.Add("@cliente", MySqlDbType.Int32).Value = agendamento.NomeCliente;
-                cmd.Parameters.Add("@servico", MySqlDbType.Int32).Value = agendamento.NomeServico;
-                cmd.Parameters.Add("@data", MySqlDbType.Date).Value = agendamento.DataHora;
+                cmd.Parameters.Add("@cliente", MySqlDbType.VarChar).Value = agendamento.NomeCliente;
+                cmd.Parameters.Add("@servico", MySqlDbType.VarChar).Value = agendamento.NomeServico;
+                cmd.Parameters.Add("@dataHora", MySqlDbType.DateTime).Value = agendamento.DataHora;
 
                 int linhasAfetadas = cmd.ExecuteNonQuery();
 
@@ -35,12 +35,12 @@ namespace MaisonEcommerce.Repositorio
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Agendamento set IdCliente_Agen=@idCli, IdServico_Agen=@idServ, DataHora=@dataHora where IdAgendamento=@idAgendamento", conexao);
-                    cmd.Parameters.Add("@idAgendamento", MySqlDbType.Int32).Value = agendamento.IdAgendamento;
-                    cmd.Parameters.Add("@idCli", MySqlDbType.Int32).Value = agendamento.NomeCliente;
-                    cmd.Parameters.Add("@idServ", MySqlDbType.Int32).Value = agendamento.NomeServico;
-                    cmd.Parameters.Add("@dataHora", MySqlDbType.DateTime).Value = agendamento.DataHora;
+                    MySqlCommand cmd = new MySqlCommand("Call editarAgen(@idAgendamento, @cliente, @servico, @dataHora)", conexao);
 
+                    cmd.Parameters.Add("@idAgendamento", MySqlDbType.Int32).Value = agendamento.IdAgendamento;
+                    cmd.Parameters.Add("@cliente", MySqlDbType.VarChar).Value = agendamento.NomeCliente;
+                    cmd.Parameters.Add("@servico", MySqlDbType.Int32).Value = agendamento.NomeServico;
+                    cmd.Parameters.Add("@dataHora", MySqlDbType.DateTime).Value = agendamento.DataHora;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();
                     return linhasAfetadas > 0;

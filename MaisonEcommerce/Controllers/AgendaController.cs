@@ -7,10 +7,15 @@ namespace MaisonEcommerce.Controllers
     public class AgendaController : Controller
     {
         private readonly AgendamentoRepositorio _agendamentoRepositorio;
+        private readonly ClienteRepositorio _clienteRepositorio;
+        private readonly ServicoRepositorio _servicoRepositorio;
 
-        public AgendaController(AgendamentoRepositorio agendamentoRepositorio)
+        public AgendaController(AgendamentoRepositorio agendamentoRepositorio, ClienteRepositorio clienteRepositorio,
+            ServicoRepositorio servicoRepositorio)
         {
             _agendamentoRepositorio = agendamentoRepositorio;
+            _clienteRepositorio = clienteRepositorio;
+            _servicoRepositorio = servicoRepositorio;
         }
 
         public IActionResult Index()
@@ -20,7 +25,10 @@ namespace MaisonEcommerce.Controllers
 
         public IActionResult CadastrarAgen()
         {
-            return View();
+            ViewBag.clientes = _clienteRepositorio.TodosClientes();
+            ViewBag.servicos = _servicoRepositorio.TodosServicos();
+
+            return View(new Agendamento());
         }
 
         [HttpPost]
@@ -52,12 +60,15 @@ namespace MaisonEcommerce.Controllers
                 return NotFound();
             }
 
+            ViewBag.clientes = _clienteRepositorio.TodosClientes();
+            ViewBag.servicos = _servicoRepositorio.TodosServicos();
+
             return View(agendamento);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarCliente(int id, [Bind("IdAgendamento, IdCliente_Agen, IdServico_Agen")] Agendamento agendamento)
+        public IActionResult EditarAgenda(int id, [Bind("IdAgendamento, IdCliente_Agen, IdServico_Agen, NomeCliente, NomeServico, DataHora")] Agendamento agendamento)
         {
             if (id != agendamento.IdAgendamento)
             {

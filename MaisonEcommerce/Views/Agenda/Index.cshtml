@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Agendamento>
 
 <p>
-    <a asp-controller="Agendamento" asp-action="CadastrarAgendamento" class="btn btn-primary">Cadastrar Agendamento</a>
+    <a asp-controller="Agenda" asp-action="CadastrarAgen" class="btn btn-primary">Cadastrar Agendamento</a>
 </p>
 
 @if (TempData["Mensagem"] != null)
@@ -17,11 +17,14 @@
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.IdCliente_Agen)
+                @Html.DisplayNameFor(model => model.NomeCliente)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.IdServico_Agen)
+                @Html.DisplayNameFor(model => model.NomeServico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataHora)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataCadastro)
@@ -43,11 +46,14 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdCliente_Agen)
+                    @Html.DisplayFor(modelItem => item.NomeCliente)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdServico_Agen)
+                    @Html.DisplayFor(modelItem => item.NomeServico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHora)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DataCadastro)
@@ -56,9 +62,9 @@
                     @Html.DisplayFor(modelItem => item.DataAtualizacao)
                 </td>
                 <td class="text-center">
-                    <a asp-controller="Agendamento" asp-action="EditarAgendamento" asp-route-id="@item.IdAgendamento" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-controller="Agenda" asp-action="EditarAgenda" asp-route-id="@item.IdAgendamento" class="btn btn-sm btn-warning">Editar</a>
                     <span>|</span>
-                    <a asp-controller="Agendamento" asp-action="ExcluirAgendamento" asp-route-id="@item.IdAgendamento"
+                    <a asp-controller="Agenda" asp-action="ExcluirAgenda" asp-route-id="@item.IdAgendamento"
                        onclick="return confirm('Deseja realmente Excluir este Agendamento?')" class="btn btn-sm btn-danger">Excluir</a>
                 </td>
             </tr>

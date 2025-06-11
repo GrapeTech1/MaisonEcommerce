@@ -207,6 +207,23 @@ end
 $$
 
 
+-- Procedure do agendamento
+delimiter $$
+create procedure insertAgen
+(cliente varchar(50), servico varchar(50), vDataHora datetime)
+begin
+
+declare clienteId int;
+
+set clienteId = (select IdCliente from tb_Cliente where Nome = cliente);
+
+	if not exists(select IdAgendamento from tb_Agendamento where DataHora = vDataHora and IdServico_Agen = servico) then
+		insert into tb_Agendamento (IdCliente_Agen, IdServico_Agen, DataHora)
+        values (clienteId, servico, vDataHora);
+    end if;
+end
+$$
+
 -- Procedure do Serviço Pacote
 delimiter $$
 create procedure insertServPacote (servico int, pacote int)

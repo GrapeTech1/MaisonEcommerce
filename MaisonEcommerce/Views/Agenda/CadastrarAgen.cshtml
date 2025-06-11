@@ -1,0 +1,57 @@
+﻿@model MaisonEcommerce.Models.Agendamento;
+
+
+<h1 class="titulo-agen">Cadastrar Agendamento</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        @if (TempData["Mensagem"] != null)
+        {
+            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+        }
+        <form asp-action="CadastrarAgen">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="NomeCliente" class="control-label">Nome do cliente:</label>
+                 <input list="clientes" asp-for="NomeCliente" />
+                 <datalist id="clientes">
+                     @foreach (var item in ViewBag.clientes)
+                     {
+                        <option value="@item.Nome"></option>
+                     }
+                 </datalist>
+                
+                <span asp-validation-for="NomeCliente" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NomeServico" class="control-label">Serviço:</label>
+                <select asp-for="NomeServico">
+                    @foreach (var item in ViewBag.servicos)
+                    {
+                        <option value="@item.IdServico">@item.Nome</option>
+                    }
+                </select>
+                <span asp-validation-for="NomeServico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataHora" class="control-label">Escolha a data e hora do atendimento:</label>
+                <input asp-for="DataHora" class="form-control" type="datetime-local" value="2025-06-23T17:00" min="2025-06-23T00:00" max="2025-12-24T00:00" />
+                <span asp-validation-for="DataHora" class="text-danger"></span>
+            </div>
+
+            <div class="btn">
+                <div class="form-group">
+                    <input type="submit" value="Cadastrar" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-success">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
