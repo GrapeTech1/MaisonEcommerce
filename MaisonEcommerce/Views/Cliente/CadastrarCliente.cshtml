@@ -1,5 +1,5 @@
 ﻿@model MaisonEcommerce.Models.Cliente;
-<link href="~/css/cadastro.css" rel="stylesheet" />
+<link href="~/css/Cadastro.css" rel="stylesheet" />
 
 <h1 class="titulo-cli">Cadastrar Cliente</h1>
 <hr />
@@ -13,60 +13,49 @@
         <form asp-action="CadastrarCliente">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    
-                    <label asp-for="CPF" class="control-label"></label>
-                    <input asp-for="CPF" maxlength="12" class="form-control" />
-                    <span asp-validation-for="CPF" class="text-danger"></span>
-                </div>
-
+            <div class="form-group">
                 <div class="form-group">
                     <label asp-for="Nome" class="control-label"></label>
                     <input asp-for="Nome" maxlength="50" class="form-control" />
                     <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="Telefone" class="control-label"></label>
-                    <input type="tel" maxlength="14" asp-for="Telefone" class="form-control" />
-                    <span asp-validation-for="Telefone" class="text-danger"></span>
-                </div>
+                <label asp-for="CPF" class="control-label"></label>
+                <input asp-for="CPF" maxlength="12" class="form-control" />
+                <span asp-validation-for="CPF" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
-                    <label asp-for="Idade" class="control-label"></label>
-                    <input asp-for="Idade" type="text" pattern="\d*" maxlength="2" class="form-control" />
-                    <span asp-validation-for="Idade" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <label asp-for="Telefone" class="control-label"></label>
+                <input type="tel" maxlength="14" asp-for="Telefone" class="form-control" />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
+            <div class="form-group">
+                <label asp-for="Idade" class="control-label"></label>
+                <input asp-for="Idade" type="text" pattern="\d*" maxlength="2" class="form-control" />
+                <span asp-validation-for="Idade" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Sexo" class="control-label"></label>
-                    <select asp-for="Sexo">
-                        <option value="Feminino">Feminino</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                    
-                    <span asp-validation-for="Sexo" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                <label asp-for="Sexo" class="control-label"></label>
-                    <select asp-for="Sexo">
-                        
-
+                <select asp-for="Sexo">
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Outro">Outro</option>
                 </select>
-                    
-                    <span asp-validation-for="Sexo" class="text-danger"></span>
-                </div>
 
-                <div class="btn">
-                    <div class="form-group">
-                        <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                    </div>
-                    <div class="form-group">
-                        <a asp-action="Index" class="btn btn-success">Voltar</a>
-                    </div>
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+
+            <div class="btn">
+                <div class="form-group">
+                    <input type="submit" value="Cadastrar" class="btn btn-primary" />
                 </div>
+                <div class="form-group">
+                    <a asp-controller="Login" asp-action="Login" class="btn btn-success">Voltar</a>
+                </div>
+            </div>
         </form>
     </div>
 </div>
