@@ -82,7 +82,16 @@ namespace MaisonEcommerce.Controllers
             return View(servicoPlano);
         }
 
-        public
+        public IActionResult ExcluirServicoPlano(int id)
+        {
+            _servicoplanoRepositorio.Excluir(id);
+
+
+            TempData["Mensagem"] = $"Serviço retirado de plano com sucesso!  -  {DateTime.Now}";
+            TempData["Classe"] = "alert alert-success";
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
     }
