@@ -32,6 +32,8 @@ namespace MaisonEcommerce.Repositorio
             {
                 using (var conexao = new MySqlConnection(_conexaoMySQL))
                 {
+                    conexao.Open();
+
                     MySqlCommand cmd = new MySqlCommand("Update tb_Servico set Nome=@nome, Descricao=@descricao, Preco=@preco where IdServico=@idServico", conexao);
                     cmd.Parameters.Add("@idServico", MySqlDbType.Int32).Value = servico.IdServico;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = servico.Nome;
