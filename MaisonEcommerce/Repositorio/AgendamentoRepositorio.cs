@@ -8,15 +8,15 @@ namespace MaisonEcommerce.Repositorio
     {
         private readonly string _conexaoMySQL = configuration.GetConnectionString("ConexaoMySQL");
 
-        public int Cadastrar(Agendamento agendamento) // dps testar importar a model do serviço e cliente
+        public int Cadastrar(Agendamento agendamento)
         {
             using (var conexao = new MySqlConnection(_conexaoMySQL))
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("Call insertAgendamento(@idCli, @idServ, @dataHora)", conexao);
-                cmd.Parameters.Add("@idCli", MySqlDbType.Int32).Value = agendamento.IdCliente_Agen;
-                cmd.Parameters.Add("@idServ", MySqlDbType.Int32).Value = agendamento.IdServico_Agen;
+                MySqlCommand cmd = new MySqlCommand("Call insertAgen(@cliente, @servico, @dataHora)", conexao);
+                cmd.Parameters.Add("@cliente", MySqlDbType.Int32).Value = agendamento.NomeCliente;
+                cmd.Parameters.Add("@servico", MySqlDbType.Int32).Value = agendamento.NomeServico;
                 cmd.Parameters.Add("@data", MySqlDbType.Date).Value = agendamento.DataHora;
 
                 int linhasAfetadas = cmd.ExecuteNonQuery();
@@ -37,8 +37,8 @@ namespace MaisonEcommerce.Repositorio
 
                     MySqlCommand cmd = new MySqlCommand("Update tb_Agendamento set IdCliente_Agen=@idCli, IdServico_Agen=@idServ, DataHora=@dataHora where IdAgendamento=@idAgendamento", conexao);
                     cmd.Parameters.Add("@idAgendamento", MySqlDbType.Int32).Value = agendamento.IdAgendamento;
-                    cmd.Parameters.Add("@idCli", MySqlDbType.Int32).Value = agendamento.IdCliente_Agen;
-                    cmd.Parameters.Add("@idServ", MySqlDbType.Int32).Value = agendamento.IdServico_Agen;
+                    cmd.Parameters.Add("@idCli", MySqlDbType.Int32).Value = agendamento.NomeCliente;
+                    cmd.Parameters.Add("@idServ", MySqlDbType.Int32).Value = agendamento.NomeServico;
                     cmd.Parameters.Add("@dataHora", MySqlDbType.DateTime).Value = agendamento.DataHora;
 
 
@@ -62,7 +62,10 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select * from tb_Agendamento", conexao);
+                MySqlCommand cmd = new MySqlCommand("select tb_agendamento.IdAgendamento,tb_Cliente.Nome as Nome_Cliente, tb_Servico.Nome as Nome_Servico, tb_agendamento.DataHora, tb_agendamento.DataCadastro, tb_agendamento.DataAtualizacao\r\n" +
+                    "from tb_Agendamento, tb_Cliente, tb_Servico\r\n" +
+                    "where tb_Agendamento.IdCliente_Agen = tb_Cliente.IdCliente and tb_Agendamento.IdServico_Agen = tb_Servico.IdServico;", conexao);
+
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -75,8 +78,8 @@ namespace MaisonEcommerce.Repositorio
                         new Agendamento
                         {
                             IdAgendamento = Convert.ToInt32(dr["IdAgendamento"]),
-                            IdCliente_Agen = Convert.ToInt32(dr["IdCliente_Agen"]),
-                            IdServico_Agen = Convert.ToInt32(dr["IdServico_Agen"]),
+                            NomeCliente = ((string)dr["Nome_Cliente"]),
+                            NomeServico = ((string)dr["Nome_Servico"]),
                             DataHora = Convert.ToDateTime(dr["DataHora"]),
                             DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
                             DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
