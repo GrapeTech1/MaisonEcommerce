@@ -207,7 +207,7 @@ end
 $$
 
 
--- Procedure do agendamento
+-- Procedure de insert do agendamento
 delimiter $$
 create procedure insertAgen
 (cliente varchar(50), servico varchar(50), vDataHora datetime)
@@ -221,6 +221,20 @@ set clienteId = (select IdCliente from tb_Cliente where Nome = cliente);
 		insert into tb_Agendamento (IdCliente_Agen, IdServico_Agen, DataHora)
         values (clienteId, servico, vDataHora);
     end if;
+end
+$$
+
+
+-- Procedure de editar do agendamento
+delimiter $$
+create procedure editarAgen
+(idAgen int,cliente varchar(50), servico varchar(50), vDataHora datetime)
+begin
+
+declare clienteId int;
+set clienteId = (select IdCliente from tb_Cliente where Nome = cliente);
+ 
+	Update tb_Agendamento set IdCliente_Agen = clienteId, IdServico_Agen = servico, DataHora = vDataHora where IdAgendamento = idAgen;
 end
 $$
 
