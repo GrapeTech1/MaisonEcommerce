@@ -87,7 +87,7 @@ namespace MaisonEcommerce.Repositorio
 
                 using (var cmd = new MySqlCommand("select * from tb_Produto", conexao))
                 {
-                    if ()
+                    
                 }
                     
                 return produtos;
@@ -113,7 +113,7 @@ namespace MaisonEcommerce.Repositorio
                             {
                                 IdProduto = reader.GetInt32(reader.GetOrdinal("IdProduto")),
                                 Foto = reader.IsDBNull(reader.GetOrdinal("Foto")) ? null : (byte[])reader["Foto"],
-                                TipoFoto = reader.IsDBNull(reader.GetOrdinal("TipoFoto")) ? null : reader.GetString(reader.GetOrdinal("TipoFoto"))
+                                TipoFoto = reader.IsDBNull(reader.GetOrdinal("TipoFoto")) ? null : reader.GetString(reader.GetOrdinal("TipoFoto")),
                                 Nome = reader.GetString(reader.GetOrdinal("Nome")),
                                 Descricao = reader.GetString(reader.GetOrdinal("Descricao")),
                                 Quantidade = reader.GetInt32(reader.GetOrdinal("Quantidade")),
