@@ -37,6 +37,8 @@ create table tb_Funcionario (
 -- Tabala do Produto
 create table tb_Produto(
     IdProduto int primary key auto_increment,
+    Foto longblob,
+    TipoFoto varchar(100),
     Nome varchar(50) not null,
 	Descricao varchar (200) not null,
     Quantidade int not null,
@@ -106,7 +108,7 @@ create table tb_Servico_Plano (
     foreign key (IdPlano) references tb_Plano(IdPlano)
 );
 
-
+select * from tb_Agendamento;
 
 
 -- Procedure do Serviço

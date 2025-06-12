@@ -85,56 +85,48 @@ namespace MaisonEcommerce.Repositorio
             {
                 await conexao.OpenAsync();
 
-                MySqlCommand cmd = new MySqlCommand("select * from tb_Produto", conexao);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                conexao.Close();
-
-                foreach (DataRow dr in dt.Rows)
+                using (var cmd = new MySqlCommand("select * from tb_Produto", conexao))
                 {
-                    produtos.Add(
-                        new Produto
-                        {
-                            IdProduto = Convert.ToInt32(dr["IdProduto"]),
-                            Nome = ((string)dr["Nome"]),
-                            Descricao = ((string)dr["Descricao"]),
-                            Quantidade = Convert.ToInt32(dr["Quantidade"]),
-                            Preco = Convert.ToDecimal(dr["Preco"]),
-                            DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
-                            DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
-                        }
-                        );
+                    if ()
                 }
+                    
                 return produtos;
             }
         }
 
-        public Produto ObterProduto(int codigo)
+        public async Task<Produto> ObterProduto(int codigo)
         {
+            Produto produto = null;
             using (var conexao = new MySqlConnection(_conexaoMySQL))
             {
-                conexao.Open();
+                await conexao.OpenAsync();
 
-                MySqlCommand cmd = new MySqlCommand("select * from tb_Produto where IdProduto = @codigo", conexao);
-                cmd.Parameters.AddWithValue("@codigo", codigo);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                MySqlDataReader dr;
-                Produto produto = new Produto();
-
-                dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-                while (dr.Read())
+                using (var cmd = new MySqlCommand("select * from tb_Produto where IdProduto = @codigo", conexao))
                 {
-                    produto.IdProduto = Convert.ToInt32(dr["IdProduto"]);
-                    produto.Nome = (string)(dr["Nome"]);
-                    produto.Descricao = (string)(dr["Descricao"]);
-                    produto.Quantidade = Convert.ToInt32(dr["Quantidade"]);
-                    produto.Preco = Convert.ToDecimal(dr["Preco"]);
+                    cmd.Parameters.AddWithValue("@codigo", codigo);
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            produto = new Produto
+                            {
+                                IdProduto = reader.GetInt32(reader.GetOrdinal("IdProduto")),
+                                Foto = reader.IsDBNull(reader.GetOrdinal("Foto")) ? null : (byte[])reader["Foto"],
+                                TipoFoto = reader.IsDBNull(reader.GetOrdinal("TipoFoto")) ? null : reader.GetString(reader.GetOrdinal("TipoFoto"))
+                                Nome = reader.GetString(reader.GetOrdinal("Nome")),
+                                Descricao = reader.GetString(reader.GetOrdinal("Descricao")),
+                                Quantidade = reader.GetInt32(reader.GetOrdinal("Quantidade")),
+                                Preco = reader.GetDecimal(reader.GetOrdinal("Preco")),
+                                DataCadastro = reader.GetDateTime(reader.GetOrdinal("DataCadastro")),
+                                DataAtualizacao = reader.GetDateTime(reader.GetOrdinal("DataAtualizacao"))
+                            };
+                        }
+                    }
                 }
-                return produto;
+                    
             }
+            return produto;
         }
 
         public void Excluir(int IdProduto)
