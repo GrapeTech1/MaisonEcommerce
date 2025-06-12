@@ -1,4 +1,5 @@
-﻿using MaisonEcommerce.Repositorio;
+﻿using MaisonEcommerce.Models;
+using MaisonEcommerce.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaisonEcommerce.Controllers
@@ -31,6 +32,66 @@ namespace MaisonEcommerce.Controllers
             return View();
         }
 
+        public IActionResult CadastrarUsuario ()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult CadastrarUsuario(Usuario usuario, FormCollection senha)
+        {
+                TempData["Mensagem"] = "Conta cadastrada com sucesso.";
+                TempData["Classe"] = "alert alert-success";
+
+            int linhasAfetadas = _loginRepositorio.Cadastrar(usuario);
+
+            return RedirectToAction(nameof(Login));
+            
+        }
+
+        public IActionResult EditarSenha(string email)
+        {
+            var usuario = _loginRepositorio.ObterUsuario(email);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return View(usuario);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarSenha(string email, [Bind("IdUsuario, Nome, Email, Senha")] Usuario usuario)
+        {
+            if (email != usuario.Email)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_loginRepositorio.Alterar(usuario))
+                    {
+                        TempData["Mensagem"] = "Senha alterada com sucesso!";
+                        TempData["Classe"] = "alert alert-success";
+                    }
+                }
+
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Erro ao alterar senha.");
+                    return View(usuario);
+                }
+                
+            }
+
+            return View(usuario);
+
+        }
     }
 }

@@ -7,6 +7,7 @@ use dbMaisonDeBeaute;
 -- Criando as tabelas
 create table tb_Usuario (
     IdUsuario int primary key auto_increment,
+    Nome varchar(50) not null,
     Email varchar(50) not null unique,
     Senha varchar(50) not null
 );
@@ -248,7 +249,7 @@ begin
 
 end;
 $$
-
+select * from tb_Pacote;
 select * from tb_Servico_Pacote;
 -- Procedure do Serviço Plano
 delimiter $$

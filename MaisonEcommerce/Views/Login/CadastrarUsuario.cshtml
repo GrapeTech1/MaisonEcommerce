@@ -1,0 +1,40 @@
+﻿@model MaisonEcommerce.Models.Usuario;
+
+<h1 class="titulo-usu">Crie a sua Conta</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        @if (TempData["Mensagem"] != null)
+        {
+            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+        }
+        <form asp-action="CadastrarUsuario">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="Nome" class="control-label">Digite o seu nome de usuário:</label>
+                    <input asp-for="Nome" required maxlength="50" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email:</label>
+                    <input asp-for="Email" required maxlength="50" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input id="senha" required maxlength="50" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Senha" class="control-label">Confirmar Senha:</label>
+                    <input asp-for="Senha" id="confirmSenha" required maxlength="50" class="form-control" />
+                    <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
