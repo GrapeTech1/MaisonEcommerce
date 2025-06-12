@@ -10,7 +10,7 @@ namespace MaisonEcommerce.Controllers
         //private readonly ServicoRepositorio _servicoRepositorio;
         //private readonly PlanoRepositorio _planoRepositorio;
 
-        //public ServicoPlanoController (ServicoPlanoRepositorio servicoplanoRepositorio, ServicoRepositorio servicoRepositorio, PlanoRepositorio planoRepositorio)
+        //public ServicoPlanoController(ServicoPlanoRepositorio servicoplanoRepositorio, ServicoRepositorio servicoRepositorio, PlanoRepositorio planoRepositorio)
         //{
         //    _servicoplanoRepositorio = servicoplanoRepositorio;
         //    _servicoRepositorio = servicoRepositorio;
@@ -24,7 +24,7 @@ namespace MaisonEcommerce.Controllers
 
         //public IActionResult CadastrarServicoPlano()
         //{
-        //    ViewBag.servicos =  _servicoRepositorio.TodosServicos ();
+        //    ViewBag.servicos = _servicoRepositorio.TodosServicos();
         //    ViewBag.planos = _planoRepositorio.TodosPlanos();
 
         //    return View(new Servico_Plano());
@@ -81,22 +81,15 @@ namespace MaisonEcommerce.Controllers
         //    }
         //    return View(servicoPlano);
         //}
-
-<<<<<<< HEAD
-        //public
-=======
-        public IActionResult ExcluirServicoPlano(int id)
-        {
-            _servicoplanoRepositorio.Excluir(id);
+        //public IActionResult ExcluirServicoPlano(int id)
+        //{
+        //    _servicoplanoRepositorio.Excluir(id);
 
 
-            TempData["Mensagem"] = $"Serviço retirado de plano com sucesso!  -  {DateTime.Now}";
-            TempData["Classe"] = "alert alert-success";
+        //    TempData["Mensagem"] = $"Serviço retirado de plano com sucesso!  -  {DateTime.Now}";
+        //    TempData["Classe"] = "alert alert-success";
 
-            return RedirectToAction(nameof(Index));
-        }
->>>>>>> 7d0a8c098674d26bbf552e62a3a29d101c549fbf
-
-
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

@@ -54,6 +54,8 @@ namespace MaisonEcommerce.Controllers
         {
             var cliente = _clienteRepositorio.ObterCliente(id);
 
+           
+
             if (cliente == null)
             {
                 return NotFound();
@@ -75,6 +77,13 @@ namespace MaisonEcommerce.Controllers
             {
                 try
                 {
+                    if (cliente.Idade < 18)
+                    {
+                        TempData["Mensagem"] = "Idade inválida, o cliente tem que ser maior de idade!";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View();
+                    }
+
                     if (_clienteRepositorio.Atualizar(cliente))
                     {
                         TempData["Mensagem"] = "Cliente modificado com sucesso!";

@@ -14,7 +14,7 @@ create table tb_Usuario (
 -- Tabela do Cliente
 create table tb_Cliente (
     IdCliente int primary key auto_increment,
-    CPF varchar(12) unique not null,
+    CPF varchar(14) unique not null,
     Nome varchar (50) not null,
     telefone varchar(14) not null,
     Idade int check (Idade >=18),
@@ -176,7 +176,7 @@ $$
 -- Procedure de Cliente 
 delimiter $$
 create procedure insertCliente
-(vCPF varchar(12), vNome varchar(50), vTel varchar(14), vIdade int, vSexo varchar(10))
+(vCPF varchar(14), vNome varchar(50), vTel varchar(14), vIdade int, vSexo varchar(10))
 begin
 
 	 if not exists 
@@ -247,7 +247,7 @@ begin
 end;
 $$
 
-
+select * from tb_Servico_Pacote;
 -- Procedure do Serviço Plano
 delimiter $$
 create procedure insertServPlano (servico int, plano int)
