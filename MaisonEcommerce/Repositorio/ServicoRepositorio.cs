@@ -76,6 +76,8 @@ namespace MaisonEcommerce.Repositorio
                             Nome = ((string)dr["Nome"]),
                             Descricao = ((string)dr["Descricao"]),
                             Preco = Convert.ToDecimal(dr["Preco"]),
+                            DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
+                            DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         }
                     );
                 }

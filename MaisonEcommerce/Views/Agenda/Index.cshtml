@@ -12,59 +12,44 @@
 <table class="table custom-table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAgendamento)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.NomeCliente)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.NomeServico)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataHora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataCadastro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataAtualizacao)
-            </th>
-
+            <th>Código</th>
+            <th>CPF do Cliente</th>
+            <th>Nome do Cliente</th>
+            <th>Nome do Serviço</th>
+            <th>Data e hora do agendamento</th>
+            <th>Data de Cadastro</th>
+            <th>Data de Modificação</th>
+            
             <th class="text-center">Ação</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var agendamento in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdAgendamento)
-                </td>
+                <td>@agendamento.IdAgendamento</td>
+                <td>@agendamento.CPF</td>
+                <td>@agendamento.NomeCliente</td>
+                <td>@agendamento.NomeServico</td>
+                <td>@agendamento.DataHora</td>
+                <td>@agendamento.DataCadastro</td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.NomeCliente)
-                </td>
+                @if (agendamento.DataCadastro == agendamento.DataAtualizacao)
+                {
+                    <td class="alert-info">Não foi modificado</td>
+                }
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.NomeServico)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataHora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataCadastro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataAtualizacao)
-                </td>
+                else
+                {
+                    <td>@agendamento.DataAtualizacao</td>
+                }
+                
+               
                 <td class="text-center">
-                    <a asp-controller="Agenda" asp-action="EditarAgenda" asp-route-id="@item.IdAgendamento" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-controller="Agenda" asp-action="EditarAgenda" asp-route-id="@agendamento.IdAgendamento" class="btn btn-sm btn-warning">Editar</a>
                     <span>|</span>
-                    <a asp-controller="Agenda" asp-action="ExcluirAgenda" asp-route-id="@item.IdAgendamento"
+                    <a asp-controller="Agenda" asp-action="ExcluirAgenda" asp-route-id="@agendamento.IdAgendamento"
                        onclick="return confirm('Deseja realmente Excluir este Agendamento?')" class="btn btn-sm btn-danger">Excluir</a>
                 </td>
             </tr>

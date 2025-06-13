@@ -38,7 +38,7 @@ namespace MaisonEcommerce.Controllers
 
             if (linhasAfetadas > 0)
             {
-                TempData["Mensagem"] = "Agendamento cadastrado com sucesso!";
+                TempData["Mensagem"] = "Serviço agendado com sucesso!";
                 TempData["Classe"] = "alert alert-success";
                 return RedirectToAction(nameof(Index));
             }
@@ -68,7 +68,7 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarAgenda(int id, [Bind("IdAgendamento, IdCliente_Agen, IdServico_Agen, NomeCliente, NomeServico, DataHora")] Agendamento agendamento)
+        public IActionResult EditarAgenda(int id, [Bind("IdAgendamento, IdCliente_Agen, IdServico_Agen, CPF, NomeServico, DataHora")] Agendamento agendamento)
         {
             if (id != agendamento.IdAgendamento)
             {
@@ -101,7 +101,7 @@ namespace MaisonEcommerce.Controllers
         {
             _agendamentoRepositorio.Excluir(id);
 
-            TempData["Mensagem"] = $"Agendamento apagado com sucesso!  -  {DateTime.Now}";
+            TempData["Mensagem"] = $"Agendamento cancelado com sucesso!  -  {DateTime.Now}";
             TempData["Classe"] = "alert alert-success";
 
             return RedirectToAction(nameof(Index));

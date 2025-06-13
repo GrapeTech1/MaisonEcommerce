@@ -31,25 +31,9 @@ namespace MaisonEcommerce.Controllers
 
             if (linhasAfetadas > 0)
             {
-                try
-                {
-                    string texto = Convert.ToString(servico.Preco);
-                    texto = texto.Replace(",", ".");
-                    
-                    decimal teste = Convert.ToDecimal(texto);
-
                     TempData["Mensagem"] = "O serviço foi cadastrado com sucesso!";
                     TempData["Classe"] = "alert alert-success";
                     return RedirectToAction(nameof(Index));
-                }
-
-                catch
-                {
-                    TempData["Mensagem"] = "Preço inválido.";
-                    TempData["Classe"] = "alert alert-danger";
-                    return View();
-                }
-                
             }
 
             else
@@ -86,6 +70,8 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_servicoRepositorio.Atualizar(servico))
                     {
+                        TempData["Mensagem"] = "Serviço modificado com sucesso!";
+                        TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }
                 }
@@ -102,6 +88,10 @@ namespace MaisonEcommerce.Controllers
         public IActionResult Excluir(int id)
         {
             _servicoRepositorio.Excluir(id);
+
+            TempData["Mensagem"] = $"Cliente deletado com sucesso!  -  {DateTime.Now}";
+            TempData["Classe"] = "alert alert-success";
+
             return RedirectToAction(nameof(Index));
         }
     }

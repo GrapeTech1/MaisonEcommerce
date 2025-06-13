@@ -125,6 +125,8 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_produtoRepositorio.Atualizar(produto))
                     {
+                        TempData["Mensagem"] = "Produto modificado com sucesso!";
+                        TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }
                 }

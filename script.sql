@@ -27,7 +27,7 @@ create table tb_Cliente (
 -- Tabela do Funcionario
 create table tb_Funcionario (
     IdFuncionario int primary key auto_increment,
-    CPF varchar (12) unique not null,
+    CPF varchar (14) unique not null,
     Nome varchar(50) not null,
     Cargo varchar(50) not null,
     Sexo varchar(10) check (Sexo in ('Masculino', 'Feminino', 'Outro')),
@@ -215,7 +215,7 @@ $$
 -- Procedure de Funcionario 
 delimiter $$
 create procedure insertFuncionario
-(vCPF varchar(12), vNome varchar(50), vSexo varchar(10), vCargo varchar(50))
+(vCPF varchar(14), vNome varchar(50), vSexo varchar(10), vCargo varchar(50))
 
 begin
 	 if not exists 
@@ -250,11 +250,11 @@ $$
 -- Procedure de editar do agendamento
 delimiter $$
 create procedure editarAgen
-(idAgen int,cliente varchar(50), servico varchar(50), vDataHora datetime)
+(idAgen int, cliente varchar(50), servico varchar(50), vDataHora datetime)
 begin
 
 declare clienteId int;
-set clienteId = (select IdCliente from tb_Cliente where Nome = cliente);
+set clienteId = (select IdCliente from tb_Cliente where CPF = cliente);
  
 	Update tb_Agendamento set IdCliente_Agen = clienteId, IdServico_Agen = servico, DataHora = vDataHora where IdAgendamento = idAgen;
 end

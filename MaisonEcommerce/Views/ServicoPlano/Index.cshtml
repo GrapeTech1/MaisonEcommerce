@@ -12,42 +12,26 @@
 <table class="table custom-table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdServicoPlano)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.IdServico)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.IdPlano)
-            </th>
-
+            <th>Código</th>
+            <th>Nome do Serviço</th>
+            <th>Nome do Plano</th>
+            
             <th class="text-center">Ação</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var servicoPlano in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdServicoPlano)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdServico)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdPlano)
-                </td>
+                <td>@servicoPlano.IdServicoPlano</td>
+                <td>@servicoPlano.IdServicoPlano</td>
+                <td>@servicoPlano.IdServicoPlano</td>
 
                 <td class="text-center">
-                    <a asp-controller="ServicoPlano" asp-action="EditarServicoPlano" asp-route-id="@item.IdServicoPlano" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-controller="ServicoPlano" asp-action="EditarServicoPlano" asp-route-id="@servicoPlano.IdServicoPlano" class="btn btn-sm btn-warning">Editar</a>
                     <span>|</span>
-                    <a asp-controller="ServicoPlano" asp-action="ExcluirServicoPlano" asp-route-id="@item.IdServicoPlano"
+                    <a asp-controller="ServicoPlano" asp-action="ExcluirServicoPlano" asp-route-id="@servicoPlano.IdServicoPlano"
                        onclick="return confirm('Deseja realmente Excluir este ServicoPlano?')" class="btn btn-sm btn-danger">Excluir</a>
                 </td>
             </tr>

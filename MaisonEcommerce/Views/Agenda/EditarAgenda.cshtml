@@ -14,26 +14,39 @@
                 <span asp-validation-for="IdAgendamento" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="NomeCliente" class="control-label">Nome do cliente:</label>
-                <input list="clientes" asp-for="NomeCliente" />
-                <datalist id="clientes">
-                    @foreach (var item in ViewBag.clientes)
-                    {
-                        <option value="@item.Nome"></option>
-                    }
-                </datalist>
+              <div class="form-group">
+                  <label asp-for="CPF" class="control-label">CPF do cliente:</label>
+                  <input list="clientes" asp-for="CPF" />
+                  <datalist id="clientes">
+                      @if(ViewBag.clientes != null)
+                      {
+                          @foreach (var item in ViewBag.clientes)
+                          {
+                              <option value="@item.CPF"></option>
+                          }
+                      }
+                    
+                  </datalist>
 
+                  <span asp-validation-for="CPF" class="text-danger"></span>
+              </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="NomeCliente" class="form-control" />
                 <span asp-validation-for="NomeCliente" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="NomeServico" class="control-label">Serviço:</label>
                 <select asp-for="NomeServico">
-                    @foreach (var item in ViewBag.servicos)
+                    @if(ViewBag.servicos != null)
                     {
-                        <option value="@item.IdServico">@item.Nome</option>
+                        @foreach (var item in ViewBag.servicos)
+                        {
+                            <option value="@item.IdServico">@item.Nome</option>
+                        }
                     }
+                    
                 </select>
 
                 <span asp-validation-for="NomeServico" class="text-danger"></span>

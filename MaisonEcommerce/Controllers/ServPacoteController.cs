@@ -89,7 +89,7 @@ namespace MaisonEcommerce.Controllers
         {
             _servPacoteRepositorio.Excluir(id);
 
-            TempData["Mensagem"] = $"Serviço retirado de pacote com sucesso!  -  {DateTime.Now}";
+            TempData["Mensagem"] = $"Serviço retirado do pacote com sucesso!  -  {DateTime.Now}";
             TempData["Classe"] = "alert alert-success";
 
             return RedirectToAction(nameof(Index));
