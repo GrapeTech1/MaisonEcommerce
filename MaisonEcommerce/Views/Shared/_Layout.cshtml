@@ -9,6 +9,30 @@
     <link rel="stylesheet" href="~/MaisonEcommerce.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="sidebar">
+        <div class="logo">A</div>
+        <ul class="nav-icons">
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                <a asp-controller="Home" asp-action="Index"><i data-lucide="layout-grid"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Cliente" ? "active" : "")">
+                <a asp-controller="Cliente" asp-action="Index"><i data-lucide="users"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Funcionario" ? "active" : "")">
+                <a asp-controller="Funcionario" asp-action="Index"><i data-lucide="user"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Produto" ? "active" : "")">
+                <a asp-controller="Produto" asp-action="Index"><i data-lucide="package"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Agenda" ? "active" : "")">
+                <a asp-controller="Agenda" asp-action="Index"><i data-lucide="calendar-check"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Servico" ? "active" : "")">
+                <a asp-controller="Servico" asp-action="Index"><i data-lucide="file-text"></i></a>
+            </li>
+        </ul>
+        <div class="bottom-text">EDIT/FUNCI</div>
+    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -66,5 +90,10 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

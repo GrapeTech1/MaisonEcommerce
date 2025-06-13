@@ -1,22 +1,97 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+/* Reset & base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #000;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 80px;
+    background-color: #e5e5e5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+    /* Logo */
+    .sidebar .logo {
+        font-size: 2rem;
+        margin: 1rem 0;
+        font-weight: bold;
+        color: #000;
+    }
+
+/* Ícones da navegação */
+.nav-icons {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 0;
+}
+
+    .nav-icons li {
+        padding: 0.8rem;
+        border-radius: 12px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+        .nav-icons li a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-icons li.active {
+            background-color: #c6cebd;
+        }
+
+        .nav-icons li:hover {
+            background-color: #dcdcdc;
+        }
+
+    .nav-icons i {
+        width: 24px;
+        height: 24px;
+        stroke: #000;
+    }
+
+/* Texto vertical no fim */
+.bottom-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.7rem;
+    color: #888;
+    margin-bottom: 1rem;
+}
+
+/* Adaptação para conteúdo do ASP.NET (deslocar para direita) */
+main, .container {
+    margin-left: 80px; /* mesmo valor da .sidebar */
+    padding: 1rem;
+    color: #fff;
+}
+
+/* Footer e Header fixos */
+footer, header {
+    margin-left: 80px;
 }
