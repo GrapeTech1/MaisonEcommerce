@@ -1,5 +1,5 @@
 ﻿@model MaisonEcommerce.Models.Usuario;
-
+<link href="~/css/CadastroUsuario.css" rel="stylesheet" />
 <h1 class="titulo-usu">Crie a sua Conta</h1>
 <hr />
 
@@ -26,6 +26,7 @@
                 </div>
 
                 <div class="form-group">
+                    <label asp-for="Senha" class="control-label">Senha:</label>
                     <input id="senha" required maxlength="50" class="form-control" />
                 </div>
 
@@ -33,6 +34,10 @@
                     <label asp-for="Senha" class="control-label">Confirmar Senha:</label>
                     <input asp-for="Senha" id="confirmSenha" required maxlength="50" class="form-control" />
                     <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <a asp-controller="Login" asp-action="Login" class="btn btn-success">Voltar</a>
                 </div>
             </div>
         </form>
