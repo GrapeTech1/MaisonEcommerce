@@ -12,6 +12,10 @@ body {
     flex-direction: row;
 }
 
+header {
+    display: none;
+}
+
 /* Sidebar */
 .sidebar {
     width: 80px;
