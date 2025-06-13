@@ -142,6 +142,10 @@ namespace MaisonEcommerce.Controllers
         public IActionResult ExcluirProduto(int id)
         {
             _produtoRepositorio.Excluir(id);
+
+            TempData["Mensagem"] = $"Produto deletado com sucesso!  -  {DateTime.Now}";
+            TempData["Classe"] = "alert alert-success";
+
             return RedirectToAction(nameof(Index));
         }
     }

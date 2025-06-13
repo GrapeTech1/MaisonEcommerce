@@ -9,70 +9,50 @@
     <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
 }
 
-<table class="table custom-table">
+<table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CPF)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Idade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sexo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataCadastro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataAtualizacao)
-            </th>
+            <th>Código</th>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Idade</th>
+            <th>Sexo</th>
+            <th>Data de Cadastro</th>
+            <th>Data de Modificação</th>
 
             <th class="text-center">Ação</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var cliente in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdCliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CPF)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Idade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sexo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataCadastro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataAtualizacao)
-                </td>
+                <td>@cliente.IdCliente</td>
+                <td>@cliente.CPF</td>
+                <td>@cliente.Nome</td>
+                <td>@cliente.Telefone</td>
+                <td>@cliente.Idade</td>
+                <td>@cliente.Sexo</td>
+                <td>@cliente.DataCadastro</td>
+
+                @if (cliente.DataCadastro == cliente.DataAtualizacao)
+                {
+                    <td class="alert-info">Não foi modificado</td>
+                }
+
+                else
+                {
+                    <td>@cliente.DataAtualizacao</td>
+                }
+                
+    
+
                 <td class="text-center">
-                    <a asp-controller="Cliente" asp-action="EditarCliente" asp-route-id="@item.IdCliente" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-controller="Cliente" asp-action="EditarCliente" asp-route-id="@cliente.IdCliente" class="btn btn-sm btn-warning">Editar</a>
                     <span>|</span>
-                    <a asp-controller="Cliente" asp-action="ExcluirCliente" asp-route-id="@item.IdCliente"
+                    <a asp-controller="Cliente" asp-action="ExcluirCliente" asp-route-id="@cliente.IdCliente"
                     onclick="return confirm('Deseja realmente Excluir este cliente?')" class="btn btn-sm btn-danger">Excluir</a>
                 </td>
             </tr>

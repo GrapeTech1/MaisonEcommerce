@@ -23,6 +23,7 @@ namespace MaisonEcommerce.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult CadastrarFuncionario(Funcionario funcionario)
         {
             int linhasAfetadas = _funcionarioRepositorio.Cadastrar(funcionario);

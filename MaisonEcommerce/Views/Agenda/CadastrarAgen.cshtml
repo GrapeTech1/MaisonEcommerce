@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label asp-for="NomeCliente" class="control-label">Nome do cliente:</label>
-                 <input list="clientes" asp-for="NomeCliente" />
+                 <input list="clientes" required asp-for="NomeCliente" />
                  <datalist id="clientes">
                      @foreach (var item in ViewBag.clientes)
                      {
@@ -40,7 +40,7 @@
 
             <div class="form-group">
                 <label asp-for="DataHora" class="control-label">Escolha a data e hora do atendimento:</label>
-                <input asp-for="DataHora" class="form-control" type="datetime-local" value="2025-06-23T17:00" min="2025-06-23T00:00" max="2025-12-24T00:00" />
+                <input asp-for="DataHora" required class="form-control" type="datetime-local" value="2025-06-23T17:00" min="2025-06-23T00:00" max="2025-12-24T00:00" />
                 <span asp-validation-for="DataHora" class="text-danger"></span>
             </div>
 

@@ -31,6 +31,8 @@
                 <th>Descrição</th>
                 <th>Quantidade</th>
                 <th>Preço</th>
+                <th>Data de Cadastro</th>
+                <th>Data de Modificação</th>
                 <th class="text-center">Ação</th>
             </tr>
         </thead>
@@ -57,8 +59,17 @@
                     <td>@produto.Descricao</td>
                     <td>@produto.Quantidade</td>
                     <td>@produto.Preco</td>
+                    <td>@produto.DataCadastro</td>
 
-                    
+                    @if (produto.DataAtualizacao != produto.DataCadastro)
+                    {
+                        <td>@produto.DataAtualizacao</td>
+                    }
+
+                    else
+                    {
+                        <td class="text-center alert alert-warning"> Não foi Modificado </td>
+                    }
 
                     <td class="text-center">
                         <a asp-controller="Produto" asp-action="EditarProduto" asp-route-id="@produto.IdProduto" class="btn btn-sm btn-warning">Editar</a>
