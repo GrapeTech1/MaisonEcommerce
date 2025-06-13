@@ -110,7 +110,8 @@ create table tb_Servico_Plano (
 );
 
 select * from tb_Agendamento;
-
+select * from tb_Produto;
+select * from tb_Funcionario;
 
 -- Procedure do Serviço
 DELIMITER $$
@@ -163,18 +164,36 @@ $$
 -- Porcedure de Produtos 
 delimiter $$
 create procedure insertProduto 
-(vNome varchar (50), vDesc varchar(200), vQuant int, vPreco decimal (10,2))
+(in vFoto longblob, in vTipoFoto varchar(100), in vNome varchar (50), in vDesc varchar(200), in vQuant int, in vPreco decimal (10,2))
 
 begin 
 	if not exists 
 	(select IdProduto from tb_Produto where Nome = vNome )
 	 then 
-		insert into tb_Produto (Nome, Descricao, Quantidade, Preco)
-		values (vNome, vDesc, vQuant, vPreco);
+		insert into tb_Produto (Foto, TipoFoto, Nome, Descricao, Quantidade, Preco)
+		values (vFoto, vTipoFoto, vNome, vDesc, vQuant, vPreco);
+        
+        select 'Produto cadastrado com sucesso!' as Mensagem;
 	end if;
 
 end 
 $$
+
+/*
+delimiter $$
+create procedure todosProdutos ()
+begin
+
+	if exists (select 1 from information_schema.tables where table_schema = database() and table_name = 'tb_Produto') then
+		select * from tb_Produto;
+    
+    else
+		select 'A tabela não existe' as Erro;
+    end if;
+
+end;
+$$
+*/
 
 -- Procedure de Cliente 
 delimiter $$
