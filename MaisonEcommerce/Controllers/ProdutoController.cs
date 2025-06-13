@@ -1,47 +1,101 @@
 ﻿using MaisonEcommerce.Models;
 using MaisonEcommerce.Repositorio;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace MaisonEcommerce.Controllers
 {
     public class ProdutoController : Controller
     {
-        private readonly ProdutoRepositorio _produtoRepositorio;
+        public readonly ProdutoRepositorio _produtoRepositorio;
 
         public ProdutoController(ProdutoRepositorio produtoRepositorio)
         {
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_produtoRepositorio.TodosProdutos());
+            IEnumerable<Produto> produtos = new List<Produto>();
+
+            try
+            {
+                produtos = await _produtoRepositorio.TodosProdutos();
+            }
+
+            catch (Exception ex)
+            {
+                TempData["Erro"] = $"Erro ao carregar todos os produtos: {ex.Message}";
+                Console.WriteLine($"Erro ao carregar todos os produtos: {ex.Message}");
+            }
+
+            if (TempData["Cadastro"] != null)
+            {
+                ViewBag.cadastro = TempData["Cadastro"];
+            }
+
+            if (TempData["Erro"] != null)
+            {
+                ViewBag.erro = TempData["Erro"];
+            }
+            return View(produtos);
         }
 
+        [HttpGet]
         public IActionResult CadastrarProduto()
         {
             return View();
         }
 
+
         [HttpPost]
-        public IActionResult CadastrarProduto(Produto produto)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CadastrarProduto(Produto produto, IFormFile fotoProduto)
         {
-            //string linhasAfetadas = _produtoRepositorio.Cadastrar(produto);
+            if (ModelState.IsValid)
+            {
+                if (fotoProduto != null && fotoProduto.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await fotoProduto.CopyToAsync(ms);
+                        produto.Foto = ms.ToArray();
+                    }
+                    produto.TipoFoto = fotoProduto.ContentType;
+                }
 
-            //if (linhasAfetadas > 0)
-            //{
-            //    TempData["Mensagem"] = "Produto cadastrado com sucesso!";
-            //    TempData["Classe"] = "alert alert-success";
-            //    return RedirectToAction(nameof(Index));
-            //}
+                else
+                {
+                    produto.Foto = null;
+                    produto.TipoFoto = null;
+                }
 
-            //else
-            //{
-            //    TempData["Mensagem"] = "O produto já existe no sistema.";
-            //    TempData["Classe"] = "alert alert-danger";
-            //    return View();
-            //}
-            return View();
+                try
+                {
+                    string resultado = await _produtoRepositorio.Cadastrar(produto);
+                    TempData["Cadastro"] = resultado;
+                    return RedirectToAction(nameof(Index));
+                }
+
+                catch (MySqlException ex)
+                {
+                    TempData["Erro"] = $"Erro ao cadastrar o produto: {ex.Message}";
+                    ModelState.AddModelError("", "Erro no banco de dados ao cadastrar o produto. Por favor, tente novamente mais tarde.");
+                }
+            }
+            return View(produto);
+        }
+
+        public async Task<IActionResult> ObterFotoProduto(int id)
+        {
+            var produto = await _produtoRepositorio.ObterProduto(id);
+
+            if (produto == null || produto.Foto == null || string.IsNullOrEmpty(produto.TipoFoto))
+            {
+                return NotFound();
+            }
+
+            return File(produto.Foto, produto.TipoFoto);
         }
 
         public IActionResult EditarProduto(int id)

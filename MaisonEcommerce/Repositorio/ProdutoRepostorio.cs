@@ -15,12 +15,15 @@ namespace MaisonEcommerce.Repositorio
             {
                 await conexao.OpenAsync();
 
-                using (var cmd = new MySqlCommand("Call insertProduto(@nome, @descricao, @quantidade, @preco);", conexao))
+                using (var cmd = new MySqlCommand("insertProduto", conexao))
                 {
-                    cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produto.Nome;
-                    cmd.Parameters.AddWithValue("@descricao", MySqlDbType.VarChar).Value = produto.Descricao;
-                    cmd.Parameters.Add("@quantidade", MySqlDbType.Int32).Value = produto.Quantidade;
-                    cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = produto.Preco;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("vFoto", produto.Foto);
+                    cmd.Parameters.AddWithValue("vTipoFoto", produto.TipoFoto);
+                    cmd.Parameters.AddWithValue("vNome", produto.Nome);
+                    cmd.Parameters.AddWithValue("vDesc", produto.Descricao);
+                    cmd.Parameters.AddWithValue("vQuant", produto.Quantidade);
+                    cmd.Parameters.AddWithValue("vPreco", produto.Preco);
 
                     try
                     {
@@ -87,11 +90,36 @@ namespace MaisonEcommerce.Repositorio
 
                 using (var cmd = new MySqlCommand("select * from tb_Produto", conexao))
                 {
-                    
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (reader.HasRows && reader.GetName(0) == "Erro")
+                        {
+                            await reader.ReadAsync();
+                            Console.WriteLine($"Erro na stored procedure do produto:{reader.GetString("Erro")}");
+                            return produtos;
+                        }
+
+                        while (await reader.ReadAsync())
+                        {
+                            produtos.Add(new Produto
+                            {
+                                IdProduto = reader.GetInt32("IdProduto"),
+                                Foto = reader.IsDBNull(reader.GetOrdinal("Foto")) ? null : (byte[])reader["Foto"],
+                                TipoFoto = reader.IsDBNull(reader.GetOrdinal("TipoFoto")) ? null : reader.GetString("TipoFoto"),
+                                Nome = reader.GetString("Nome"),
+                                Descricao = reader.GetString("Descricao"),
+                                Quantidade = reader.GetInt32("Quantidade"),
+                                Preco = reader.GetDecimal("Preco"),
+                                DataCadastro = reader.GetDateTime("DataCadastro"),
+                                DataAtualizacao = reader.GetDateTime("DataAtualizacao")
+                            });
+                        }
+                    }
                 }
                     
-                return produtos;
+               
             }
+            return produtos;
         }
 
         public async Task<Produto> ObterProduto(int codigo)

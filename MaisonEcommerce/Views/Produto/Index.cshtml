@@ -1,75 +1,78 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Produto>
 
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
 <p>
     <a asp-controller="Produto" asp-action="CadastrarProduto" class="btn btn-primary">Cadastrar Produto</a>
 </p>
 
-@if (TempData["Mensagem"] != null)
+@if (ViewBag.cadastro != null)
 {
-    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+    <div class="alert alert-success">@ViewBag.cadastro</div>
 }
 
-<table class="table custom-table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdProduto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataCadastro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataAtualizacao)
-            </th>
+@if (TempData["Erro"]!= null)
+{
+    <div class="alert alert-danger">@TempData["Erro"]</div>
+}
 
-            <th class="text-center">Ação</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdProduto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantidade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Preco)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataCadastro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataAtualizacao)
-                </td>
-                <td class="text-center">
-                    <a asp-controller="Produto" asp-action="EditarProduto" asp-route-id="@item.IdProduto" class="btn btn-sm btn-warning">Editar</a>
-                    <span>|</span>
-                    <a asp-controller="Produto" asp-action="ExcluirProduto" asp-route-id="@item.IdProduto"
-                    onclick="return confirm('Deseja realmente Excluir este produto?')" class="btn btn-sm btn-danger">Excluir</a>
-                </td>
+                <th>Código</th>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th class="text-center">Ação</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var produto in Model)
+            {
+                <tr>
+                    <td>@produto.IdProduto</td>
+                    <td>
+                        @if (produto.Foto != null && !string.IsNullOrEmpty(produto.TipoFoto))
+                        {
+                            <img src="@Url.Action("ObterFotoProduto", "Produto", new {id = produto.IdProduto})"
+                                 alt="Foto do Produto"
+                                 style="width: 100px; height: 100px; object-fit: cover;" />
+                        }
+
+                        else
+                        {
+                            <span>Sem Foto</span>
+                        }
+                    </td>
+                    <td>@produto.Nome</td>
+                    <td>@produto.Descricao</td>
+                    <td>@produto.Quantidade</td>
+                    <td>@produto.Preco</td>
+
+                    
+
+                    <td class="text-center">
+                        <a asp-controller="Produto" asp-action="EditarProduto" asp-route-id="@produto.IdProduto" class="btn btn-sm btn-warning">Editar</a>
+                        <span>|</span>
+                        <a asp-controller="Produto" asp-action="ExcluirProduto" asp-route-id="@produto.IdProduto"
+                           onclick="return confirm('Deseja realmente Excluir este produto?')" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <p>Nenhum produto cadastrado.</p>
+}
