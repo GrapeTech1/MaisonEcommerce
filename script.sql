@@ -74,6 +74,7 @@ create table tb_Pacote(
     IdPacote int primary key auto_increment,
     Nome varchar(50) not null,
     Descricao varchar(200) not null,
+    Desconto decimal (10,2) not null,
     Preco decimal (10,2) not null,
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp
@@ -109,9 +110,19 @@ create table tb_Servico_Plano (
     foreign key (IdPlano) references tb_Plano(IdPlano)
 );
 
-select * from tb_Agendamento;
-select * from tb_Produto;
-select * from tb_Funcionario;
+-- Procedure do Usuario
+delimiter $$
+create procedure insertUsuario 
+(vNome varchar(50), vEmail varchar(50), vSenha varchar(50))
+begin
+
+	if not exists (select Email from tb_Usuario where Email=vEmail) then
+		insert into tb_Usuario (Nome, Email, Senha) values (vNome, vEmail, vSenha);
+    end if;
+
+end;
+$$
+
 
 -- Procedure do Serviço
 DELIMITER $$
@@ -148,14 +159,14 @@ $$
 -- Procedure de Pacote 
 DELIMITER $$
 create procedure insertPacote 
-(vNome varchar (50), vDesc varchar(200), vPreco decimal(10,2))
+(vNome varchar (50), vDesc varchar(200), vDesconto decimal(10,2))
 
 begin
 	if not exists 
 	(select IdPacote from tb_Pacote where Nome = vNome) 
     then 
-		insert into tb_Pacote (Nome, Descricao, Preco)
-		values (vNome, vDesc, vPreco);
+		insert into tb_Pacote (Nome, Descricao, Desconto, Preco)
+		values (vNome, vDesc, vDesconto, 0.00);
 	end if;
 
 end 
@@ -215,7 +226,7 @@ $$
 -- Procedure de Funcionario 
 delimiter $$
 create procedure insertFuncionario
-(vCPF varchar(14), vNome varchar(50), vSexo varchar(10), vCargo varchar(50))
+(vCPF varchar(14), vNome varchar(50), vCargo varchar(50), vSexo varchar(10))
 
 begin
 	 if not exists 
@@ -237,7 +248,7 @@ begin
 
 declare clienteId int;
 
-set clienteId = (select IdCliente from tb_Cliente where Nome = cliente);
+set clienteId = (select IdCliente from tb_Cliente where CPF = cliente);
 
 	if not exists(select IdAgendamento from tb_Agendamento where DataHora = vDataHora and IdServico_Agen = servico) then
 		insert into tb_Agendamento (IdCliente_Agen, IdServico_Agen, DataHora)
@@ -255,21 +266,29 @@ begin
 
 declare clienteId int;
 set clienteId = (select IdCliente from tb_Cliente where CPF = cliente);
- 
 	Update tb_Agendamento set IdCliente_Agen = clienteId, IdServico_Agen = servico, DataHora = vDataHora where IdAgendamento = idAgen;
 end
 $$
+
 
 -- Procedure do Serviço Pacote
 delimiter $$
 create procedure insertServPacote (servico int, pacote int)
 begin
-	insert into tb_Servico_Pacote (IdServico, IdPacote) values (servico, pacote);
-
+	
+    declare servicoPreco decimal (10,2);
+    set servicoPreco = (select Preco from tb_Servico where Idservico = servico);
+    
+    if not exists (select IdServicoPacote from tb_Servico_Pacote where IdServico = servico and IdPacote = pacote) then
+		
+        insert into tb_Servico_Pacote (IdServico, IdPacote) values (servico, pacote);
+        update tb_Pacote set Preco = Preco + servicoPreco * (Desconto/100) where IdPacote = pacote;
+        
+	end if;
 end;
 $$
-select * from tb_Pacote;
-select * from tb_Servico_Pacote;
+
+
 -- Procedure do Serviço Plano
 delimiter $$
 create procedure insertServPlano (servico int, plano int)
@@ -277,3 +296,10 @@ begin
 	insert into tb_Servico_Plano (IdServico, IdPlano) values (servico, plano);
 end;
 $$
+
+select * from tb_Cliente;
+select * from tb_Agendamento;
+select * from tb_Produto;
+select * from tb_Funcionario;
+select * from tb_Pacote;
+select * from tb_Servico_Pacote;
