@@ -30,6 +30,19 @@
             <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Servico" ? "active" : "")">
                 <a asp-controller="Servico" asp-action="Index"><i data-lucide="file-text"></i></a>
             </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Pacote" ? "active" : "")">
+                <a asp-controller="Pacote" asp-action="Index"><i data-lucide="file-text"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Plano" ? "active" : "")">
+                <a asp-controller="Plano" asp-action="Index"><i data-lucide="file-text"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServPacote" ? "active" : "")">
+                <a asp-controller="ServPacote" asp-action="Index"><i data-lucide="file-text"></i></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServicoPlano" ? "active" : "")">
+                <a asp-controller="ServicoPlano" asp-action="Index"><i data-lucide="file-text"></i></a>
+            </li>
+            
         </ul>
         <div class="bottom-text">EDIT/FUNCI</div>
     </div>

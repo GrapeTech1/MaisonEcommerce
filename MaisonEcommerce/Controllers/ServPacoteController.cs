@@ -36,7 +36,20 @@ namespace MaisonEcommerce.Controllers
         {
             int linhasAfetadas = _servPacoteRepositorio.Cadastrar(servPacote);
 
-            return RedirectToAction(nameof(Index));
+            if (linhasAfetadas > 0)
+            {
+                ViewData["Mensagem"] = "Serviço inserido em pacote com sucesso!";
+                ViewData["Classe"] = "alert alert-success";
+                return RedirectToAction(nameof(Index));
+            }
+
+            else
+            {
+                ViewData["Mensagem"] = "O serviço já foi adicionado anteriormente nesse pacote!";
+                ViewData["Classe"] = "alert alert-danger";
+                return View();
+            }
+            
         }
 
         public IActionResult EditarServPacote(int id)
@@ -69,7 +82,7 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_servPacoteRepositorio.Atualizar(servPacote))
                     {
-                        TempData["Mensagem"] = "Serviço inserido em pacote com sucesso!";
+                        TempData["Mensagem"] = "Serviço ou pacote alterado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }

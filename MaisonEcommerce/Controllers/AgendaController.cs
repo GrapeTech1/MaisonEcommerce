@@ -75,6 +75,8 @@ namespace MaisonEcommerce.Controllers
                 return BadRequest();
             }
 
+            ModelState.Remove("NomeCliente");
+
             if (ModelState.IsValid)
             {
                 try

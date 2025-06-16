@@ -98,9 +98,10 @@ namespace MaisonEcommerce.Controllers
             return File(produto.Foto, produto.TipoFoto);
         }
 
-        public IActionResult EditarProduto(int id)
+        [HttpGet]
+        public async Task<IActionResult> EditarProduto(int id)
         {
-            var produto = _produtoRepositorio.ObterProduto(id);
+            var produto = await _produtoRepositorio.ObterProduto(id);
 
             if (produto == null)
             {
@@ -112,7 +113,7 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarProduto(int id, [Bind("IdProduto, Nome, Descricao, Quantidade, Preco")] Produto produto)
+        public async Task<IActionResult> EditarProduto(int id, IFormFile fotoProduto, [Bind("IdProduto, Nome, Descricao, Quantidade, Preco")] Produto produto)
         {
            if (id != produto.IdProduto)
            {
@@ -120,14 +121,24 @@ namespace MaisonEcommerce.Controllers
            }
 
            if (ModelState.IsValid)
-            {
+           {
+                if (fotoProduto != null)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await fotoProduto.CopyToAsync(ms);
+                        produto.Foto = ms.ToArray();
+                    }
+                    produto.TipoFoto = fotoProduto.ContentType;
+                }
+
                 try
                 {
-                    if (_produtoRepositorio.Atualizar(produto))
+                    if (await _produtoRepositorio.Atualizar(produto))
                     {
                         TempData["Mensagem"] = "Produto modificado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction("Index");
                     }
                 }
 

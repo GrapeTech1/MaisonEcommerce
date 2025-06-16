@@ -62,8 +62,8 @@ namespace MaisonEcommerce.Repositorio
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Usuario set Senha=@senha where IdUsuario=@IdUsuario", conexao);
-                    cmd.Parameters.Add("@IdUsuario", MySqlDbType.Int32).Value = usuario.IdUsuario;
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Usuario set Senha=@senha where Email=@email", conexao);
+                    cmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = usuario.Email;
                     cmd.Parameters.Add("@senha", MySqlDbType.VarChar).Value = usuario.Senha;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();

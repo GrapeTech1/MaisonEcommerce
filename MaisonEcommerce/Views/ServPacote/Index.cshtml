@@ -4,6 +4,11 @@
     <a asp-controller="ServPacote" asp-action="CadastrarServPacote" class="btn btn-primary">Adicionar serviços nos pacotes</a>
 </p>
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+}
+
 <table class="table custom-table">
     <thead>
         <tr>

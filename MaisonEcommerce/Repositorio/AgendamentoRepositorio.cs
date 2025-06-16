@@ -35,7 +35,7 @@ namespace MaisonEcommerce.Repositorio
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Call editarAgen(@idAgendamento, @cliente, @servico, @dataHora)", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Agendamento set IdCliente_Agen=(select IdCliente from tb_Cliente where CPF = @cliente), IdServico_Agen=@servico, DataHora = @dataHora where IdAgendamento=@idAgendamento", conexao);
 
                     cmd.Parameters.Add("@idAgendamento", MySqlDbType.Int32).Value = agendamento.IdAgendamento;
                     cmd.Parameters.Add("@cliente", MySqlDbType.VarChar).Value = agendamento.CPF;

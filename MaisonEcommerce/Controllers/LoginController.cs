@@ -38,33 +38,44 @@ namespace MaisonEcommerce.Controllers
         }
 
         [HttpPost]
-        public IActionResult CadastrarUsuario(Usuario usuario, FormCollection senha)
+        public IActionResult CadastrarUsuario(Usuario usuario)
         {
-                TempData["Mensagem"] = "Conta cadastrada com sucesso.";
-                TempData["Classe"] = "alert alert-success";
-
-            int linhasAfetadas = _loginRepositorio.Cadastrar(usuario);
-
-            return RedirectToAction(nameof(Login));
-            
-        }
-
-        public IActionResult EditarSenha(string email)
-        {
-            var usuario = _loginRepositorio.ObterUsuario(email);
-
-            if (usuario == null)
+            if (usuario.Senha != usuario.ConfirmarSenha)
             {
-                return NotFound();
+                TempData["Mensagem"] = "Senha inválida, por favor digite a mesma senha nos dois campos.";
+                TempData["Classe"] = "alert alert-danger";
+                return View(usuario);
             }
 
-            return View(usuario);
+            else
+            {
+                int linhasAfetadas = _loginRepositorio.Cadastrar(usuario);
 
+                if (linhasAfetadas > 0)
+                {
+                    TempData["Mensagem"] = "Conta cadastrada com sucesso.";
+                    TempData["Classe"] = "alert alert-success";
+                    return RedirectToAction(nameof(Login));
+                }
+
+                else
+                {
+                    TempData["Mensagem"] = "Email inválido, já tem usuário cadastrado com esse e-mail.";
+                    TempData["Classe"] = "alert alert-danger";
+                    return View(usuario);
+                }
+            }
+
+        }
+
+        public IActionResult EditarSenha()
+        {
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarSenha(string email, [Bind("IdUsuario, Nome, Email, Senha")] Usuario usuario)
+        public IActionResult EditarSenha(string email, [Bind("Nome, Email, Senha, ConfirmarSenha")] Usuario usuario)
         {
             if (email != usuario.Email)
             {
@@ -75,16 +86,25 @@ namespace MaisonEcommerce.Controllers
             {
                 try
                 {
+                    if (usuario.Senha != usuario.ConfirmarSenha)
+                    {
+                        TempData["Mensagem"] = "Senha inválida, por favor digite a nova senha corretamente na confirmação";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View();
+                    }
+
                     if (_loginRepositorio.Alterar(usuario))
                     {
+                        
                         TempData["Mensagem"] = "Senha alterada com sucesso!";
                         TempData["Classe"] = "alert alert-success";
+                        return RedirectToAction(nameof(Login));
                     }
                 }
 
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Erro ao alterar senha.");
+                    ModelState.AddModelError("", "Erro ao atualizar senha.");
                     return View(usuario);
                 }
                 

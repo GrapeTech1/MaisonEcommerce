@@ -15,12 +15,12 @@
 
 
             <div class="form-group">
-                <label asp-for="NomeCliente" class="control-label">Nome do cliente:</label>
-                 <input list="clientes" required asp-for="NomeCliente" />
+                <label asp-for="CPF" class="control-label">CPF do cliente:</label>
+                 <input list="clientes" required asp-for="CPF" />
                  <datalist id="clientes">
                      @foreach (var item in ViewBag.clientes)
                      {
-                        <option value="@item.Nome"></option>
+                        <option value="@item.CPF"></option>
                      }
                  </datalist>
                 

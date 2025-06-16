@@ -20,6 +20,11 @@
     <div class="alert alert-danger">@TempData["Erro"]</div>
 }
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+}
+
 @if (Model != null && Model.Any())
 {
     <table class="table">

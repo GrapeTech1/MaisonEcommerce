@@ -53,16 +53,18 @@ namespace MaisonEcommerce.Repositorio
             }
         }
 
-        public bool Atualizar(Produto produto)
+        public async Task <bool> Atualizar(Produto produto)
         {
             try
             {
                 using (var conexao = new MySqlConnection(_conexaoMySQL))
                 {
-                    conexao.Open();
+                    conexao.OpenAsync();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Produto set Nome=@nome, Descricao=@descricao, Quantidade=@quantidade, Preco=@preco where IdProduto = @idProduto", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Produto set Foto=@foto, TipoFoto=@tipoFoto, Nome=@nome, Descricao=@descricao, Quantidade=@quantidade, Preco=@preco where IdProduto = @idProduto", conexao);
                     cmd.Parameters.Add("@idProduto", MySqlDbType.Int32).Value = produto.IdProduto;
+                    cmd.Parameters.AddWithValue("@foto", produto.Foto);
+                    cmd.Parameters.AddWithValue("@tipoFoto", produto.TipoFoto);
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = produto.Nome;
                     cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = produto.Descricao;
                     cmd.Parameters.Add("@quantidade", MySqlDbType.Int32).Value = produto.Quantidade;
