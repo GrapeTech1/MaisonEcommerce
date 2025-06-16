@@ -63,7 +63,7 @@ create table tb_Plano (
     IdPlano int primary key auto_increment,
     Nome varchar(50) not null,
     Descricao varchar(200) not null,
-    Duracao enum ( '30', '365') not null,
+    Duracao int not null,
     Preco decimal(10,2) not null,
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp
@@ -143,14 +143,14 @@ $$
 -- Procedure de Plano
 DELIMITER $$
 create PROCEDURE insertPlano 
-(vNome varchar(50), vDesc varchar(200), vDuracao enum('30','365'),vPreco decimal(10,2))
+(vNome varchar(50), vDesc varchar(200), vDuracao int,vPreco decimal(10,2))
 
 begin
 	if not EXISTS
 	(select IdPlano from tb_Plano where Nome = vNome) 
 	then
 		insert into tb_Plano (Nome,Descricao, Duracao,Preco) 
-        values (vNome,vDesc, vDuracao,vPreco);
+        values (vNome, vDesc, vDuracao,vPreco);
     end if;
     
 end;
