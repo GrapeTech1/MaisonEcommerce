@@ -93,13 +93,13 @@ namespace MaisonEcommerce.Repositorio
                 cmd.Parameters.AddWithValue("@codigo", codigo);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 MySqlDataReader dr;
-                Servico_Pacote servicoPlano = new Servico_Plano();
+                Servico_Plano servicoPlano = new Servico_Plano();
 
                 dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
                 while (dr.Read())
                 {
-                    servicoPlano.IdServicoPacote = Convert.ToInt32(dr["IdServicoPlano"]);
+                    servicoPlano.IdServicoPlano = Convert.ToInt32(dr["IdServicoPlano"]);
                     servicoPlano.IdPlano = Convert.ToInt32(dr["IdPlano"]);
                     servicoPlano.IdServico = Convert.ToInt32(dr["IdServico"]);
                 }

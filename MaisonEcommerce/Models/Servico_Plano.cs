@@ -8,5 +8,10 @@
 
         public string NomeServico { get; set; }
         public string NomePlano { get; set; }
+
+        internal static void Add(Servico_Plano servico_Plano)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

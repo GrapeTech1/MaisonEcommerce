@@ -10,7 +10,8 @@ namespace MaisonEcommerce.Controllers
         private readonly ServicoRepositorio _servicoRepositorio;
         private readonly PlanoRepositorio _planoRepositorio;
 
-        public ServicoPlanoController(ServicoPlanoRepositorio servicoplanoRepositorio, ServicoRepositorio servicoRepositorio, PlanoRepositorio planoRepositorio)
+        public ServicoPlanoController(ServicoPlanoRepositorio servicoplanoRepositorio, 
+            ServicoRepositorio servicoRepositorio, PlanoRepositorio planoRepositorio)
         {
             _servicoplanoRepositorio = servicoplanoRepositorio;
             _servicoRepositorio = servicoRepositorio;
@@ -35,7 +36,19 @@ namespace MaisonEcommerce.Controllers
         {
             int linhasAfetadas = _servicoplanoRepositorio.Cadastrar(servicoPlano);
 
-            return RedirectToAction(nameof(Index));
+            if(linhasAfetadas > 0)
+            {
+                ViewData["Mensagen"] = "Serviço inserido em plano com sucesso!";
+                ViewData["Classe"] = "alert alert-success";
+                return RedirectToAction(nameof(Index));
+            }
+
+            else
+            {
+                ViewData["Mensagem"] = "O serviço já foi adicionado anteriormente nesse plano!";
+                ViewData["Classe"] = "alert alert-danger";
+                return View(); 
+            }
         }
 
         public IActionResult EditarServicoPlano(int id)
@@ -86,7 +99,7 @@ namespace MaisonEcommerce.Controllers
             _servicoplanoRepositorio.Excluir(id);
 
 
-            TempData["Mensagem"] = $"Serviço retirado de plano com sucesso!  -  {DateTime.Now}";
+            TempData["Mensagem"] = $"Serviço retirado do plano com sucesso!  -  {DateTime.Now}";
             TempData["Classe"] = "alert alert-success";
 
             return RedirectToAction(nameof(Index));
