@@ -25,6 +25,8 @@ function telefone(input) {
     if (qtd.length == 3) qtd += ')';
 
     if (qtd.length == 8) qtd += '-';
+
+   
     input.value = qtd;
 }
 
