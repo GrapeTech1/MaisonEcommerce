@@ -30,10 +30,19 @@
                 <td>@plano.IdPlano</td>
                 <td>@plano.Nome</td>
                 <td>@plano.Descricao</td>
-                <td>@plano.DuracaoPlano</td>
+                <td>@plano.Duracao</td>
                 <td>@plano.Preco</td>
                 <td>@plano.DataCadastro</td>
-                <td>@plano.DataAtualizacao</td>
+
+                @if (plano.DataCadastro == plano.DataAtualizacao)
+                {
+                    <td class="alert-info">Não foi modificado</td>
+                }
+
+                else
+                {
+                    <td>@plano.DataAtualizacao</td>
+                }
                 
                 <td class="text-center">
                     <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@plano.IdPlano" class="btn btn-sm btn-warning">Editar</a>

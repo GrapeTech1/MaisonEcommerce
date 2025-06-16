@@ -57,7 +57,7 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarPlano(int id, [Bind("IdPlano, Nome, Descricao, DuracaoPlano, Preco")] Plano plano)
+        public IActionResult EditarPlano(int id, [Bind("IdPlano, Nome, Descricao, Duracao, Preco")] Plano plano)
         {
             if (id != plano.IdPlano)
             {
@@ -90,7 +90,7 @@ namespace MaisonEcommerce.Controllers
         {
             _planoRepositorio.Excluir(id);
 
-            TempData["Mensagem"] = $"Cliente deletado com sucesso!";
+            TempData["Mensagem"] = $"Plano deletado com sucesso!  -  {DateTime.Now}";
             TempData["Classe"] = "alert alert-success";
 
             return RedirectToAction(nameof(Index));
