@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Servico_Plano>
 
+@{
+    ViewData["Title"] = "Serviços nos Planos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
 <p>
     <a asp-controller="ServicoPlano" asp-action="CadastrarServicoPlano" class="btn btn-primary">Cadastrar Servico Plano</a>
 </p>

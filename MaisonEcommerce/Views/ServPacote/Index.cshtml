@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Servico_Pacote>
 
+@{
+    ViewData["Title"] = "Serviços em Pacotes";
+}
+
+<h1>@ViewData["Title"]</h1>
+
 <p>
     <a asp-controller="ServPacote" asp-action="CadastrarServPacote" class="btn btn-primary">Adicionar serviços nos pacotes</a>
 </p>
