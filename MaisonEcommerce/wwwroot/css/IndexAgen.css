@@ -5,13 +5,14 @@ body {
 }
 
 p a.btn.btn-primary {
-    margin-left: 70.7rem;
+    margin-left: 65.7rem;
     background-color: #A06E56;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: bold;
     transition: background-color 0.3s;
+    width: 15rem;
 }
 
     p a.btn.btn-primary:hover {
@@ -27,8 +28,7 @@ p a.btn.btn-primary {
 
     .table thead {
         background-color: #d8cdcd;
-        color: #000;
-        border-radius: 20%;
+        color: #421919;
     }
 
         .table thead th {
