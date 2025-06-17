@@ -1,4 +1,4 @@
-/* Reset & base */
+
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +16,7 @@ header {
     display: none;
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 80px;
     background-color: #e5e5e5;
@@ -31,7 +31,7 @@ header {
     z-index: 1000;
 }
 
-    /* Logo */
+
     .sidebar .logo {
         font-size: 2rem;
         margin: 1rem 0;
@@ -39,7 +39,7 @@ header {
         color: #000;
     }
 
-/* Ícones da navegação */
+
 .nav-icons {
     list-style: none;
     display: flex;
@@ -59,7 +59,7 @@ header {
 
         .nav-icons li a {
             text-decoration: none;
-            color: inherit;
+            color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,7 +79,14 @@ header {
         stroke: #000;
     }
 
-/* Texto vertical no fim */
+    .nav-icons img.nav-img-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        
+    }
+
+
 .bottom-text {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
@@ -88,14 +95,14 @@ header {
     margin-bottom: 1rem;
 }
 
-/* Adaptação para conteúdo do ASP.NET (deslocar para direita) */
+
 main, .container {
-    margin-left: 80px; /* mesmo valor da .sidebar */
+    margin-left: 80px; 
     padding: 1rem;
     color: #fff;
 }
 
-/* Footer e Header fixos */
+
 footer, header {
     margin-left: 80px;
 }
