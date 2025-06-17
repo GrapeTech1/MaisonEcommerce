@@ -6,9 +6,9 @@
 
 <div class="row">
     <div class="col-md-4">
-        @if (TempData["Mensagem"] != null)
+        @if (ViewData["Mensagem"] != null)
         {
-            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+            <div class="@ViewData["Classe"]">@ViewData["Mensagem"]</div>
         }
         <form asp-action="CadastrarAgen">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -18,10 +18,15 @@
                 <label asp-for="CPF" class="control-label">CPF do cliente:</label>
                  <input list="clientes" required asp-for="CPF" />
                  <datalist id="clientes">
-                     @foreach (var item in ViewBag.clientes)
-                     {
-                        <option value="@item.CPF"></option>
-                     }
+
+                    @if (ViewBag.clientes != null)
+                    {
+                        @foreach (var item in ViewBag.clientes)
+                        {
+                            <option value="@item.CPF"></option>
+                        }
+                    }
+                    
                  </datalist>
                 
                 <span asp-validation-for="NomeCliente" class="text-danger"></span>
@@ -30,10 +35,15 @@
             <div class="form-group">
                 <label asp-for="NomeServico" class="control-label">Serviço:</label>
                 <select asp-for="NomeServico">
-                    @foreach (var item in ViewBag.servicos)
+
+                    @if (ViewBag.servicos != null)
                     {
-                        <option value="@item.IdServico">@item.Nome</option>
+                        @foreach (var item in ViewBag.servicos)
+                        {
+                            <option value="@item.IdServico">@item.Nome</option>
+                        }
                     }
+                    
                 </select>
                 <span asp-validation-for="NomeServico" class="text-danger"></span>
             </div>

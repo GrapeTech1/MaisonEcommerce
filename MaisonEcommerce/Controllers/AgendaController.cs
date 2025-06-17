@@ -28,25 +28,30 @@ namespace MaisonEcommerce.Controllers
             ViewBag.clientes = _clienteRepositorio.TodosClientes();
             ViewBag.servicos = _servicoRepositorio.TodosServicos();
 
-            return View(new Agendamento());
+            return View();
         }
 
         [HttpPost]
         public IActionResult CadastrarAgen(Agendamento agendamento)
         {
             int linhasAfetadas = _agendamentoRepositorio.Cadastrar(agendamento);
+            ModelState.Remove("NomeCliente");
 
             if (linhasAfetadas > 0)
             {
-                TempData["Mensagem"] = "Serviço agendado com sucesso!";
-                TempData["Classe"] = "alert alert-success";
+                ViewData["Mensagem"] = "Serviço agendado com sucesso!";
+                ViewData["Classe"] = "alert alert-success";
                 return RedirectToAction(nameof(Index));
             }
 
             else
             {
-                TempData["Mensagem"] = "O horário está indisponível, por favor agende outro horário.";
-                TempData["Classe"] = "alert alert-danger";
+                ViewData["Mensagem"] = "O serviço já está com esse horário indisponível, por favor agende outro horário.";
+                ViewData["Classe"] = "alert alert-danger";
+
+                ViewBag.clientes = _clienteRepositorio.TodosClientes();
+                ViewBag.servicos = _servicoRepositorio.TodosServicos();
+
                 return View();
             }
         }
@@ -83,8 +88,8 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_agendamentoRepositorio.Atualizar(agendamento))
                     {
-                        TempData["Mensagem"] = "Agendamento remarcado com sucesso!";
-                        TempData["Classe"] = "alert alert-success";
+                        ViewData["Mensagem"] = "Agendamento remarcado com sucesso!";
+                        ViewData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }
                 }
@@ -103,8 +108,8 @@ namespace MaisonEcommerce.Controllers
         {
             _agendamentoRepositorio.Excluir(id);
 
-            TempData["Mensagem"] = $"Agendamento cancelado com sucesso!  -  {DateTime.Now}";
-            TempData["Classe"] = "alert alert-success";
+            ViewData["Mensagem"] = $"Agendamento cancelado com sucesso!  -  {DateTime.Now}";
+            ViewData["Classe"] = "alert alert-success";
 
             return RedirectToAction(nameof(Index));
         }

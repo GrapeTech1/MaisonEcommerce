@@ -4,9 +4,9 @@
     <a asp-controller="Agenda" asp-action="CadastrarAgen" class="btn btn-primary">Cadastrar Agendamento</a>
 </p>
 
-@if (TempData["Mensagem"] != null)
+@if (ViewData["Mensagem"] != null)
 {
-    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+    <div class="@ViewData["Classe"]">@ViewData["Mensagem"]</div>
 }
 
 <table class="table custom-table">

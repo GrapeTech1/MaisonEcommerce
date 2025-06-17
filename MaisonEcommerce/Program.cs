@@ -13,7 +13,8 @@ builder.Services.AddScoped<PlanoRepositorio>();
 builder.Services.AddScoped<FuncionarioRepositorio>();
 builder.Services.AddScoped<ServicoRepositorio>();
 builder.Services.AddScoped<AgendamentoRepositorio>();
-builder.Services.AddScoped <ServPacoteRepositorio>();
+builder.Services.AddScoped<ServPacoteRepositorio>();
+builder.Services.AddScoped<ServicoPlanoRepositorio>();
 
 var app = builder.Build();
 
