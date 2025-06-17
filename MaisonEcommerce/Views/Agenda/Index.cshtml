@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Agendamento>
 <link href="~/css/IndexAgen.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Agendamentos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
 <p>
     <a asp-controller="Agenda" asp-action="CadastrarAgen" class="btn btn-primary">Cadastrar Agendamento</a>
 </p>

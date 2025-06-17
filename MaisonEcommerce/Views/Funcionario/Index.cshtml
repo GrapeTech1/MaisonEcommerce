@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Funcionario>
 <link href="~/css/IndexFu.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Funcionários";
+}
+
+<h1>@ViewData["Title"]</h1>
+
 <p>
     <a asp-controller="Funcionario" asp-action="CadastrarFuncionario" class="btn btn-primary">Cadastrar Funcionario</a>
 </p>
