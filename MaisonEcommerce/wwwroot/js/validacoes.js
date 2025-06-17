@@ -33,3 +33,19 @@ function telefone(input) {
 function decimal(input) {
     input.value = input.value.replace(/[^\d,]/g, '');
 }
+
+function mostrarSenha() {
+    let senha = document.getElementById('senha');
+    let olho = document.getElementById('olho');
+
+    if (senha.type == 'password') {
+        senha.type = 'text';
+        olho.src = "../image/OlhoAberto.png";
+        olho.style.transition = 'all 0.5s;';
+    }
+
+    else {
+        senha.type = 'password';
+        olho.src = "../image/OlhoFechado.png";
+    }
+}
