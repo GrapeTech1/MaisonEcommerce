@@ -1,0 +1,13 @@
+body {
+
+    background-image: url('/image/indexfo.png');
+    background-size: cover;
+    background-position: 50% 40%; /* Primeiro valor: horizontal, Segundo: vertical */
+    background-repeat: no-repeat;
+    margin-top: 20rem;
+}
+
+.display-4 {
+    font-family: 'Poppins', sans-serif, bold;
+    font-size: 4.5rem;
+}
