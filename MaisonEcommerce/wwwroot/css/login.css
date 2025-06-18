@@ -95,5 +95,36 @@ html, body {
     height: 100%;
 }
 
+#senha {
+    position: relative;
+    padding-right: 35px; /* Pra criar espaço pro olho dentro do campo */
+}
+
+.campo-senha {
+    position: relative;
+    width: 100%;
+}
+
+#senha {
+    padding-right: 35px; /* Espaço pro olho não tampar o texto */
+}
+
+#olho {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: #b57b5b;
+}
+
+#olho:hover {
+    opacity: 0.7;
+}
 
 
+.Esqueceu-link {
+    color: #82283b;
+}
