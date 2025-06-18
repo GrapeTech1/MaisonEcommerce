@@ -9,11 +9,7 @@
 body {
     display: flex;
     flex-direction: row;
-    background-image: url('/image/indexfo.png');
-    background-size: cover;
-    background-position: 50% 30%; /* Primeiro valor: horizontal, Segundo: vertical */
-    background-repeat: no-repeat;
-  
+
 }
 
 header {
