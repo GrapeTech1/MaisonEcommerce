@@ -28,7 +28,7 @@ namespace MaisonEcommerce.Controllers
             ViewBag.servicos = _servicoRepositorio.TodosServicos();
             ViewBag.planos = _planoRepositorio.TodosPlanos();
 
-            return View(new Servico_Plano());
+            return View();
         }
 
         [HttpPost]

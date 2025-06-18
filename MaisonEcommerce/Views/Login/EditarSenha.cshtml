@@ -4,11 +4,16 @@
 <hr />
 
 <div class="row">
+    @{
+        ViewBag.OcultarNavbar = true;
+    }
+
     <div class="col-md-4">
         @if (TempData["Mensagem"] != null)
         {
             <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
         }
+
         <form asp-action="EditarSenha" method="post">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

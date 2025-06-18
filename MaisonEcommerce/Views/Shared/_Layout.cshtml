@@ -9,86 +9,93 @@
     <link rel="stylesheet" href="~/MaisonEcommerce.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">A</div>
-        <ul class="nav-icons">
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
-                <a asp-controller="Home" asp-action="Index"><i data-lucide="layout-grid"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Cliente" ? "active" : "")">
-                <a asp-controller="Cliente" asp-action="Index"><i data-lucide="users"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Funcionario" ? "active" : "")">
-                <a asp-controller="Funcionario" asp-action="Index"><i data-lucide="user"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Produto" ? "active" : "")">
-                <a asp-controller="Produto" asp-action="Index"><i data-lucide="package"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Agenda" ? "active" : "")">
-                <a asp-controller="Agenda" asp-action="Index"><i data-lucide="calendar-check"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Servico" ? "active" : "")">
-                <a asp-controller="Servico" asp-action="Index"><i data-lucide="file-text"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Pacote" ? "active" : "")">
-                <a asp-controller="Pacote" asp-action="Index"><i data-lucide="file-text"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Plano" ? "active" : "")">
-                <a asp-controller="Plano" asp-action="Index"><i data-lucide="file-text"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServPacote" ? "active" : "")">
-                <a asp-controller="ServPacote" asp-action="Index"><i data-lucide="file-text"></i></a>
-            </li>
-            <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServicoPlano" ? "active" : "")">
-                <a asp-controller="ServicoPlano" asp-action="Index"><i data-lucide="file-text"></i></a>
-            </li>
-            
-        </ul>
-        <div class="bottom-text">EDIT/FUNCI</div>
-    </div>
-    <div class="main-content" style="margin-left: 80px; width: calc(100% - 80px);">
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MaisonEcommerce</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Cliente" asp-action="Index">Clientes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Produto" asp-action="Index">Produtos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Servico" asp-action="Index">Serviços</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Pacote" asp-action="Index">Pacotes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Plano" asp-action="Index">Planos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="ServPacote" asp-action="Index">Serviços nos Pacotes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="ServicoPlano" asp-action="Index">Serviços nos Planos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Agenda" asp-action="Index">Agendamentos de Serviços</a>
-                            </li>
-                        </ul>
+    @* Verifica se deve esconder a sidebar e header *@
+    @if (ViewBag.OcultarNavbar != true)
+    {
+        <div class="sidebar">
+            <div class="logo">A</div>
+            <ul class="nav-icons">
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                    <a asp-controller="Home" asp-action="Index"><i data-lucide="layout-grid"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Cliente" ? "active" : "")">
+                    <a asp-controller="Cliente" asp-action="Index"><i data-lucide="users"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Funcionario" ? "active" : "")">
+                    <a asp-controller="Funcionario" asp-action="Index"><i data-lucide="user"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Produto" ? "active" : "")">
+                    <a asp-controller="Produto" asp-action="Index"><i data-lucide="package"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Agenda" ? "active" : "")">
+                    <a asp-controller="Agenda" asp-action="Index"><i data-lucide="calendar-check"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Servico" ? "active" : "")">
+                    <a asp-controller="Servico" asp-action="Index"><i data-lucide="file-text"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Pacote" ? "active" : "")">
+                    <a asp-controller="Pacote" asp-action="Index"><i data-lucide="file-text"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Plano" ? "active" : "")">
+                    <a asp-controller="Plano" asp-action="Index"><i data-lucide="file-text"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServPacote" ? "active" : "")">
+                    <a asp-controller="ServPacote" asp-action="Index"><i data-lucide="file-text"></i></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServicoPlano" ? "active" : "")">
+                    <a asp-controller="ServicoPlano" asp-action="Index"><i data-lucide="file-text"></i></a>
+                </li>
+            </ul>
+            <div class="bottom-text"></div>
+        </div>
+    }
+
+    <div class="main-content" style="margin-left: @(ViewBag.OcultarNavbar != true ? "80px" : "0"); width: @(ViewBag.OcultarNavbar != true ? "calc(100% - 80px)" : "100%");">
+        @if (ViewBag.OcultarNavbar != true)
+        {
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MaisonEcommerce</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Cliente" asp-action="Index">Clientes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Produto" asp-action="Index">Produtos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Servico" asp-action="Index">Serviços</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Pacote" asp-action="Index">Pacotes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Plano" asp-action="Index">Planos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="ServPacote" asp-action="Index">Serviços nos Pacotes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="ServicoPlano" asp-action="Index">Serviços nos Planos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Agenda" asp-action="Index">Agendamentos de Serviços</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </header>
+                </nav>
+            </header>
+        }
 
         <main role="main" class="pb-3 container">
             @RenderBody()
@@ -100,6 +107,7 @@
             </div>
         </footer>
     </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

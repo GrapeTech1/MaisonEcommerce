@@ -275,27 +275,81 @@ $$
 delimiter $$
 create procedure insertServPacote (servico int, pacote int)
 begin
-	
-    declare servicoPreco decimal (10,2);
-    set servicoPreco = (select Preco from tb_Servico where Idservico = servico);
     
     if not exists (select IdServicoPacote from tb_Servico_Pacote where IdServico = servico and IdPacote = pacote) then
-		
         insert into tb_Servico_Pacote (IdServico, IdPacote) values (servico, pacote);
-        update tb_Pacote set Preco = Preco + servicoPreco * (Desconto/100) where IdPacote = pacote;
-        
 	end if;
+    
 end;
 $$
 
 
 -- Procedure do Serviço Plano
 delimiter $$
-create procedure insertServPlano (servico int, plano int)
+create procedure insertServicoPlano (servico int, plano int)
 begin
-	insert into tb_Servico_Plano (IdServico, IdPlano) values (servico, plano);
+
+	if not exists (select IdServicoPlano from tb_Servico_Plano where IdServico = servico and IdPlano = plano) then
+		insert into tb_Servico_Plano (IdServico, IdPlano) values (servico, plano);
+	end if;
+        
 end;
 $$
+
+
+-- TRIGGERS
+
+-- Trigger ao inserir no Servico Pacote
+delimiter $$
+create trigger precoPacoteInsert after insert on tb_Servico_Pacote
+for each row
+begin
+
+	update tb_Pacote 
+    inner join (select (sum(tb_Servico.Preco)) * (max(Desconto)/100) novoPreco 
+				from tb_Servico 
+				inner join tb_Servico_Pacote on tb_Servico.IdServico = tb_Servico_Pacote.IdServico
+                inner join tb_Pacote on tb_Pacote.IdPacote = tb_Servico_Pacote.IdPacote
+				where tb_Servico_Pacote.IdPacote = new.IdPacote) tbl 
+    set Preco = novoPreco;
+    
+end;
+$$
+
+-- Trigger ao deletar no Servico Pacote
+delimiter $$
+create trigger precoPacoteDelete after delete on tb_Servico_Pacote
+for each row
+begin
+
+	update tb_Pacote
+    inner join (select (sum(tb_Servico.Preco)) * (max(Desconto)/100) novoPreco
+		from tb_Servico
+        inner join tb_Servico_Pacote on tb_Servico.IdServico = tb_Servico_Pacote.IdServico
+        inner join tb_Pacote on tb_Pacote.IdPacote = tb_Servico_Pacote.IdPacote
+        where tb_Servico_Pacote.IdPacote = old.IdPacote) tbl
+	set Preco = novoPreco;
+
+end;
+$$
+
+-- Trigger ao editar no Servico Pacote
+delimiter $$
+create trigger precoPacoteUpdate after update on tb_Servico_Pacote
+for each row
+begin
+
+	update tb_Pacote
+    inner join (select (sum(tb_Servico.Preco)) * (max(Desconto)/100) novoPreco
+		from tb_Servico
+        inner join tb_Servico_Pacote on tb_Servico.IdServico = tb_Servico_Pacote.IdServico
+        inner join tb_Pacote on tb_Pacote.IdPacote = tb_Servico_Pacote.IdPacote
+        where tb_Servico_Pacote.IdPacote = new.IdPacote) tbl
+	set Preco = novoPreco;
+
+end;
+$$
+
 
 select * from tb_Cliente;
 select * from tb_Agendamento;

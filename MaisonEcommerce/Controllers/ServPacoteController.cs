@@ -28,7 +28,7 @@ namespace MaisonEcommerce.Controllers
             ViewBag.servicos = _servicoRepositorio.TodosServicos();
             ViewBag.pacotes = _pacoteRepositorio.TodosPacotes();
 
-            return View(new Servico_Pacote());
+            return View();
         }
 
         [HttpPost]
@@ -45,8 +45,12 @@ namespace MaisonEcommerce.Controllers
 
             else
             {
-                ViewData["Mensagem"] = "O serviço já foi adicionado anteriormente nesse pacote!";
+                ViewData["Mensagem"] = "O serviço já foi adicionado anteriormente nesse pacote.";
                 ViewData["Classe"] = "alert alert-danger";
+
+                ViewBag.servicos = _servicoRepositorio.TodosServicos();
+                ViewBag.pacotes = _pacoteRepositorio.TodosPacotes();
+
                 return View();
             }
             
@@ -85,6 +89,13 @@ namespace MaisonEcommerce.Controllers
                         TempData["Mensagem"] = "Serviço ou pacote alterado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        TempData["Mensagem"] = "O servico que você está tentando inserir no pacote já foi inserido anteriormente.";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View();
                     }
                 }
 

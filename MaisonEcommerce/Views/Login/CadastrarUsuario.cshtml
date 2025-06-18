@@ -2,14 +2,16 @@
 <link href="~/css/CadastroUsuario.css" rel="stylesheet" />
 
 <div class="container-cadastro">
-    <!-- Lado da imagem com logo centralizada -->
+    @{
+        ViewBag.OcultarNavbar = true;
+    }
+
     <div class="lado-imagem">
         <div class="logo-centralizada">
             <img src="~/image/logo_m_branca.png" alt="Logo Maison" />
         </div>
     </div>
 
-    <!-- Lado do formulário -->
     <div class="lado-formulario">
         <h2>Crie a sua Conta</h2>
         <hr />
@@ -55,11 +57,17 @@
 </div>
 
 <style>
+<<<<<<< HEAD
     * {
         box-sizing: border-box;
     }
 
  html, body{
+=======
+   .side
+        
+    html, body {
+>>>>>>> eefdad4f04c776d4d7860a4430bf8b73e9346bd0
         margin: 0;
         padding: 0;
         font-family: 'Segoe UI', sans-serif;

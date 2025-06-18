@@ -9,7 +9,7 @@ namespace MaisonEcommerce.Repositorio
 
     public class ServicoPlanoRepositorio(IConfiguration configuration)
     {
-        private readonly string _conexaoMySQL = configuration.GetConnectionString("XonexaoMySQL");
+        private readonly string _conexaoMySQL = configuration.GetConnectionString("ConexaoMySQL");
 
         public int Cadastrar(Servico_Plano servicoPlano)
         {
@@ -60,8 +60,8 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
                 MySqlCommand cmd = new MySqlCommand("select tb_Servico_Plano.IdServicoPlano, tb_Servico.Nome as Nome_Servico, tb_Plano.Nome as Nome_Plano \r\n" +
-                    "fromt tb_Plano, tb_Servico, tb_Servico_Plano\r\n" +
-                    "where tb_Servico_Plano.IdPlano = tb_Plano.IdPlano and tb_ServicoPlano.IdServico = tb_Servico.IdServico;", conexao);
+                    "from tb_Plano, tb_Servico, tb_Servico_Plano\r\n" +
+                    "where tb_Servico_Plano.IdPlano = tb_Plano.IdPlano and tb_Servico_Plano.IdServico = tb_Servico.IdServico;", conexao);
 
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();

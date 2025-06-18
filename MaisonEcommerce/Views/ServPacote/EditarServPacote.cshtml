@@ -5,9 +5,9 @@
 <div class="row">
     <div class="col-md-4">
 
-        @if (TempData["Mensagem"] != null)
+        @if (ViewData["Mensagem"] != null)
         {
-            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+            <div class="@ViewData["Classe"]">@ViewData["Mensagem"]</div>
         }
 
         <form asp-action="EditarServPacote" method="post">
@@ -23,10 +23,14 @@
                 <label asp-for="NomeServico" class="control-label">Nome do Serviço:</label>
                 <select asp-for="NomeServico">
 
-                    @foreach (var item in ViewBag.servicos)
+                    @if (ViewBag.servicos != null)
                     {
-                        <option value="@item.IdServico">@item.Nome</option>
+                        @foreach (var item in ViewBag.servicos)
+                        {
+                            <option value="@item.IdServico">@item.Nome</option>
+                        }
                     }
+                    
                 </select>
             </div>
 
@@ -34,10 +38,14 @@
                 <label asp-for="NomePacote" class="control-label">Nome do Pacote:</label>
                 <select asp-for="NomePacote">
 
-                    @foreach (var item in ViewBag.pacotes)
+                    @if (ViewBag.pacotes != null)
                     {
-                        <option value="@item.IdPacote">@item.Nome</option>
+                        @foreach (var item in ViewBag.pacotes)
+                        {
+                            <option value="@item.IdPacote">@item.Nome</option>
+                        }
                     }
+                    
                 </select>
             </div>
 
