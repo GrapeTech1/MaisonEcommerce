@@ -17,48 +17,56 @@
     <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
 }
 
-<table class="table custom-table"> 
-    <thead>
-        <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Duração do Plano</th>
-            <th>Preço</th>
-            <th>Data de Cadastro</th>
-            <th>Data de Modificação</th>
-            <th class="text-center">Ação</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var plano in Model)
-        {
+@if (Model != null && Model.Any())
+{
+    <table class="table custom-table">
+        <thead>
             <tr>
-                <td>@plano.IdPlano</td>
-                <td>@plano.Nome</td>
-                <td>@plano.Descricao</td>
-                <td>@plano.Duracao</td>
-                <td>@plano.Preco</td>
-                <td>@plano.DataCadastro</td>
-
-                @if (plano.DataCadastro == plano.DataAtualizacao)
-                {
-                    <td class="alert-info">Não foi modificado</td>
-                }
-
-                else
-                {
-                    <td>@plano.DataAtualizacao</td>
-                }
-                
-                <td class="text-center">
-                    <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@plano.IdPlano" class="btn btn-sm btn-warning">Editar</a>
-                    <span>|</span>
-                    <a asp-controller="Plano" asp-action="ExcluirPlano" asp-route-id="@plano.IdPlano"
-                       onclick="return confirm('Deseja realmente Excluir este plano?')" class="btn btn-sm btn-danger">Excluir</a>
-                </td>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Duração do Plano</th>
+                <th>Preço</th>
+                <th>Data de Cadastro</th>
+                <th>Data de Modificação</th>
+                <th class="text-center">Ação</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var plano in Model)
+            {
+                <tr>
+                    <td>@plano.IdPlano</td>
+                    <td>@plano.Nome</td>
+                    <td>@plano.Descricao</td>
+                    <td>@plano.Duracao</td>
+                    <td>@plano.Preco</td>
+                    <td>@plano.DataCadastro</td>
+
+                    @if (plano.DataCadastro == plano.DataAtualizacao)
+                    {
+                        <td class="alert-info">Não foi modificado</td>
+                    }
+
+                    else
+                    {
+                        <td>@plano.DataAtualizacao</td>
+                    }
+
+                    <td class="text-center">
+                        <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@plano.IdPlano" class="btn btn-sm btn-warning">Editar</a>
+                        <span>|</span>
+                        <a asp-controller="Plano" asp-action="ExcluirPlano" asp-route-id="@plano.IdPlano"
+                           onclick="return confirm('Deseja realmente Excluir este plano?')" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <p>Nenhum plano cadastrado.</p>
+}

@@ -5,13 +5,9 @@
         public int IdServicoPlano { get; set; }
         public int IdServico { get; set; } // foreign key para a tabela Servico
         public int IdPlano { get; set; } // foreign key para a tabela Plano
-
         public string NomeServico { get; set; }
         public string NomePlano { get; set; }
-
-        internal static void Add(Servico_Plano servico_Plano)
-        {
-            throw new NotImplementedException();
-        }
+        public DateTime DataAdicao { get; set; }
+        public DateTime DataAtualizacao { get; set; }
     }
 }

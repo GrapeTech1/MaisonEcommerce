@@ -38,8 +38,8 @@ namespace MaisonEcommerce.Controllers
 
             if (linhasAfetadas > 0)
             {
-                ViewData["Mensagem"] = "Serviço inserido em pacote com sucesso!";
-                ViewData["Classe"] = "alert alert-success";
+                TempData["Mensagem"] = "Serviço inserido em pacote com sucesso!";
+                TempData["Classe"] = "alert alert-success";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -93,8 +93,8 @@ namespace MaisonEcommerce.Controllers
 
                     else
                     {
-                        TempData["Mensagem"] = "O servico que você está tentando inserir no pacote já foi inserido anteriormente.";
-                        TempData["Classe"] = "alert alert-danger";
+                        ViewData["Mensagem"] = "O servico que você está tentando inserir no pacote já foi inserido anteriormente.";
+                        ViewData["Classe"] = "alert alert-danger";
                         return View();
                     }
                 }

@@ -47,6 +47,10 @@ namespace MaisonEcommerce.Controllers
             {
                 ViewData["Mensagem"] = "O serviço já foi adicionado anteriormente nesse plano!";
                 ViewData["Classe"] = "alert alert-danger";
+
+                ViewBag.servicos = _servicoRepositorio.TodosServicos();
+                ViewBag.planos = _planoRepositorio.TodosPlanos();
+
                 return View(); 
             }
         }
@@ -81,9 +85,17 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_servicoplanoRepositorio.Atualizar(servicoPlano))
                     {
-                        TempData["Mensagem"] = "Servico inserido em pacote com sucesso!";
-                        TempData["Classe"] = "alert alert-success";
+                        ViewData["Mensagem"] = "Servico inserido em plano com sucesso!";
+                        ViewData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        ViewData["Mensagem"] = "O servico que você está tentando inserir no plano já foi inserido anteriormente.";
+                        ViewData["Classe"] = "alert alert-danger";
+                        return View();
+
                     }
                 }
                 catch (Exception)
@@ -99,8 +111,8 @@ namespace MaisonEcommerce.Controllers
             _servicoplanoRepositorio.Excluir(id);
 
 
-            TempData["Mensagem"] = $"Serviço retirado do plano com sucesso!  -  {DateTime.Now}";
-            TempData["Classe"] = "alert alert-success";
+            ViewData["Mensagem"] = $"Serviço retirado do plano com sucesso!  -  {DateTime.Now}";
+            ViewData["Classe"] = "alert alert-success";
 
             return RedirectToAction(nameof(Index));
         }

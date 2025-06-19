@@ -27,8 +27,15 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Duracao">Duração (dias):</label>
-                <input asp-for="Duracao" required />
+                <label asp-for="Duracao" class="control-label"></label>
+                <select asp-for="Duracao" class="form-control">
+
+                    <option value="1 mes">1 mês</option>
+                    <option value="3 meses">2 meses</option>
+                    <option value="6 meses">3 meses</option>
+                    <option value="1 ano">1 ano</option>
+
+                </select>
                 <span asp-validation-for="Duracao" class="text-danger"></span>
             </div>
 

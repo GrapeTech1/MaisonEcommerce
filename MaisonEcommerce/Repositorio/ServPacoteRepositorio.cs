@@ -57,7 +57,7 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select tb_Servico_Pacote.IdServicoPacote, tb_Servico.Nome as Nome_Serviço, tb_Pacote.Nome as Nome_Pacote \r\n" +
+                MySqlCommand cmd = new MySqlCommand("select tb_Servico_Pacote.IdServicoPacote, tb_Servico.Nome as Nome_Serviço, tb_Pacote.Nome as Nome_Pacote, tb_Servico_Pacote.DataAdicao, tb_Servico_Pacote.DataAtualizacao  \r\n" +
                     "from tb_Pacote, tb_Servico, tb_Servico_Pacote\r\n" +
                     "where tb_Servico_Pacote.IdPacote = tb_Pacote.IdPacote and tb_Servico_Pacote.IdServico = tb_Servico.IdServico;", conexao);
 
@@ -75,7 +75,8 @@ namespace MaisonEcommerce.Repositorio
                             IdServicoPacote = Convert.ToInt32(dr["IdServicoPacote"]),
                             NomeServico = ((string)dr["Nome_Serviço"]),
                             NomePacote = ((string)dr["Nome_Pacote"]),
-
+                            DataAdicao = Convert.ToDateTime(dr["DataAdicao"]),
+                            DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         });
                 }
                 return servico_Pacotes;

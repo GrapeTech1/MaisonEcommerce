@@ -71,8 +71,8 @@ namespace MaisonEcommerce.Repositorio
                             IdPacote = Convert.ToInt32(dr["IdPacote"]),
                             Nome = ((string)dr["Nome"]),
                             Descricao = ((string)dr["Descricao"]),
-                            Desconto = Convert.ToDecimal(dr["Desconto"]),
-                            Preco = Convert.ToDecimal(dr["Preco"]),
+                            Desconto = Convert.ToInt32(dr["Desconto"]),
+                            Preco = dr["Preco"] is DBNull ? 0 : Convert.ToDecimal(dr["Preco"]),
                             DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
                             DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         });
@@ -100,7 +100,7 @@ namespace MaisonEcommerce.Repositorio
                     pacote.IdPacote = Convert.ToInt32(dr["IdPacote"]);
                     pacote.Nome = (string)(dr["Nome"]);
                     pacote.Descricao = (string)(dr["Descricao"]);
-                    pacote.Desconto = Convert.ToDecimal(dr["Desconto"]);
+                    pacote.Desconto = Convert.ToInt32(dr["Desconto"]);
                     pacote.Preco = Convert.ToDecimal(dr["Preco"]);
                 }
                 return pacote;

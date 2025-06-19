@@ -17,7 +17,7 @@ namespace MaisonEcommerce.Repositorio
                 MySqlCommand cmd = new MySqlCommand("Call insertPlano(@nome, @descricao, @duracao, @preco);", conexao);
                 cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = plano.Nome;
                 cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = plano.Descricao;
-                cmd.Parameters.Add("@duracao", MySqlDbType.Int32).Value = plano.Duracao;
+                cmd.Parameters.Add("@duracao", MySqlDbType.VarChar).Value = plano.Duracao;
                 cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = plano.Preco;
 
                 int linhasAfetadas = cmd.ExecuteNonQuery();
@@ -39,7 +39,7 @@ namespace MaisonEcommerce.Repositorio
                     cmd.Parameters.Add("@idPlano", MySqlDbType.Int32).Value = plano.IdPlano;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = plano.Nome;
                     cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = plano.Descricao;
-                    cmd.Parameters.Add("@duracao", MySqlDbType.Int32).Value = plano.Duracao;
+                    cmd.Parameters.Add("@duracao", MySqlDbType.VarChar).Value = plano.Duracao;
                     cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = plano.Preco;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();
@@ -76,8 +76,10 @@ namespace MaisonEcommerce.Repositorio
                             IdPlano = Convert.ToInt32(dr["IdPlano"]),
                             Nome = ((string)dr["Nome"]),
                             Descricao = ((string)dr["Descricao"]),
-                            Duracao = Convert.ToInt32(dr["Duracao"]),
+                            Duracao = ((string)dr["Duracao"]),
                             Preco = Convert.ToDecimal(dr["Preco"]),
+                            DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
+                            DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         }
                     );
                 }
@@ -105,7 +107,7 @@ namespace MaisonEcommerce.Repositorio
                     plano.IdPlano = Convert.ToInt32(dr["IdPlano"]);
                     plano.Nome = (string)(dr["Nome"]);
                     plano.Descricao = (string)(dr["Descricao"]);
-                    plano.Duracao = Convert.ToInt32(dr["Duracao"]);
+                    plano.Duracao = (string)(dr["Duracao"]);
                     plano.Preco = Convert.ToDecimal(dr["Preco"]);
                 }
                 return plano;
@@ -119,7 +121,7 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("Delete from tb_Plano where IdPlano = @IdPlano", conexao);
+                MySqlCommand cmd = new MySqlCommand("delete from tb_Servico_Plano where IdPlano = @IdPlano; Delete from tb_Plano where IdPlano = @IdPlano", conexao);
                 cmd.Parameters.AddWithValue("@IdPlano", IdPlano);
 
                 int linhasAfetadas = cmd.ExecuteNonQuery();

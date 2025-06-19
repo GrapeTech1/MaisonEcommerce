@@ -14,53 +14,61 @@
     <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Código</th>
-            <th>CPF</th>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Idade</th>
-            <th>Sexo</th>
-            <th>Data de Cadastro</th>
-            <th>Data de Modificação</th>
-            <th class="text-center">Ação</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var cliente in Model)
-        {
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@cliente.IdCliente</td>
-                <td>@cliente.CPF</td>
-                <td>@cliente.Nome</td>
-                <td>@cliente.Telefone</td>
-                <td>@cliente.Idade</td>
-                <td>@cliente.Sexo</td>
-                <td>@cliente.DataCadastro</td>
-
-                @if (cliente.DataCadastro == cliente.DataAtualizacao)
-                {
-                    <td class="alert-info">Não foi modificado</td>
-                }
-                else
-                {
-                    <td>@cliente.DataAtualizacao</td>
-                }
-
-                <td class="text-center">
-                    <a asp-controller="Cliente" asp-action="EditarCliente" asp-route-id="@cliente.IdCliente" class="btn btn-sm btn-warning">
-                        <img src="~/image/editar.png" alt="Editar" width="20" height="20" />
-                    </a>
-                    <span style="padding: 0 5px;">|</span>
-                    <a asp-controller="Cliente" asp-action="ExcluirCliente" asp-route-id="@cliente.IdCliente"
-                       onclick="return confirm('Deseja realmente Excluir este cliente? Os seus agendamentos serão deletados')" class="btn btn-sm btn-danger">
-                        <img src="~/image/lixeira.png" alt="Excluir" width="20" height="20" />
-                    </a>
-                </td>
+                <th>Código</th>
+                <th>CPF</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Idade</th>
+                <th>Sexo</th>
+                <th>Data de Cadastro</th>
+                <th>Data de Modificação</th>
+                <th class="text-center">Ação</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.IdCliente</td>
+                    <td>@cliente.CPF</td>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Telefone</td>
+                    <td>@cliente.Idade</td>
+                    <td>@cliente.Sexo</td>
+                    <td>@cliente.DataCadastro</td>
+
+                    @if (cliente.DataCadastro == cliente.DataAtualizacao)
+                    {
+                        <td class="alert-info">Não foi modificado</td>
+                    }
+                    else
+                    {
+                        <td>@cliente.DataAtualizacao</td>
+                    }
+
+                    <td class="text-center">
+                        <a asp-controller="Cliente" asp-action="EditarCliente" asp-route-id="@cliente.IdCliente" class="btn btn-sm btn-warning">
+                            <img src="~/image/editar.png" alt="Editar" width="20" height="20" />
+                        </a>
+                        <span style="padding: 0 5px;">|</span>
+                        <a asp-controller="Cliente" asp-action="ExcluirCliente" asp-route-id="@cliente.IdCliente"
+                           onclick="return confirm('Deseja realmente Excluir este cliente? Os seus agendamentos serão deletados')" class="btn btn-sm btn-danger">
+                            <img src="~/image/lixeira.png" alt="Excluir" width="20" height="20" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <p>Nenhum cliente cadastrado.</p>
+}

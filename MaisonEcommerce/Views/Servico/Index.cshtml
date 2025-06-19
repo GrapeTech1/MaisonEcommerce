@@ -18,47 +18,55 @@
     <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
 }
 
-<table class="table custom-table">
-    <thead>
-        <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Data de Cadastro</th>
-            <th>Data de Modificação</th>
-            <th class="text-center">Ação</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var servico in Model)
-        {
+@if (Model != null && Model.Any())
+{
+    <table class="table custom-table">
+        <thead>
             <tr>
-                <td>@servico.IdServico</td>
-                <td>@servico.Nome</td>
-                <td>@servico.Descricao</td>
-                <td>@servico.Preco</td>
-                <td>@servico.DataCadastro</td>
-
-                @if (servico.DataCadastro == servico.DataAtualizacao)
-                {
-                    <td class="text-center alert alert-info"> Não foi Modificado </td>
-                }
-
-                else
-                {
-                    <td>@servico.DataAtualizacao</td>
-                }
-                
-                
-                <td class="text-center">
-                    <a asp-controller="Servico" asp-action="EditarServico" asp-route-id="@servico.IdServico" class="btn btn-sm btn-warning">Editar</a>
-                    <span>|</span>
-                    <a asp-controller="Servico" asp-action="Excluir" asp-route-id="@servico.IdServico"
-                    onclick="return confirm('Deseja realmente Excluir este serviço? O serviço será retirado dos pacotes e planos.')" class="btn btn-danger">Excluir</a>
-                </td>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Data de Cadastro</th>
+                <th>Data de Modificação</th>
+                <th class="text-center">Ação</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var servico in Model)
+            {
+                <tr>
+                    <td>@servico.IdServico</td>
+                    <td>@servico.Nome</td>
+                    <td>@servico.Descricao</td>
+                    <td>@servico.Preco</td>
+                    <td>@servico.DataCadastro</td>
+
+                    @if (servico.DataCadastro == servico.DataAtualizacao)
+                    {
+                        <td class="text-center alert alert-info"> Não foi Modificado </td>
+                    }
+
+                    else
+                    {
+                        <td>@servico.DataAtualizacao</td>
+                    }
+
+
+                    <td class="text-center">
+                        <a asp-controller="Servico" asp-action="EditarServico" asp-route-id="@servico.IdServico" class="btn btn-sm btn-warning">Editar</a>
+                        <span>|</span>
+                        <a asp-controller="Servico" asp-action="Excluir" asp-route-id="@servico.IdServico"
+                           onclick="return confirm('Deseja realmente Excluir este serviço? O serviço será retirado dos pacotes e planos.')" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <p>Nenhum serviço cadastrado.</p>
+}

@@ -5,6 +5,12 @@
 
 <div class="row">
     <div class="col-md-4">
+
+        @if (ViewData["Mensagem"] != null)
+        {
+            <div class="@ViewData["Classe"]">@ViewData["Mensagem"]</div>
+        }
+
         <form asp-action="EditarServicoPlano" method="post">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -15,18 +21,36 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="IdServico" class="control-label">Cliente</label>
-                <select asp-for="IdServico" class="form-control" asp-items="ViewBag.Clientes">
+                <label asp-for="NomeServico" class="control-label">Serviço</label>
+                <select asp-for="NomeServico" class="form-control">
+
+                    @if (ViewBag.servicos != null)
+                    {
+                        @foreach (var item in ViewBag.servicos)
+                        {
+                            <option value="@item.IdServico">@item.Nome</option>
+                        }
+                    }
+
                 </select>
                 <span asp-validation-for="IdServico" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="IdPlano" class="control-label">Serviço</label>
-                <select asp-for="IdPlano" class="form-control" asp-items="ViewBag.Servicos">
-                </select>
-                <span asp-validation-for="IdPlano" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="NomePlano" class="control-label">Plano</label>
+                    <select asp-for="NomePlano" class="form-control">
+
+                        @if (ViewBag.servicos != null)
+                        {
+                            @foreach (var item in ViewBag.planos)
+                            {
+                                <option value="@item.IdPlano">@item.Nome</option>
+                            }
+                        }
+
+                    </select>
+                    <span asp-validation-for="NomePlano" class="text-danger"></span>
+                </div>
 
         <div class="btn-group">
                 <input type="submit" value="Alterar" class="btn btn-primary" />

@@ -35,7 +35,7 @@ namespace MaisonEcommerce.Repositorio
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Servico_Plano set IdServico=@servico, IdPlano@plano where IdServicoPlano=@idServico", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Servico_Plano set IdServico=@servico, IdPlano=@plano where IdServicoPlano=@idServicoPlano", conexao);
                     cmd.Parameters.Add("@idServicoPlano", MySqlDbType.Int32).Value = ServicoPlano.IdServicoPlano;
                     cmd.Parameters.Add("@servico", MySqlDbType.Int32).Value = ServicoPlano.NomeServico;
                     cmd.Parameters.Add("@plano", MySqlDbType.Int32).Value = ServicoPlano.NomePlano;
@@ -54,12 +54,12 @@ namespace MaisonEcommerce.Repositorio
 
         public IEnumerable<Servico_Plano> TodosServicoPlano()
         {
-            List<Servico_Plano> servico_Plamos = new List<Servico_Plano>();
+            List<Servico_Plano> servico_Planos = new List<Servico_Plano>();
 
             using (var conexao = new MySqlConnection(_conexaoMySQL))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("select tb_Servico_Plano.IdServicoPlano, tb_Servico.Nome as Nome_Servico, tb_Plano.Nome as Nome_Plano \r\n" +
+                MySqlCommand cmd = new MySqlCommand("select tb_Servico_Plano.IdServicoPlano, tb_Servico.Nome as Nome_Servico, tb_Plano.Nome as Nome_Plano, tb_Servico_Plano.DataAdicao, tb_Servico_Plano.DataAtualizacao \r\n" +
                     "from tb_Plano, tb_Servico, tb_Servico_Plano\r\n" +
                     "where tb_Servico_Plano.IdPlano = tb_Plano.IdPlano and tb_Servico_Plano.IdServico = tb_Servico.IdServico;", conexao);
 
@@ -71,15 +71,17 @@ namespace MaisonEcommerce.Repositorio
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Servico_Plano.Add(
+                    servico_Planos.Add(
                         new Servico_Plano
                         {
                             IdServicoPlano = Convert.ToInt32(dr["IdServicoPlano"]),
                             NomeServico = ((string)dr["Nome_Servico"]),
-                            NomePlano = ((string)dr["Nome_Plano"])
+                            NomePlano = ((string)dr["Nome_Plano"]),
+                            DataAdicao = Convert.ToDateTime(dr["DataAdicao"]),
+                            DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         });
                 }
-                return servico_Plamos;
+                return servico_Planos;
             }
         }
 
@@ -113,8 +115,9 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("delee from tb_Servico_Plano where IdServicoPlano = @idServicoPlano", conexao);
-                int linhasAfetadas = cmd .ExecuteNonQuery();
+                MySqlCommand cmd = new MySqlCommand("delete from tb_Servico_Plano where IdServicoPlano = @idServicoPlano", conexao);
+                cmd.Parameters.AddWithValue("@IdServicoPlano", IdServicoPlano);
+                int linhasAfetadas = cmd.ExecuteNonQuery();
 
                 conexao .Close();
             }

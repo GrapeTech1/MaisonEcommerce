@@ -7,7 +7,7 @@ namespace MaisonEcommerce.Models
         public int IdPacote { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public decimal Desconto { get; set; }
+        public int Desconto { get; set; }
         public decimal Preco { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAtualizacao { get; set; }

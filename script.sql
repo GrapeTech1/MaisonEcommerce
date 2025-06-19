@@ -63,8 +63,8 @@ create table tb_Plano (
     IdPlano int primary key auto_increment,
     Nome varchar(50) not null,
     Descricao varchar(200) not null,
-    Duracao int not null,
-    Preco decimal(10,2) not null,
+     Duracao varchar(10) not null,
+    Preco decimal(10,2) default 0,
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp
     );
@@ -74,8 +74,8 @@ create table tb_Pacote(
     IdPacote int primary key auto_increment,
     Nome varchar(50) not null,
     Descricao varchar(200) not null,
-    Desconto decimal (10,2) not null,
-    Preco decimal (10,2) not null,
+    Desconto int not null,
+    Preco decimal (10,2) default 0,
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp
     );
@@ -97,6 +97,8 @@ create table tb_Servico_Pacote (
     IdServicoPacote int primary key auto_increment,
     IdServico int,
     IdPacote int,
+	DataAdicao timestamp default current_timestamp not null,
+    DataAtualizacao timestamp default current_timestamp on update current_timestamp,
     foreign key (IdServico) references tb_Servico(IdServico),
     foreign key (IdPacote) references tb_Pacote(IdPacote)
 );
@@ -106,6 +108,8 @@ create table tb_Servico_Plano (
     IdServicoPlano int primary key auto_increment,
     IdServico int,
     IdPlano int,
+	DataAdicao timestamp default current_timestamp not null,
+    DataAtualizacao timestamp default current_timestamp on update current_timestamp,
     foreign key (IdServico) references tb_Servico(IdServico),
     foreign key (IdPlano) references tb_Plano(IdPlano)
 );
@@ -143,13 +147,13 @@ $$
 -- Procedure de Plano
 DELIMITER $$
 create PROCEDURE insertPlano 
-(vNome varchar(50), vDesc varchar(200), vDuracao int,vPreco decimal(10,2))
+(vNome varchar(50), vDesc varchar(200), vDuracao varchar(10),vPreco decimal(10,2))
 
 begin
 	if not EXISTS
 	(select IdPlano from tb_Plano where Nome = vNome) 
 	then
-		insert into tb_Plano (Nome,Descricao, Duracao,Preco) 
+		insert into tb_Plano (Nome,Descricao, Duracao, Preco) 
         values (vNome, vDesc, vDuracao,vPreco);
     end if;
     
@@ -350,6 +354,38 @@ begin
 end;
 $$
 
+
+-- Trigger ao cadastrar no Servico Plano
+delimiter $$
+create trigger precoPlanoInsert after insert on tb_Servico_Plano
+for each row
+begin
+
+declare desconto int;
+
+if exists (select new.IdPlano from tb_Plano where Duracao = '1 mes') then
+	set desconto = 5;
+    
+elseif exists (select new.IdPlano from tb_Plano where Duracao = '3 meses') then
+	set desconto = 10;
+
+elseif exists (select new.IdPlano from tb_Plano where Duracao = '6 meses') then
+	set desconto = 15;
+
+else
+	set desconto = 20;
+end if;
+
+	update tb_Plano
+    inner join (select (sum(tb_Servico.Preco)) * (max(desconto)/100) novoPreco 
+				from tb_Servico 
+				inner join tb_Servico_Plano on tb_Servico.IdServico = tb_Servico_Plano.IdServico
+                inner join tb_Plano on tb_Plano.IdPlano = tb_Servico_Plano.IdPlano
+				where tb_Servico_Plano.IdPlano = new.IdPlano) tbl 
+    set Preco = novoPreco;
+    
+end;
+$$
 
 select * from tb_Cliente;
 select * from tb_Agendamento;

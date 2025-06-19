@@ -7,5 +7,7 @@
         public int IdPacote { get; set; } 
         public string NomeServico { get; set; }
         public string NomePacote { get; set; }
+        public DateTime DataAdicao { get; set; }
+        public DateTime DataAtualizacao { get; set; }
     }
 }
