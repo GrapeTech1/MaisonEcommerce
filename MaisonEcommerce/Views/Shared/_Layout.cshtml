@@ -27,9 +27,11 @@
                 <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Funcionario" ? "active" : "")">
                     <a asp-controller="Funcionario" asp-action="Index"><i data-lucide="user"></i></a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Produto" ? "active" : "")">
-                    <a asp-controller="Produto" asp-action="Index"><i data-lucide="package"></i></a>
-                </li>
+                   <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Produto" ? "active" : "")">
+                        <a asp-controller="Produto" asp-action="Index">
+                            <img src="~/image/product.png" alt="Produto" class="nav-img-icon" />
+                        </a>
+                    </li>
                 <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Agenda" ? "active" : "")">
                     <a asp-controller="Agenda" asp-action="Index"><i data-lucide="calendar-check"></i></a>
                 </li>
@@ -37,18 +39,24 @@
                     <a asp-controller="Servico" asp-action="Index"><i data-lucide="file-text"></i></a>
                 </li>
                 <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Pacote" ? "active" : "")">
-                    <a asp-controller="Pacote" asp-action="Index"><i data-lucide="file-text"></i></a>
+                    <a asp-controller="Pacote" asp-action="Index"><i data-lucide="package"></i></a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Plano" ? "active" : "")">
-                    <a asp-controller="Plano" asp-action="Index"><i data-lucide="file-text"></i></a>
-                </li>
-                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServPacote" ? "active" : "")">
-                    <a asp-controller="ServPacote" asp-action="Index"><i data-lucide="file-text"></i></a>
-                </li>
+                  <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Plano" ? "active" : "")">
+                    <a asp-controller="Plano" asp-action="Index">
+                  <img src="~/image/tolist.png" alt="Plano" class="nav-img-icon" />
+                     </a>
+                   </li>
+                   <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServPacote" ? "active" : "")">
+                        <a asp-controller="ServPacote" asp-action="Index">
+                            <img src="~/image/pasta.png" alt="Serviço Pacote" class="nav-img-icon" />
+                        </a>
+                   </li>
                 <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ServicoPlano" ? "active" : "")">
-                    <a asp-controller="ServicoPlano" asp-action="Index"><i data-lucide="file-text"></i></a>
+                    <a asp-controller="ServicoPlano" asp-action="Index">
+                        <img src="~/image/list.png" alt="Serviço Plano" class="nav-img-icon" />
+                    </a>
                 </li>
-            </ul>
+</ul>
             <div class="bottom-text"></div>
         </div>
     }
