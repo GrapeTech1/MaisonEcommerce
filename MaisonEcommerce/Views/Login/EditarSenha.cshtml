@@ -1,6 +1,6 @@
 ﻿@model MaisonEcommerce.Models.Usuario;
 <link href="~/css/EditFu.css" rel="stylesheet" />
-<h1 class="titulo">Redefinição de Senha</h1>
+<h1 class="titulo">Redefinir de Senha</h1>
 <hr />
 
 <div class="row">
@@ -40,6 +40,26 @@
                 <label asp-for="ConfirmarSenha" class="control-label">Confirmar Senha</label>
                 <input asp-for="ConfirmarSenha" required class="form-control" />
                 <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+            </div>
+
+            <div class="captcha flex-column text-center bg-dark" id="captcha">
+                <h6>Utilize as setas para rotacionar a imagem e coloque ela na direção em que a mão está apontando.</h6>
+
+                <div class="alert alert-danger d-none" id="erro">Imagem rotacionada para o lado errado, por favor tente novamente.</div>
+
+                <img src="~/image/captcha/mao2.png" width="30%" height="auto" />
+
+                <input type="button" id="anterior" value="<" onclick="anteriorImg()" />
+                <img src="~/image/captcha/img1.png" width="30%" height="auto" id="imagens" />
+                <input type="button" id="depois" value=">" onclick="proximoImg()" />
+                <br />
+
+                <input type="button" class="btn btn-primary" value="Confirmar" id="cinfirmarCaptcha" onclick="confirmarCaptcha()" />
+            </div>
+
+            <div class="d-none text-center" id="sucesso">
+                <div class="alert alert-success">Captcha realizado com sucesso.</div>
+                <input type="button" class="btn btn-primary" disabled value="Confirmar" id="captcha" />
             </div>
 
             <div class="btn">

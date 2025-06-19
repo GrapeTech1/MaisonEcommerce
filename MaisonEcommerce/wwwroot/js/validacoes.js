@@ -49,3 +49,53 @@ function mostrarSenha() {
         olho.src = "../image/OlhoFechado.png";
     }
 }
+
+function anteriorImg() {
+    let anterior = document.getElementById('imagens');
+    const anteriorImg = document.getElementById('anteriorImg');
+
+    if (anterior.src == 'http://localhost:5146/image/captcha/img1.png') anterior.src = '../image/captcha/img2.png';
+
+    else if (anterior.src == 'http://localhost:5146/image/captcha/img2.png') anterior.src = '../image/captcha/img3.png';
+
+    else if (anterior.src == 'http://localhost:5146/image/captcha/img3.png') anterior.src = '../image/captcha/img4.png';
+
+    else if (anterior.src == 'http://localhost:5146/image/captcha/img4.png') anterior.src = '../image/captcha/img5.png';
+
+    else if (anterior.src == 'http://localhost:5146/image/captcha/img5.png') anterior.src = '../image/captcha/img6.png';
+
+    else if (anterior.src == 'http://localhost:5146/image/captcha/img6.png') anterior.src = '../image/captcha/img1.png';
+}
+
+function proximoImg() {
+    let proximo = document.getElementById('imagens');
+
+    if (proximo.src == 'http://localhost:5146/image/captcha/img1.png') proximo.src = '../image/captcha/img6.png';
+
+    else if (proximo.src == 'http://localhost:5146/image/captcha/img2.png') proximo.src = '../image/captcha/img1.png';
+
+    else if (proximo.src == 'http://localhost:5146/image/captcha/img3.png') proximo.src = '../image/captcha/img2.png';
+
+    else if (proximo.src == 'http://localhost:5146/image/captcha/img4.png') proximo.src = '../image/captcha/img3.png';
+
+    else if (proximo.src == 'http://localhost:5146/image/captcha/img5.png') proximo.src = '../image/captcha/img4.png';
+
+    else if (proximo.src == 'http://localhost:5146/image/captcha/img6.png') proximo.src = '../image/captcha/img5.png';
+}
+
+function confirmarCaptcha() {
+    let imagem = document.getElementById('imagens');
+    let redefinir = document.getElementById('redefinir');
+    let erro = document.getElementById('erro');
+    let form = document.getElementById('captcha');
+    let sucesso = document.getElementById('sucesso');
+
+    if (imagem.src == 'http://localhost:5146/image/captcha/img2.png') {
+        redefinir.disabled = false;
+        erro.classList.add('d-none');
+        form.classList.add('d-none');
+        sucesso.classList.remove('d-none');
+    }
+
+    else erro.classList.remove('d-none');
+}
