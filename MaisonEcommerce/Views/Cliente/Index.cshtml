@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<MaisonEcommerce.Models.Cliente>
 <link href="~/css/IndexCli.css" rel="stylesheet" />
-
-
 @{
     ViewData["Title"] = "Clientes";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-
+<h1 style="font-weight: bold; text-align: center;">@ViewData["Title"]</h1>
 <p>
     <a asp-controller="Cliente" asp-action="CadastrarCliente" class="btn btn-primary">+ Novo Cliente</a>
 </p>
