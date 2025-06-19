@@ -1,0 +1,85 @@
+.row {
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    background-color: #000; /* Fundo preto */
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.titulo {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+
+.btn-group {
+    display: flex;
+    gap: 10px; 
+    margin-top: 10px;
+}
+
+input[type="submit"],
+a.btn-success {
+    flex: 1; 
+    text-align: center;
+}
+
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    background-color: #e6e6e6; /* Fundo dos inputs */
+    color: black;
+}
+
+input[type="submit"] {
+    background-color: #A06E56; /* Marrom do botão */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    input[type="submit"]:hover {
+        background-color: #8C5A43; /* Tom mais escuro ao passar o mouse */
+    }
+
+a.btn-success {
+    background-color: #B4B49D; /* Verde claro/bege do botão Voltar */
+    color: black;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+    a.btn-success:hover {
+        background-color: #9A9A7F;
+    }
+
+hr {
+    border-color: #fff;
+}

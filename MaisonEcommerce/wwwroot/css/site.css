@@ -7,9 +7,9 @@
 }
 
 body {
-    background-color: #000;
     display: flex;
     flex-direction: row;
+
 }
 
 header {

@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MaisonEcommerce.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body >
+
     @* Verifica se deve esconder a sidebar e header *@
     @if (ViewBag.OcultarNavbar != true)
     {
         <div class="sidebar">
-            <div class="logo">A</div>
+            <div class="logo">
+                <img src="~/image/logo_M_preta.png" alt="Logo" style="width: 70px; height: auto;" />
+            </div>
             <ul class="nav-icons">
                 <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
                     <a asp-controller="Home" asp-action="Index"><i data-lucide="layout-grid"></i></a>
