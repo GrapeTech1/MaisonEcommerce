@@ -75,7 +75,7 @@ namespace MaisonEcommerce.Repositorio
                         new Servico_Plano
                         {
                             IdServicoPlano = Convert.ToInt32(dr["IdServicoPlano"]),
-                            NomeServico = ((string)dr["Nome_Serviço"]),
+                            NomeServico = ((string)dr["Nome_Servico"]),
                             NomePlano = ((string)dr["Nome_Plano"])
                         });
                 }

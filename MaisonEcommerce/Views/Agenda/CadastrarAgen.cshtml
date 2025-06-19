@@ -1,24 +1,23 @@
-﻿@model MaisonEcommerce.Models.Agendamento;
+﻿@model MaisonEcommerce.Models.Agendamento
+<link href="~/css/CadastroAgendamento.css" rel="stylesheet" />
 
+<div class="pagina-centro">
+    <div class="container-agendamento">
+        <h1 class="titulo">Cadastrar Agendamento</h1>
+        <hr />
 
-<h1 class="titulo-agen">Cadastrar Agendamento</h1>
-<hr />
-
-<div class="row">
-    <div class="col-md-4">
         @if (ViewData["Mensagem"] != null)
         {
             <div class="@ViewData["Classe"]">@ViewData["Mensagem"]</div>
         }
-        <form asp-action="CadastrarAgen">
+
+        <form asp-action="CadastrarAgen" class="form-agendamento">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
             <div class="form-group">
-                <label asp-for="CPF" class="control-label">CPF do cliente:</label>
-                 <input list="clientes" required asp-for="CPF" />
-                 <datalist id="clientes">
-
+                <label asp-for="CPF">CPF do cliente:</label>
+                <input list="clientes" required asp-for="CPF" />
+                <datalist id="clientes">
                     @if (ViewBag.clientes != null)
                     {
                         @foreach (var item in ViewBag.clientes)
@@ -26,16 +25,13 @@
                             <option value="@item.CPF"></option>
                         }
                     }
-                    
-                 </datalist>
-                
+                </datalist>
                 <span asp-validation-for="NomeCliente" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="NomeServico" class="control-label">Serviço:</label>
+                <label asp-for="NomeServico">Serviço:</label>
                 <select asp-for="NomeServico">
-
                     @if (ViewBag.servicos != null)
                     {
                         @foreach (var item in ViewBag.servicos)
@@ -43,25 +39,117 @@
                             <option value="@item.IdServico">@item.Nome</option>
                         }
                     }
-                    
                 </select>
                 <span asp-validation-for="NomeServico" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="DataHora" class="control-label">Escolha a data e hora do atendimento:</label>
-                <input asp-for="DataHora" required class="form-control" type="datetime-local" value="2025-06-23T17:00" min="2025-06-23T00:00" max="2025-12-24T00:00" />
+                <label asp-for="DataHora">Escolha a data e hora do atendimento:</label>
+                <input asp-for="DataHora" required type="datetime-local"
+                       value="2025-06-23T17:00"
+                       min="2025-06-23T00:00"
+                       max="2025-12-24T00:00" />
                 <span asp-validation-for="DataHora" class="text-danger"></span>
             </div>
 
-            <div class="btn">
-                <div class="form-group">
-                    <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                </div>
-                <div class="form-group">
-                    <a asp-action="Index" class="btn btn-success">Voltar</a>
-                </div>
+            <div class="form-buttons">
+                <a asp-action="Index" class="btn-voltar">Voltar</a>
+                <input type="submit" value="Cadastrar" class="btn-cadastrar" />
             </div>
         </form>
     </div>
 </div>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #000;
+        font-family: Arial, sans-serif;
+        color: white;
+        overflow: hidden;
+    }
+
+    .pagina-centro {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .container-agendamento {
+        width: 400px;
+        padding: 30px;
+        background-color: #000;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px #222;
+    }
+
+    .titulo {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .form-agendamento .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-agendamento label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-agendamento input,
+    .form-agendamento select {
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #fff;
+        color: #000;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+
+    .btn-voltar,
+    .btn-cadastrar {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-voltar {
+        background-color: white !important;
+        color: #000 !important;
+    }
+
+    .btn-cadastrar {
+        background-color: #8B5E3C !important;
+        color: white !important;
+    }
+
+        .btn-voltar:hover,
+        .btn-cadastrar:hover {
+            opacity: 0.85;
+            color: black;
+        }
+
+
+</style>

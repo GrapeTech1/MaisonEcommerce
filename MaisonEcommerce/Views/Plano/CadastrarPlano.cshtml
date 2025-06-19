@@ -1,51 +1,141 @@
-﻿@model MaisonEcommerce.Models.Plano;
+﻿@model MaisonEcommerce.Models.Plano
+<link href="~/css/CadastroPlano.css" rel="stylesheet" />
 
-<h1 class="titulo-plan">Cadastrar Plano</h1>
-<hr />
+<div class="pagina-centro">
+    <div class="container-plano">
+        <h1 class="titulo">Cadastrar Plano</h1>
+        <hr />
 
-<div class="row">
-    <div class="col-md-4">
         @if (TempData["Mensagem"] != null)
         {
             <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
         }
-        <form asp-action="CadastrarPlano">
+
+        <form asp-action="CadastrarPlano" class="form-plano">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" required oninput="texto(this)" class="form-control" />
+                <label asp-for="Nome">Nome:</label>
+                <input asp-for="Nome" required oninput="texto(this)" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" required oninput="texto(this)" class="form-control" />
+                <label asp-for="Descricao">Descrição:</label>
+                <input asp-for="Descricao" required oninput="texto(this)" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Duracao" class="control-label"></label>
-                <input asp-for="Duracao" required class="form-control" />
+                <label asp-for="Duracao">Duração (dias):</label>
+                <input asp-for="Duracao" required />
                 <span asp-validation-for="Duracao" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" required class="form-control" />
+                <label asp-for="Preco">Preço:</label>
+                <input asp-for="Preco" required oninput="decimal(this)" />
                 <span asp-validation-for="Preco" class="text-danger"></span>
             </div>
 
-            <div class="btn">
-                <div class="form-group">
-                    <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                </div>
-                <div class="form-group">
-                    <a asp-action="Index" class="btn btn-success">Voltar</a>
-                </div>
+            <div class="form-buttons">
+                <a asp-action="Index" class="btn-voltar">Voltar</a>
+                <input type="submit" value="Cadastrar" class="btn-cadastrar" />
             </div>
         </form>
     </div>
 </div>
+
 <script src="~/js/validacoes.js"></script>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #000;
+        font-family: Arial, sans-serif;
+        color: white;
+        overflow: hidden;
+    }
+
+    .pagina-centro {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .container-plano {
+        width: 400px;
+        padding: 30px;
+        background-color: #000;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #222;
+    }
+
+    .titulo {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .form-plano .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-plano label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-plano input {
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #fff;
+        color: #000;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+
+    .btn-voltar,
+    .btn-cadastrar {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-voltar {
+        background-color: white !important;
+        color: #000 !important;
+    }
+
+    .btn-cadastrar {
+        background-color: #8B5E3C !important;
+        color: white !important;
+    }
+
+        .btn-voltar:hover,
+        .btn-cadastrar:hover {
+            opacity: 0.85;
+            color: black;
+        }
+
+</style>

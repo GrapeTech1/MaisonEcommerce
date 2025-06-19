@@ -1,50 +1,51 @@
-﻿@model MaisonEcommerce.Models.Produto;
+﻿@model MaisonEcommerce.Models.Produto
+<link rel="stylesheet" href="~/css/CadastroProduto.css" asp-append-version="true" />
 
-<h1 class="titulo-prod">Cadastrar Produto</h1>
-<hr />
+<div class="pagina-centro">
+    <div class="container-produto">
+        <h1 class="titulo">Cadastrar Produto</h1>
+        <hr />
 
-<div class="row">
-    <div class="col-md-6">
         @if (TempData["Mensagem"] != null)
         {
             <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
         }
 
-        <form asp-action="CadastrarProduto" enctype="multipart/form-data">
+        <form asp-action="CadastrarProduto" enctype="multipart/form-data" class="form-produto">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
+                <label asp-for="Nome">Nome:</label>
+                <input asp-for="Nome" required maxlength="50" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
+                <label asp-for="Descricao">Descrição:</label>
+                <input asp-for="Descricao" required maxlength="100" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Quantidade" class="control-label"></label>
-                <input asp-for="Quantidade" class="form-control" />
+                <label asp-for="Quantidade">Quantidade:</label>
+                <input asp-for="Quantidade" type="number" min="0" />
                 <span asp-validation-for="Quantidade" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" oninput="decimal(this)" maxlength="6" class="form-control" />
-                <span asp-validation-for="Preco" class="tex-danger"></span>
+                <label asp-for="Preco">Preço:</label>
+                <input asp-for="Preco" oninput="decimal(this)" maxlength="6" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label for="fotoProduto" class="control-label">Foto do Produto</label>
-                <input type="file" id="fotoProduto" name="fotoProduto" class="form-control" accept="image/*" />
+                <label for="fotoProduto">Foto do Produto:</label>
+                <input type="file" id="fotoProduto" name="fotoProduto" accept="image/*" />
             </div>
 
-            <div class="form-group mt-3">
-                    <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-success">Voltar</a>
+            <div class="form-buttons">
+                <a asp-action="Index" class="btn-voltar">Voltar</a>
+                <input type="submit" value="Cadastrar" class="btn-cadastrar" />
             </div>
 
             @if (TempData["Erro"] != null)
@@ -56,4 +57,130 @@
         </form>
     </div>
 </div>
+
 <script src="~/js/validacoes.js"></script>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #000;
+        font-family: Arial, sans-serif;
+        color: white;
+        overflow: hidden;
+    }
+
+    .pagina-centro {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .container-produto {
+        width: 400px;
+        padding: 30px;
+        background-color: #000;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px #222;
+    }
+
+    .titulo {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .form-produto .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-produto label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-produto input,
+    .form-produto select {
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #fff;
+        color: #000;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+
+    .btn-voltar,
+    .btn-cadastrar {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-voltar {
+        background-color: white !important;
+        color: #000 !important;
+    }
+
+    .btn-cadastrar {
+        background-color: #8B5E3C !important;
+        color: white !important;
+    }
+
+        .btn-voltar:hover,
+        .btn-cadastrar:hover {
+            opacity: 0.85;
+            color: black;
+        }
+
+    .text-danger {
+        color: #ff4d4d;
+        font-size: 0.9em;
+    }
+
+    input[type="file"] {
+        padding: 10px;
+        background-color: #fff;
+        color: #000;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+    }
+
+        input[type="file"]::file-selector-button {
+            background-color: #8B5E3C;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin-right: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            input[type="file"]::file-selector-button:hover {
+                opacity: 0.85;
+                color: black;
+            }
+
+
+</style>

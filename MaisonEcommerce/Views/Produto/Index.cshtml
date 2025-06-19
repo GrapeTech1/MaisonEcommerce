@@ -4,91 +4,163 @@
     ViewData["Title"] = "Produtos";
 }
 
-<h1>@ViewData["Title"]</h1>
+<link rel="stylesheet" href="~/css/ListaProduto.css" />
 
-<p>
-    <a asp-controller="Produto" asp-action="CadastrarProduto" class="btn btn-primary">Cadastrar Produto</a>
-</p>
+<div class="pagina-centro">
+    <div class="container-produtos">
+        <h1 class="titulo">@ViewData["Title"]</h1>
 
-@if (ViewBag.cadastro != null)
-{
-    <div class="alert alert-success">@ViewBag.cadastro</div>
-}
+        <div class="btn-cadastro">
+            <a asp-controller="Produto" asp-action="CadastrarProduto" class="btn btn-primary">Cadastrar Produto</a>
+        </div>
 
-@if (TempData["Erro"]!= null)
-{
-    <div class="alert alert-danger">@TempData["Erro"]</div>
-}
+        @if (ViewBag.cadastro != null)
+        {
+            <div class="alert alert-success">@ViewBag.cadastro</div>
+        }
 
-@if (TempData["Mensagem"] != null)
-{
-    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
-}
+        @if (TempData["Erro"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Erro"]</div>
+        }
 
-@if (Model != null && Model.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Foto</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-                <th>Data de Cadastro</th>
-                <th>Data de Modificação</th>
-                <th class="text-center">Ação</th>
-            </tr>
-        </thead>
+        @if (TempData["Mensagem"] != null)
+        {
+            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+        }
 
-        <tbody>
-            @foreach (var produto in Model)
-            {
-                <tr>
-                    <td>@produto.IdProduto</td>
-                    <td>
-                        @if (produto.Foto != null && !string.IsNullOrEmpty(produto.TipoFoto))
+        @if (Model != null && Model.Any())
+        {
+            <div class="tabela-container">
+                <table class="table table-dark table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Código</th>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Preço</th>
+                            <th>Data de Cadastro</th>
+                            <th>Data de Modificação</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var produto in Model)
                         {
-                            <img src="@Url.Action("ObterFotoProduto", "Produto", new {id = produto.IdProduto})"
-                                 alt="Foto do Produto"
-                                 style="width: 100px; height: 100px; object-fit: cover;" />
+                            <tr>
+                                <td>@produto.IdProduto</td>
+                                <td>
+                                    @if (produto.Foto != null && !string.IsNullOrEmpty(produto.TipoFoto))
+                                    {
+                                        <img src="@Url.Action("ObterFotoProduto", "Produto", new { id = produto.IdProduto })"
+                                             alt="Foto do Produto"
+                                             style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />
+                                    }
+                                    else
+                                    {
+                                        <span>Sem Foto</span>
+                                    }
+                                </td>
+                                <td>@produto.Nome</td>
+                                <td>@produto.Descricao</td>
+                                <td>@produto.Quantidade</td>
+                                <td>@produto.Preco</td>
+                                <td>@produto.DataCadastro</td>
+                                <td>
+                                    @if (produto.DataAtualizacao != produto.DataCadastro)
+                                    {
+                                        @produto.DataAtualizacao
+                                    }
+                                    else
+                                    {
+                                        <span class="alert alert-warning p-1 m-0">Não Modificado</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="EditarProduto" asp-route-id="@produto.IdProduto" class="btn btn-sm btn-warning">Editar</a>
+                                    <span>|</span>
+                                    <a asp-action="ExcluirProduto" asp-route-id="@produto.IdProduto"
+                                       onclick="return confirm('Deseja realmente excluir este produto?')"
+                                       class="btn btn-sm btn-danger">Excluir</a>
+                                </td>
+                            </tr>
                         }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-center">Nenhum produto cadastrado.</p>
+        }
+    </div>
+</div>
 
-                        else
-                        {
-                            <span>Sem Foto</span>
-                        }
-                    </td>
-                    <td>@produto.Nome</td>
-                    <td>@produto.Descricao</td>
-                    <td>@produto.Quantidade</td>
-                    <td>@produto.Preco</td>
-                    <td>@produto.DataCadastro</td>
+<style>
 
-                    @if (produto.DataAtualizacao != produto.DataCadastro)
-                    {
-                        <td>@produto.DataAtualizacao</td>
-                    }
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        color: white;
+        font-family: Arial, sans-serif;
+        height: 100%;
+        width: 100%;
+    }
 
-                    else
-                    {
-                        <td class="text-center alert alert-warning"> Não foi Modificado </td>
-                    }
+    .pagina-centro {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        min-height: 100vh;
+        padding: 30px 10px;
+        
+    }
 
-                    <td class="text-center">
-                        <a asp-controller="Produto" asp-action="EditarProduto" asp-route-id="@produto.IdProduto" class="btn btn-sm btn-warning">Editar</a>
-                        <span>|</span>
-                        <a asp-controller="Produto" asp-action="ExcluirProduto" asp-route-id="@produto.IdProduto"
-                           onclick="return confirm('Deseja realmente Excluir este produto?')" class="btn btn-sm btn-danger">Excluir</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+    .container-produtos {
+        width: 100%;
+        max-width: 1200px;
+        background-color: black;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px black;
 
-else
-{
-    <p>Nenhum produto cadastrado.</p>
-}
+        ;
+
+    }
+
+    .titulo {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .btn-cadastro {
+        text-align: center;
+        margin-bottom: 20px;
+
+    }
+
+    .tabela-container {
+        overflow-x: auto;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle !important;
+        font-size: 14px;
+    }
+
+    .alert {
+        font-size: 14px;
+    }
+
+    .btn-primary
+    {
+        background-color: #8B5E3C;
+        border-color: #8B5E3C;
+    }
+
+</style>
