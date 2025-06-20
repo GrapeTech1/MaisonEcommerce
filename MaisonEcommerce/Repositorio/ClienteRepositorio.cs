@@ -136,7 +136,7 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("delete from tb_Cliente where IdCliente = @IdCliente", conexao);
+                MySqlCommand cmd = new MySqlCommand("delete from tb_Agendamento where IdCliente_Agen = @IdCliente; delete from tb_Cliente where IdCliente = @IdCliente", conexao);
                 cmd.Parameters.AddWithValue("@IdCliente", IdCliente);
                 int linhasAfetadas = cmd.ExecuteNonQuery();
 
