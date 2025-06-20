@@ -1,5 +1,6 @@
 ﻿using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System.Data;
 using System.Security.Cryptography;
 

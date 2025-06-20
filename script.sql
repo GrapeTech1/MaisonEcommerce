@@ -63,7 +63,7 @@ create table tb_Plano (
     IdPlano int primary key auto_increment,
     Nome varchar(50) not null,
     Descricao varchar(200) not null,
-     Duracao varchar(10) not null,
+    Duracao varchar(10) not null,
     Preco decimal(10,2) default 0,
     DataCadastro timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp
@@ -97,7 +97,7 @@ create table tb_Servico_Pacote (
     IdServicoPacote int primary key auto_increment,
     IdServico int,
     IdPacote int,
-	DataAdicao timestamp default current_timestamp not null,
+    DataAdicao timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp,
     foreign key (IdServico) references tb_Servico(IdServico),
     foreign key (IdPacote) references tb_Pacote(IdPacote)
@@ -108,11 +108,20 @@ create table tb_Servico_Plano (
     IdServicoPlano int primary key auto_increment,
     IdServico int,
     IdPlano int,
-	DataAdicao timestamp default current_timestamp not null,
+    DataAdicao timestamp default current_timestamp not null,
     DataAtualizacao timestamp default current_timestamp on update current_timestamp,
     foreign key (IdServico) references tb_Servico(IdServico),
     foreign key (IdPlano) references tb_Plano(IdPlano)
 );
+
+
+-- INDEX
+-- Index do ServicoPlano
+create unique index IdPlanoIdServico on tb_Servico_Plano(IdServico, IdPlano);
+
+-- Index do ServicoPacote
+create unique index IdPacoteIdServico on tb_Servico_Pacote(IdServico, IdPacote);
+
 
 -- Procedure do Usuario
 delimiter $$
@@ -193,22 +202,6 @@ begin
 
 end 
 $$
-
-/*
-delimiter $$
-create procedure todosProdutos ()
-begin
-
-	if exists (select 1 from information_schema.tables where table_schema = database() and table_name = 'tb_Produto') then
-		select * from tb_Produto;
-    
-    else
-		select 'A tabela não existe' as Erro;
-    end if;
-
-end;
-$$
-*/
 
 -- Procedure de Cliente 
 delimiter $$
@@ -354,8 +347,7 @@ begin
 end;
 $$
 
-
--- Trigger ao cadastrar no Servico Plano
+-- Trigger ao editar o Servico Plano
 delimiter $$
 create trigger precoPlanoInsert after insert on tb_Servico_Plano
 for each row
@@ -363,13 +355,13 @@ begin
 
 declare desconto int;
 
-if exists (select new.IdPlano from tb_Plano where Duracao = '1 mes') then
+if exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '1 mes' and tb_Plano.IdPlano = new.IdPlano) then
 	set desconto = 5;
     
-elseif exists (select new.IdPlano from tb_Plano where Duracao = '3 meses') then
+elseif exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '3 meses' and tb_Plano.IdPlano = new.IdPlano) then
 	set desconto = 10;
 
-elseif exists (select new.IdPlano from tb_Plano where Duracao = '6 meses') then
+elseif exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '6 meses' and tb_Plano.IdPlano = new.IdPlano) then
 	set desconto = 15;
 
 else
@@ -377,19 +369,93 @@ else
 end if;
 
 	update tb_Plano
-    inner join (select (sum(tb_Servico.Preco)) * (max(desconto)/100) novoPreco 
+    inner join (select (sum(tb_Servico.Preco)) * (desconto/100) novoPreco 
 				from tb_Servico 
 				inner join tb_Servico_Plano on tb_Servico.IdServico = tb_Servico_Plano.IdServico
                 inner join tb_Plano on tb_Plano.IdPlano = tb_Servico_Plano.IdPlano
 				where tb_Servico_Plano.IdPlano = new.IdPlano) tbl 
-    set Preco = novoPreco;
+    set Preco = novoPreco
+    where IdPlano = new.IdPlano;
     
 end;
 $$
+
+
+-- Trigger ao editar o Servico Plano
+delimiter $$
+create trigger precoPlanoUpdate after update on tb_Servico_Plano
+for each row
+begin
+
+declare desconto int;
+
+if exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '1 mes' and tb_Plano.IdPlano = new.IdPlano) then
+	set desconto = 5;
+    
+elseif exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '3 meses' and tb_Plano.IdPlano = new.IdPlano) then
+	set desconto = 10;
+
+elseif exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '6 meses' and tb_Plano.IdPlano = new.IdPlano) then
+	set desconto = 15;
+
+else
+	set desconto = 20;
+end if;
+
+	update tb_Plano
+    inner join (select (sum(tb_Servico.Preco)) * (desconto/100) novoPreco 
+				from tb_Servico 
+				inner join tb_Servico_Plano on tb_Servico.IdServico = tb_Servico_Plano.IdServico
+                inner join tb_Plano on tb_Plano.IdPlano = tb_Servico_Plano.IdPlano
+				where tb_Servico_Plano.IdPlano = new.IdPlano) tbl 
+    set Preco = novoPreco
+    where IdPlano = new.IdPlano;
+    
+end;
+$$
+
+-- Trigger ao deletar no Servico Plano
+delimiter $$
+create trigger precoPlanoDelete after delete on tb_Servico_Plano
+for each row
+begin
+
+declare desconto int;
+
+if exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '1 mes' and tb_Plano.IdPlano = old.IdPlano) then
+	set desconto = 5;
+    
+elseif exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '3 meses' and tb_Plano.IdPlano = old.IdPlano) then
+	set desconto = 10;
+
+elseif exists (select tb_Servico_Plano.IdPlano from tb_Servico_Plano inner join tb_Plano on tb_Servico_Plano.IdPlano = tb_Plano.IdPlano where tb_Plano.Duracao = '6 meses' and tb_Plano.IdPlano = old.IdPlano) then
+	set desconto = 15;
+
+else
+	set desconto = 20;
+end if;
+
+	update tb_Plano
+    inner join (select (sum(tb_Servico.Preco)) * (desconto/100) novoPreco 
+				from tb_Servico 
+				inner join tb_Servico_Plano on tb_Servico.IdServico = tb_Servico_Plano.IdServico
+                inner join tb_Plano on tb_Plano.IdPlano = tb_Servico_Plano.IdPlano
+				where tb_Servico_Plano.IdPlano = old.IdPlano) tbl 
+    set Preco = novoPreco
+    where IdPlano = old.IdPlano;
+    
+end;
+$$
+
+drop trigger precoPlanoInsert;
+
 
 select * from tb_Cliente;
 select * from tb_Agendamento;
 select * from tb_Produto;
 select * from tb_Funcionario;
 select * from tb_Pacote;
+select * from tb_Plano;
 select * from tb_Servico_Pacote;
+select * from tb_Servico_Plano;
+				

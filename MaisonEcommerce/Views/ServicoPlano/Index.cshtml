@@ -17,6 +17,11 @@
     <div class="@ViewData["Classe"]">@ViewData["Mensagem"]</div>
 }
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+}
+
 @if (Model != null && Model.Any())
 {
     <table class="table custom-table">

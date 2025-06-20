@@ -1,5 +1,6 @@
 ﻿using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System.Data;
 
 namespace MaisonEcommerce.Repositorio
@@ -30,6 +31,13 @@ namespace MaisonEcommerce.Repositorio
         {
             try
             {
+                int servicoDuplicado = TodosServicos().Where(a => a.Nome == servico.Nome).Count();
+
+                if (servicoDuplicado > 0)
+                {
+                    return false;
+                }
+
                 using (var conexao = new MySqlConnection(_conexaoMySQL))
                 {
                     conexao.Open();

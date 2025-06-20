@@ -5,6 +5,12 @@
 
 <div class="row">
     <div class="col-md-4">
+
+        @if (TempData["Mensagem"] != null)
+        {
+            <div class="@TempData["Classe"]">@TempData["Mensagem"]</div>
+        }
+
         <form asp-action="EditarPacote" method="post">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,7 +22,7 @@
 
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" oninput="texto(this)" required class="form-control" />
+                <input asp-for="Nome" disabled oninput="texto(this)" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
 

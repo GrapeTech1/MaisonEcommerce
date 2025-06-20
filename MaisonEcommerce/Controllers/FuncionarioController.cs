@@ -57,12 +57,14 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarFuncionario(int id, [Bind("IdFuncionario, CPF, Nome, Cargo, Sexo")] Funcionario funcionario)
+        public IActionResult EditarFuncionario(int id, [Bind("IdFuncionario, Nome, Cargo, Sexo")] Funcionario funcionario)
         {
             if (id != funcionario.IdFuncionario)
             {
                 return BadRequest();
             }
+
+            ModelState.Remove("CPF");
 
             if (ModelState.IsValid)
             {
@@ -73,6 +75,13 @@ namespace MaisonEcommerce.Controllers
                         TempData["Mensagem"] = "Funcionário modificado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        TempData["Mensagem"] = "CPF inválido, esse CPF já foi cadastrado no sistema anteriormente.";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View(funcionario);
                     }
                 }
 

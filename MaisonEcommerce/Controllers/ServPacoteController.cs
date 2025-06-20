@@ -91,10 +91,15 @@ namespace MaisonEcommerce.Controllers
                         return RedirectToAction(nameof(Index));
                     }
 
+
                     else
                     {
                         ViewData["Mensagem"] = "O servico que você está tentando inserir no pacote já foi inserido anteriormente.";
                         ViewData["Classe"] = "alert alert-danger";
+
+                        ViewBag.servicos = _servicoRepositorio.TodosServicos();
+                        ViewBag.pacotes = _pacoteRepositorio.TodosPacotes();
+
                         return View();
                     }
                 }

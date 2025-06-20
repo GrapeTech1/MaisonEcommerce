@@ -28,14 +28,15 @@ namespace MaisonEcommerce.Repositorio
         {
             try
             {
+
+
                 using (var conexao = new MySqlConnection(_conexaMySQL))
                 {
                     conexao.Open();
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Pacote set Nome=@nome, Descricao=@descricao, Desconto=@desconto, Preco=@preco where IdPacote=@idPacote", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Pacote set Descricao=@descricao, Desconto=@desconto, Preco=@preco where IdPacote=@idPacote", conexao);
                     cmd.Parameters.Add("@IdPacote", MySqlDbType.Int32).Value = pacote.IdPacote;
-                    cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = pacote.Nome;
                     cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = pacote.Descricao;
-                    cmd.Parameters.Add("@desconto", MySqlDbType.Decimal).Value = pacote.Desconto;
+                    cmd.Parameters.Add("@desconto", MySqlDbType.Int32).Value = pacote.Desconto;
                     cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = pacote.Preco;
                     int linhasAfetadas = cmd.ExecuteNonQuery();
                     return linhasAfetadas > 0;
@@ -101,7 +102,7 @@ namespace MaisonEcommerce.Repositorio
                     pacote.Nome = (string)(dr["Nome"]);
                     pacote.Descricao = (string)(dr["Descricao"]);
                     pacote.Desconto = Convert.ToInt32(dr["Desconto"]);
-                    pacote.Preco = Convert.ToDecimal(dr["Preco"]);
+                    pacote.Preco = dr["Preco"] is DBNull ? 0 : Convert.ToDecimal(dr["Preco"]);
                 }
                 return pacote;
             }
