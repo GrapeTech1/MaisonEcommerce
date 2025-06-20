@@ -47,10 +47,9 @@ p a.btn.btn-primary {
     .table tbody td {
         padding: 12px;
         color: #000;
-        border-top: 1px solid #000; /* Se quiser linhas entre as células, opcional */
+        border-top: 1px solid #000; 
     }
 
-    /* Corrigindo: como o border-radius não funciona direto no tr, faça assim: */
     .table tbody tr td:first-child {
         border-top-left-radius: 12px;
         border-bottom-left-radius: 12px;

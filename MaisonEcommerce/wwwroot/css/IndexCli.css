@@ -42,7 +42,7 @@ p a.btn.btn-primary {
     .table tbody tr {
         background-color: #d8cdcd;
         overflow: hidden;
-        border-radius: 12px; /* Deixa os cantos arredondados */
+        border-radius: 12px; 
     }
 
     .table tbody td {

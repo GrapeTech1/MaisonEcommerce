@@ -40,16 +40,15 @@ p a.btn.btn-primary {
     .table tbody tr {
         background-color: #d8cdcd;
         overflow: hidden;
-        border-radius: 12px; /* Deixa os cantos arredondados */
+        border-radius: 12px; 
     }
 
     .table tbody td {
         padding: 12px;
         color: #000;
-        border-top: 1px solid #000; /* Se quiser linhas entre as células, opcional */
+        border-top: 1px solid #000; 
     }
 
-    /* Corrigindo: como o border-radius não funciona direto no tr, faça assim: */
     .table tbody tr td:first-child {
         border-top-left-radius: 12px;
         border-bottom-left-radius: 12px;
@@ -67,7 +66,7 @@ tr {
     border-radius: 30%;
 }
 
-/* Estilo para célula de modificação com alerta */
+/
 .alert-info {
     background-color: #f2f2f2;
     color: #333;
@@ -75,7 +74,6 @@ tr {
     padding: 8px;
 }
 
-/* Botões dentro da tabela */
 .btn.btn-sm {
     border: none;
     border-radius: 8px;
@@ -100,7 +98,6 @@ tr {
             background-color: #7f1e47;
         }
 
-/* Alinhamento da coluna Ação */
 .text-center {
     text-align: center;
 }

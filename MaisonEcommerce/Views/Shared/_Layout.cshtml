@@ -56,7 +56,12 @@
                         <img src="~/image/list.png" alt="Serviço Plano" class="nav-img-icon" />
                     </a>
                 </li>
-</ul>
+                  <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Login" ? "active" : "")">
+                    <a asp-controller="Login" asp-action="Login">
+                        <img src="~/image/door.png" alt="Serviço Plano" class="nav-img-icon" />
+                    </a>
+                </li>
+            </ul>
             <div class="bottom-text"></div>
         </div>
     }

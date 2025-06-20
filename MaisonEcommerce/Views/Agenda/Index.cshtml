@@ -56,10 +56,14 @@
 
 
                     <td class="text-center">
-                        <a asp-controller="Agenda" asp-action="EditarAgenda" asp-route-id="@agendamento.IdAgendamento" class="btn btn-sm btn-warning">Editar</a>
-                        <span>|</span>
-                        <a asp-controller="Agenda" asp-action="ExcluirAgenda" asp-route-id="@agendamento.IdAgendamento"
-                           onclick="return confirm('Deseja realmente Excluir este Agendamento?')" class="btn btn-sm btn-danger">Excluir</a>
+                        <a asp-controller="Agenda" asp-action="EditarAgenda" asp-route-id="@agendamento.IdAgendamento" class="btn btn-sm btn-warning">
+                            <img src="~/image/editar.png" alt="Editar" width="20" height="20" />
+                        </a>
+                        <span style="padding: 0 5px;">|</span>
+                        <a asp-controller="Agenda" asp-action="EditarAgenda" asp-route-id="@agendamento.IdAgendamento"
+                           onclick="return confirm('Deseja realmente Excluir este Agendamento? Os seus agendamentos serão deletados')" class="btn btn-sm btn-danger">
+                            <img src="~/image/lixeira.png" alt="Excluir" width="20" height="20" />
+                            </a>
                     </td>
                 </tr>
             }

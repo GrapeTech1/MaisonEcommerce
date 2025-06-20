@@ -97,7 +97,7 @@ html, body {
 
 #senha {
     position: relative;
-    padding-right: 35px; /* Pra criar espaço pro olho dentro do campo */
+    padding-right: 35px; 
 }
 
 .campo-senha {
@@ -106,7 +106,7 @@ html, body {
 }
 
 #senha {
-    padding-right: 35px; /* Espaço pro olho não tampar o texto */
+    padding-right: 35px; 
 }
 
 #olho {

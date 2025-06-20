@@ -4,7 +4,7 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-p a.btn.btn-primary {
+ a.btn.btn-primary {
     margin-left: 65.7rem;
     background-color: #A06E56;
     border: none;
@@ -15,7 +15,7 @@ p a.btn.btn-primary {
     width: 15rem;
 }
 
-    p a.btn.btn-primary:hover {
+     a.btn.btn-primary:hover {
         background-color: #8a5946;
     }
 
@@ -40,13 +40,13 @@ p a.btn.btn-primary {
     .table tbody tr {
         background-color: #d8cdcd;
         overflow: hidden;
-        border-radius: 12px; 
+        border-radius: 12px; /* Deixa os cantos arredondados */
     }
 
     .table tbody td {
         padding: 12px;
         color: #000;
-        border-top: 1px solid #000; 
+        border-top: 1px solid #000;
     }
 
     .table tbody tr td:first-child {
@@ -60,17 +60,13 @@ p a.btn.btn-primary {
     }
 
 tr {
-    border: 1px solid transparent;
-    border-radius: 12px;
-}
-
-tr {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
     border-radius: 30%;
 }
 
+/* Estilo para célula de modificação com alerta */
 .alert-info {
     background-color: #f2f2f2;
     color: #333;
@@ -78,6 +74,7 @@ tr {
     padding: 8px;
 }
 
+/* Botões dentro da tabela */
 .btn.btn-sm {
     border: none;
     border-radius: 8px;
@@ -102,6 +99,7 @@ tr {
             background-color: #7f1e47;
         }
 
+/* Alinhamento da coluna Ação */
 .text-center {
     text-align: center;
 }
