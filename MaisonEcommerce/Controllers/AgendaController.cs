@@ -73,7 +73,7 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarAgenda(int id, [Bind("IdAgendamento, IdCliente_Agen, IdServico_Agen, CPF, NomeServico, DataHora")] Agendamento agendamento)
+        public IActionResult EditarAgenda(int id, [Bind("IdAgendamento, IdCliente_Agen, IdServico_Agen, NomeServico, DataHora")] Agendamento agendamento)
         {
             if (id != agendamento.IdAgendamento)
             {
@@ -81,6 +81,7 @@ namespace MaisonEcommerce.Controllers
             }
 
             ModelState.Remove("NomeCliente");
+            ModelState.Remove("CPF");
 
             if (ModelState.IsValid)
             {
@@ -91,6 +92,17 @@ namespace MaisonEcommerce.Controllers
                         ViewData["Mensagem"] = "Agendamento remarcado com sucesso!";
                         ViewData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        ViewData["Mensagem"] = "Horário indisponível.";
+                        ViewData["Classe"] = "alert alert-danger";
+
+                        ViewBag.clientes = _clienteRepositorio.TodosClientes();
+                        ViewBag.servicos = _servicoRepositorio.TodosServicos();
+
+                        return View();
                     }
                 }
 

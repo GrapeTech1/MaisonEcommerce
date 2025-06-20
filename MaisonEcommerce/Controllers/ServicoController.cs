@@ -74,6 +74,13 @@ namespace MaisonEcommerce.Controllers
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }
+
+                    else
+                    {
+                        TempData["Mensagem"] = "Nome inválido, o serviço já existe.";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View();
+                    }
                 }
 
                 catch (Exception)

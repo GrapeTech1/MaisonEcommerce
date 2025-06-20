@@ -31,14 +31,20 @@ namespace MaisonEcommerce.Repositorio
         {
             try
             {
+                int agendamentoMarcado = TodosAgendamentos().Where(a => a.DataHora == agendamento.DataHora).Count();
+
+                if (agendamentoMarcado > 0)
+                {
+                    return false;
+                }
+
                 using (var conexao = new MySqlConnection(_conexaoMySQL))
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Agendamento set IdCliente_Agen=(select IdCliente from tb_Cliente where CPF = @cliente), IdServico_Agen=@servico, DataHora = @dataHora where IdAgendamento=@idAgendamento", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Agendamento set IdServico_Agen=@servico, DataHora = @dataHora where IdAgendamento=@idAgendamento", conexao);
 
                     cmd.Parameters.Add("@idAgendamento", MySqlDbType.Int32).Value = agendamento.IdAgendamento;
-                    cmd.Parameters.Add("@cliente", MySqlDbType.VarChar).Value = agendamento.CPF;
                     cmd.Parameters.Add("@servico", MySqlDbType.Int32).Value = agendamento.NomeServico;
                     cmd.Parameters.Add("@dataHora", MySqlDbType.DateTime).Value = agendamento.DataHora;
 
@@ -96,7 +102,7 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select * from tb_Agendamento where IdAgendamento = @codigo", conexao);
+                MySqlCommand cmd = new MySqlCommand("select * \r\nfrom tb_Cliente, tb_Agendamento\r\nwhere tb_Agendamento.IdCliente_Agen = @codigo;", conexao);
                 cmd.Parameters.AddWithValue("@codigo", codigo);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 MySqlDataReader dr;
@@ -109,6 +115,7 @@ namespace MaisonEcommerce.Repositorio
                     agendamento.IdAgendamento = Convert.ToInt32(dr["IdAgendamento"]);
                     agendamento.IdCliente_Agen = Convert.ToInt32(dr["IdCliente_Agen"]);
                     agendamento.IdServico_Agen = Convert.ToInt32(dr["IdServico_Agen"]);
+                    agendamento.CPF = (string)(dr["CPF"]);
                     agendamento.DataHora = Convert.ToDateTime(dr["DataHora"]);
                 }
                 return agendamento;

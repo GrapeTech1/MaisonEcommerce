@@ -57,12 +57,14 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarPacote(int id, [Bind("IdPacote, Nome, Descricao, Preco")] Pacote pacote)
+        public IActionResult EditarPacote(int id, [Bind("IdPacote, Descricao, Desconto, Preco")] Pacote pacote)
         {
             if (id != pacote.IdPacote)
             {
                 return BadRequest();
             }
+
+            ModelState.Remove("Nome");
 
             if (ModelState.IsValid)
             {
@@ -73,6 +75,13 @@ namespace MaisonEcommerce.Controllers
                         TempData["Mensagem"] = "Pacote modificado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        TempData["Mensagem"] = "O pacote já existe no sistema.";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View(pacote);
                     }
                 }
 

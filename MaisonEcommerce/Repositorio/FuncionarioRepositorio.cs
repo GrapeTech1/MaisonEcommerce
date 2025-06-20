@@ -1,5 +1,6 @@
 ﻿using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System.Data;
 
 namespace MaisonEcommerce.Repositorio
@@ -27,12 +28,18 @@ namespace MaisonEcommerce.Repositorio
         {
             try
             {
+                int cpfDuplicado = TodosFuncionarios().Where(a => a.CPF == funcionario.CPF).Count();
+
+                if (cpfDuplicado > 0)
+                {
+                    return false;
+                }
+
                 using (var conexao = new MySqlConnection(_conexaMySQL))
                 {
                     conexao.Open();
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Funcionario set CPF=@cpf, Nome=@nome, Cargo=@cargo, Sexo=@sexo where IdFuncionario=@idFuncionario", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Funcionario set Nome=@nome, Cargo=@cargo, Sexo=@sexo where IdFuncionario=@idFuncionario", conexao);
                     cmd.Parameters.Add("@IdFuncionario", MySqlDbType.Int32).Value = funcionario.IdFuncionario;
-                    cmd.Parameters.Add("@cpf", MySqlDbType.VarChar).Value = funcionario.CPF;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = funcionario.Nome;
                     cmd.Parameters.Add("@cargo", MySqlDbType.VarChar).Value = funcionario.Cargo;
                     cmd.Parameters.Add("@sexo", MySqlDbType.VarChar).Value = funcionario.Sexo;

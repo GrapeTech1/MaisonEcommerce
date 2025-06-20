@@ -39,13 +39,19 @@ namespace MaisonEcommerce.Repositorio
         {
             try
             {
+                int cpfDuplicado = TodosClientes().Where(a => a.CPF == cliente.CPF).Count();
+
+                if (cpfDuplicado > 0)
+                {
+                    return false;
+                }
+
                 using (var conexao = new MySqlConnection(_conexaoMySQL))
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Cliente set CPF=@cpf, Nome=@nome, Telefone=@telefone, Idade=@idade, Sexo=@sexo where IdCliente=@idCliente", conexao);
+                    MySqlCommand cmd = new MySqlCommand(" Update tb_Cliente set Nome=@nome, Telefone=@telefone, Idade=@idade, Sexo=@sexo where IdCliente=@idCliente", conexao);
                     cmd.Parameters.Add("@idCliente", MySqlDbType.Int32).Value = cliente.IdCliente;
-                    cmd.Parameters.Add("@cpf", MySqlDbType.VarChar).Value = cliente.CPF;
                     cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = cliente.Nome;
                     cmd.Parameters.Add("@telefone", MySqlDbType.VarChar).Value = cliente.Telefone;
                     cmd.Parameters.Add("@idade", MySqlDbType.Int32).Value = cliente.Idade;

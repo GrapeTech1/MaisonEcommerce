@@ -38,8 +38,8 @@ namespace MaisonEcommerce.Controllers
 
             if(linhasAfetadas > 0)
             {
-                ViewData["Mensagen"] = "Serviço inserido em plano com sucesso!";
-                ViewData["Classe"] = "alert alert-success";
+                TempData["Mensagem"] = "Serviço inserido em plano com sucesso!";
+                TempData["Classe"] = "alert alert-success";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -85,8 +85,8 @@ namespace MaisonEcommerce.Controllers
                 {
                     if (_servicoplanoRepositorio.Atualizar(servicoPlano))
                     {
-                        ViewData["Mensagem"] = "Servico inserido em plano com sucesso!";
-                        ViewData["Classe"] = "alert alert-success";
+                        TempData["Mensagem"] = "Serviço ou plano alterado com sucesso!";
+                        TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
                     }
 
@@ -94,6 +94,10 @@ namespace MaisonEcommerce.Controllers
                     {
                         ViewData["Mensagem"] = "O servico que você está tentando inserir no plano já foi inserido anteriormente.";
                         ViewData["Classe"] = "alert alert-danger";
+
+                        ViewBag.servicos = _servicoRepositorio.TodosServicos();
+                        ViewBag.planos = _planoRepositorio.TodosPlanos();
+
                         return View();
 
                     }

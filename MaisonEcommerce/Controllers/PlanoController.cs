@@ -57,13 +57,14 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarPlano(int id, [Bind("IdPlano, Nome, Descricao, Duracao, Preco")] Plano plano)
+        public IActionResult EditarPlano(int id, [Bind("IdPlano, Descricao, Duracao, Preco")] Plano plano)
         {
             if (id != plano.IdPlano)
             {
                 return BadRequest();
             }
 
+            ModelState.Remove("Nome");
             if (ModelState.IsValid)
             {
                 try
@@ -73,6 +74,13 @@ namespace MaisonEcommerce.Controllers
                         TempData["Mensagem"] = "Plano alterado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        TempData["Mensagem"] = "O plano já existe no sistema.";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View(plano);
                     }
                 }
 

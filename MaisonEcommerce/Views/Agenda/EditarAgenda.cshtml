@@ -24,18 +24,7 @@
 
               <div class="form-group">
                   <label asp-for="CPF" class="control-label">CPF do cliente:</label>
-                  <input list="clientes" asp-for="CPF" />
-                  <datalist id="clientes">
-                      @if(ViewBag.clientes != null)
-                      {
-                          @foreach (var item in ViewBag.clientes)
-                          {
-                              <option value="@item.CPF"></option>
-                          }
-                      }
-                    
-                  </datalist>
-
+                  <input asp-for="CPF" disabled class="form-control" />
                   <span asp-validation-for="CPF" class="text-danger"></span>
               </div>
 

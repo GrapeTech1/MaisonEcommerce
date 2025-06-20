@@ -1,5 +1,6 @@
 ﻿using MaisonEcommerce.Models;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System.Data;
 
 namespace MaisonEcommerce.Repositorio
@@ -14,11 +15,10 @@ namespace MaisonEcommerce.Repositorio
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("Call insertPlano(@nome, @descricao, @duracao, @preco);", conexao);
+                MySqlCommand cmd = new MySqlCommand("Call insertPlano(@nome, @descricao, @duracao);", conexao);
                 cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = plano.Nome;
                 cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = plano.Descricao;
                 cmd.Parameters.Add("@duracao", MySqlDbType.VarChar).Value = plano.Duracao;
-                cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = plano.Preco;
 
                 int linhasAfetadas = cmd.ExecuteNonQuery();
 
@@ -31,16 +31,21 @@ namespace MaisonEcommerce.Repositorio
         {
             try
             {
+                int planoDuplicado = TodosPlanos().Where(a => a.Nome == plano.Nome).Count();
+
+                if (planoDuplicado > 0)
+                {
+                    return false;
+                }
+
                 using (var conexao = new MySqlConnection(_conexaMySQL))
                 {
                     conexao.Open();
 
-                    MySqlCommand cmd = new MySqlCommand("Update tb_Plano set Nome=@nome, Descricao=@descricao, Duracao=@duracao, Preco=@preco where IdPlano=@idPlano", conexao);
+                    MySqlCommand cmd = new MySqlCommand("Update tb_Plano set Descricao=@descricao, Duracao=@duracao where IdPlano=@idPlano", conexao);
                     cmd.Parameters.Add("@idPlano", MySqlDbType.Int32).Value = plano.IdPlano;
-                    cmd.Parameters.Add("@nome", MySqlDbType.VarChar).Value = plano.Nome;
                     cmd.Parameters.Add("@descricao", MySqlDbType.VarChar).Value = plano.Descricao;
                     cmd.Parameters.Add("@duracao", MySqlDbType.VarChar).Value = plano.Duracao;
-                    cmd.Parameters.Add("@preco", MySqlDbType.Decimal).Value = plano.Preco;
 
                     int linhasAfetadas = cmd.ExecuteNonQuery();
                     return linhasAfetadas > 0;
@@ -77,7 +82,7 @@ namespace MaisonEcommerce.Repositorio
                             Nome = ((string)dr["Nome"]),
                             Descricao = ((string)dr["Descricao"]),
                             Duracao = ((string)dr["Duracao"]),
-                            Preco = Convert.ToDecimal(dr["Preco"]),
+                            Preco = dr["Preco"] is DBNull ? 0 : Convert.ToDecimal(dr["Preco"]),
                             DataCadastro = Convert.ToDateTime(dr["DataCadastro"]),
                             DataAtualizacao = Convert.ToDateTime(dr["DataAtualizacao"]),
                         }
@@ -108,7 +113,7 @@ namespace MaisonEcommerce.Repositorio
                     plano.Nome = (string)(dr["Nome"]);
                     plano.Descricao = (string)(dr["Descricao"]);
                     plano.Duracao = (string)(dr["Duracao"]);
-                    plano.Preco = Convert.ToDecimal(dr["Preco"]);
+                    plano.Preco = dr["Preco"] is DBNull ? 0 : Convert.ToDecimal(dr["Preco"]);
                 }
                 return plano;
             }

@@ -66,12 +66,14 @@ namespace MaisonEcommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditarCliente(int id, [Bind("IdCliente, CPF, Nome, Telefone, Idade, Sexo")] Cliente cliente)
+        public IActionResult EditarCliente(int id, [Bind("IdCliente, Nome, Telefone, Idade, Sexo")] Cliente cliente)
         {
             if (id != cliente.IdCliente)
             {
                 return BadRequest();
             }
+
+            ModelState.Remove("CPF");
 
             if (ModelState.IsValid)
             {
@@ -89,6 +91,13 @@ namespace MaisonEcommerce.Controllers
                         TempData["Mensagem"] = "Cliente modificado com sucesso!";
                         TempData["Classe"] = "alert alert-success";
                         return RedirectToAction(nameof(Index));
+                    }
+
+                    else
+                    {
+                        TempData["Mensagem"] = "CPF inválido, esse CPF já foi cadastrado no sistema anteriormente.";
+                        TempData["Classe"] = "alert alert-danger";
+                        return View();
                     }
                 }
 
