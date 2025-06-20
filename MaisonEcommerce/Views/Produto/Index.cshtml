@@ -78,11 +78,11 @@
                                     }
                                 </td>
                                 <td>
-                                    <a asp-action="EditarProduto" asp-route-id="@produto.IdProduto" class="btn btn-sm btn-warning">Editar</a>
+                                    <a asp-action="EditarProduto" asp-route-id="@produto.IdProduto" class="btn btn-sm btn-warning"><img style="max-width:20px;" src="~/image/editar.png" /></a>
                                     <span>|</span>
                                     <a asp-action="ExcluirProduto" asp-route-id="@produto.IdProduto"
                                        onclick="return confirm('Deseja realmente excluir este produto?')"
-                                       class="btn btn-sm btn-danger">Excluir</a>
+                                       class="btn btn-sm btn-danger"><img style="max-width:20px;" src="~/image/lixeira.png" /></a>
                                 </td>
                             </tr>
                         }

@@ -54,10 +54,10 @@
                     }
 
                     <td class="text-center">
-                        <a asp-controller="ServPacote" asp-action="EditarServPacote" asp-route-id="@servicoPacote.IdServicoPacote" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-controller="ServPacote" asp-action="EditarServPacote" asp-route-id="@servicoPacote.IdServicoPacote" class="btn btn-sm btn-warning"><img style="max-width:20px;" src="~/image/editar.png" /></a>
                         <span>|</span>
                         <a asp-controller="ServPacote" asp-action="ExcluirServPacote" asp-route-id="@servicoPacote.IdServicoPacote"
-                           onclick="return confirm('Deseja realmente Excluir este Serviço do pacote?')" class="btn btn-sm btn-danger">Excluir</a>
+                           onclick="return confirm('Deseja realmente Excluir este Serviço do pacote?')" class="btn btn-sm btn-danger"><img style="max-width:20px;" src="~/image/lixeira.png" /></a>
                     </td>
                 </tr>
             }
