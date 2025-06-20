@@ -55,10 +55,10 @@
                     }
 
                     <td class="text-center">
-                        <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@plano.IdPlano" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-controller="Plano" asp-action="EditarPlano" asp-route-id="@plano.IdPlano" class="btn btn-sm btn-warning"><img style="max-width:20px;" src="~/image/editar.png" /></a>
                         <span>|</span>
                         <a asp-controller="Plano" asp-action="ExcluirPlano" asp-route-id="@plano.IdPlano"
-                           onclick="return confirm('Deseja realmente Excluir este plano?')" class="btn btn-sm btn-danger">Excluir</a>
+                           onclick="return confirm('Deseja realmente Excluir este plano?')" class="btn btn-sm btn-danger"><img style="max-width:20px;" src="~/image/lixeira.png" /></a>
                     </td>
                 </tr>
             }
